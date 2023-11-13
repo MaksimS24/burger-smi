@@ -1,0 +1,21 @@
+.mainIngredient {
+    margin-top: 40px;
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+.ingredients{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    text-align: center;
+    padding-inline-start: 0px;
+    margin-top: 24px;
+    margin-bottom: 32px;
+}
+.ingredients li {
+    list-style: none;
+    flex: 0 0 50%;
+    max-width: 40%;
+    margin: 12px 16px 16px 16px;
+}

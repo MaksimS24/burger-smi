@@ -1,0 +1,9 @@
+.mainBurger {
+    margin: auto;
+    max-width: 1280px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex: 1;
+    font-family: "Jet Brains Mono", Arial, sans-serif;
+}
