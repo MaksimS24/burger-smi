@@ -14,24 +14,27 @@ header {
     height: 88px;
 }
 
-nav {
-    display: flex;
-    align-items: center;
-    order: -1;
-}
 
-nav, .aConstructor, .aLineOrder, .logo, .lk {
+nav, .constructor, .lineOrder, .logo, .lk {
     flex: 1;
 }
 
+nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0px;
+}
+
+.constructor, .lineOrder {
+    display: flex;
+}
 
 .aConstructor, .aLineOrder {
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 8px 16px;
     border-radius: 40px;
-    margin: 0 4px;
+    padding: 0px 20px;
 }
 
 .logo {
@@ -48,8 +51,8 @@ nav, .aConstructor, .aLineOrder, .logo, .lk {
     display: flex;
     justify-content: end;
     align-items: center;
-    padding: 8px 16px;
     border-radius: 40px;
+    padding: 0px 20px;
 }
 
 header a {

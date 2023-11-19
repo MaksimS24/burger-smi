@@ -1,3 +1,16 @@
 .mainBurgerConstructor {
     margin: 100px 0px 0px 20px;
+    max-width: 600px;
+    max-height: 500px;
+}
+
+.check {
+    margin-top: 40px;
+    display: flex;
+    justify-content: end;
+    gap: 40px;
+}
+.pay {
+    display: flex;
+    align-items: center;
 }

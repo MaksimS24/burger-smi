@@ -1,21 +1,30 @@
 .mainIngredient {
     margin-top: 40px;
     overflow-y: auto;
+    max-width: 600px;
     max-height: 500px;
+    scrollbar-color: #F2F2F3 #8585AD;
 }
 
 .ingredients{
+    list-style: none;
+    text-align: center;
+    margin: 20px 16px;
+}
+
+.liArray {
     display: flex;
     flex-wrap: wrap;
+    height: 600px;
     gap: 24px;
-    text-align: center;
-    padding-inline-start: 0px;
-    margin-top: 24px;
-    margin-bottom: 32px;
 }
-.ingredients li {
-    list-style: none;
-    flex: 0 0 50%;
-    max-width: 40%;
-    margin: 12px 16px 16px 16px;
+
+.liIngredients {
+    height: 208px;
+    width: 272px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+li svg {
+    margin-left: 12px;
 }
