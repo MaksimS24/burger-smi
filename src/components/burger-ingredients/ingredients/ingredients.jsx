@@ -31,7 +31,6 @@ const Ingredients = () => {
                             </li>
                         ))}
                     </li>
-
                 </div>
             </div>
             {isOpen && <Modal setIsOpen={setIsOpen}/>}
