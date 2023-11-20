@@ -20,7 +20,7 @@ const Ingredients = () => {
         <div className={styles.mainIngredient}>
             <div className={styles.ingredients}>
                 <div onClick={() => setIsOpen(true)}>
-                    <li className={styles.liArray} >
+                    <ul className={styles.ulArray} >
                         {data.map(data => (
                             <li className={styles.liIngredients} key={data._id}>
                                 <img src={data.image} alt={'img'}/>
@@ -30,7 +30,7 @@ const Ingredients = () => {
                                 <li className={'text text_type_main-default'}>{data.name}</li>
                             </li>
                         ))}
-                    </li>
+                    </ul>
                 </div>
             </div>
             {isOpen && <Modal setIsOpen={setIsOpen}/>}

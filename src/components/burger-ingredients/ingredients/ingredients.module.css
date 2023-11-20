@@ -7,16 +7,16 @@
 }
 
 .ingredients{
-    list-style: none;
     text-align: center;
     margin: 20px 16px;
 }
 
-.liArray {
+.ulArray {
     display: flex;
     flex-wrap: wrap;
     height: 600px;
     gap: 24px;
+    list-style: none;
 }
 
 .liIngredients {
