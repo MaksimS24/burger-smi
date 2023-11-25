@@ -1,8 +1,6 @@
 .mainIngredient {
-    margin-top: 40px;
-    overflow-y: auto;
+    margin-top: 20px;
     max-width: 600px;
-    max-height: 500px;
     scrollbar-color: #F2F2F3 #8585AD;
 }
 
@@ -11,19 +9,23 @@
     margin: 20px 16px;
 }
 
-.ulArray {
-    display: flex;
-    flex-wrap: wrap;
-    height: 600px;
+.array {
+    display: grid;
+    grid-template-columns: repeat(2, 270px);
+    overflow-x: hidden;
+    width: 585px;
+    height: 450px;
+    padding-inline-start: 0px;
     gap: 24px;
-    list-style: none;
 }
 
-.liIngredients {
+.ulIngredients {
     height: 208px;
     width: 272px;
     box-sizing: border-box;
     cursor: pointer;
+    list-style: none;
+    padding-inline-start: 0px;
 }
 li svg {
     margin-left: 12px;

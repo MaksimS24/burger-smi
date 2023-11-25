@@ -1,37 +1,38 @@
 import React from "react";
 import styles from './details-ingredient.module.css'
-import {data} from "../../../../utils/data";
+import {ingredients} from "../../../../utils/data";
 
 const DetailsIngredient = () => {
 
-    const details = data.find((ingredient) =>
-        ingredient._id === data._id);
+    const details = ingredients.find((ingredient) =>
+        ingredient._id === ingredient._id);
 
     return (
         <>
-
-                <li className={styles.liDetailsIngredient}>
-                    <img src={details?.image} alt={'img'}/>
-                    <h2>{details?.name}</h2>
-                    {/*<ul>*/}
-                    {/*    <li>*/}
-                    {/*        <p>Калории, ккал</p>*/}
-                    {/*        <span>{data.calories}</span>*/}
-                    {/*    </li>*/}
-                    {/*    <li>*/}
-                    {/*        <p>Белки, г</p>*/}
-                    {/*        <span>{data.proteins}</span>*/}
-                    {/*    </li>*/}
-                    {/*    <li>*/}
-                    {/*        <p>Жиры, г</p>*/}
-                    {/*        <span>{data.fat}</span>*/}
-                    {/*    </li>*/}
-                    {/*    <li>*/}
-                    {/*        <p>Углеводы, г</p>*/}
-                    {/*        <span>{data.carbohydrates}</span>*/}
-                    {/*    </li>*/}
-                    {/*</ul>*/}
+            <ul className={styles.ulDetailsIngredient} key={details._id}>
+                <li>
+                    <img src={details.image_large} alt={'img'}/>
+                    <h2 className={"text text_type_main-medium mt-4 mb-8"}>{details.name}</h2>
+                    <ul className={styles.ulDetails}>
+                        <li className={styles.liCalories}>
+                            <p className="text text_type_main-default">Калории, ккал</p>
+                            <span className="text text_type_digits-default">{details.calories}</span>
+                        </li>
+                        <li className={styles.liProteins}>
+                            <p className="text text_type_main-default">Белки, г</p>
+                            <span className="text text_type_digits-default">{details.proteins}</span>
+                        </li>
+                        <li className={styles.liFat}>
+                            <p className="text text_type_main-default">Жиры, г</p>
+                            <span className="text text_type_digits-default">{details.fat}</span>
+                        </li>
+                        <li className={styles.liCarbohydrates}>
+                            <p className="text text_type_main-default">Углеводы, г</p>
+                            <span className="text text_type_digits-default">{details.carbohydrates}</span>
+                        </li>
+                    </ul>
                 </li>
+            </ul>
         </>
     )
 }

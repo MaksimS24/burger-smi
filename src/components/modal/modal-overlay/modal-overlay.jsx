@@ -1,9 +1,11 @@
 import React from "react";
 import styles from './modal-overlay.css'
 
-const ModalOverlay = ({setIsOpen}) => {
-    return(
-        <div className={styles.backgroundModal} onClick={() => setIsOpen(false)}/>
+const ModalOverlay = () => {
+
+    return (
+        <div className={styles.backgroundModal}/>
     )
 }
 
+export default ModalOverlay;

@@ -1,39 +1,42 @@
 import React, {useState} from "react";
 import styles from "./ingredients.module.css";
-import {data} from "../../../utils/data";
+import {ingredients} from "../../../utils/data";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../../modal/modal";
+import DetailsIngredient from "./details-ingredient/details-ingredient";
 
-const Ingredients = () => {
+const Ingredients = ({name, price, image}) => {
+
+
+    // const bun = ingredients.filter(bun =>
+    //     bun.type === 'bun');
+    // const main = ingredients.filter(main =>
+    //     main.type === 'main');
+    // const sauce = ingredients.filter(sauce =>
+    //     sauce.type === 'sauce');
 
     const [isOpen, setIsOpen] = useState(false);
-
-        // const bun = data.filter(bun =>
-        //     bun.type === 'bun');
-        // const main = data.filter(main =>
-        //     main.type === 'main');
-        // const sauce = data.filter(sauce =>
-        //     sauce.type === 'sauce');
 
 
     return (
         <div className={styles.mainIngredient}>
             <div className={styles.ingredients}>
                 <div onClick={() => setIsOpen(true)}>
-                    <ul className={styles.ulArray} >
-                        {data.map(data => (
-                            <li className={styles.liIngredients} key={data._id}>
-                                <img src={data.image} alt={'img'}/>
-                                <li className={'text text_type_digits-default'}>{data.price}
+                    <div className={styles.array}>
+                        {ingredients.map(ingredient =>
+                            <ul className={styles.ulIngredients} key={ingredient._id}>
+                                <img src={ingredient.image} alt={'burger-ingredients'}/>
+                                <li className={'text text_type_digits-default'}>{ingredient.price}
                                     <CurrencyIcon type={"primary"}/>
                                 </li>
-                                <li className={'text text_type_main-default'}>{data.name}</li>
-                            </li>
-                        ))}
-                    </ul>
+                                <li className={'text text_type_main-default'}>{ingredient.name}</li>
+                            </ul>
+                        )}
+                    </div>
+
                 </div>
+                {isOpen && <Modal title="Детали ингредиента" children={<DetailsIngredient/>} setIsOpen={setIsOpen}/>}
             </div>
-            {isOpen && <Modal setIsOpen={setIsOpen}/>}
         </div>
     );
 }

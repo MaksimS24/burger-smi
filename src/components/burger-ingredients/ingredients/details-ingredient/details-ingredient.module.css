@@ -1,7 +1,24 @@
 .ulDetailsIngredient{
-
+    list-style: none;
+    text-align: center;
+    width: 100%;
+    margin: 0 40px auto;
+    padding-inline-start: 0px;
+    color: #F2F2F3;
 }
 
-.liDetailsIngredient {
+.ulDetails {
+    width: 516px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
     list-style: none;
+    padding-inline-start: 0px;
+}
+
+.liCalories, .liProteins, .liFat, .liCarbohydrates {
+    color: #8585AD;
+    display: grid;
+    gap: 8px;
+    margin-bottom: 60px;
 }
