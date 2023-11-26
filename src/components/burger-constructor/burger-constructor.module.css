@@ -4,12 +4,25 @@
     max-height: 500px;
 }
 
+.burgerConstructor {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.constructorElement {
+    display: flex;
+    align-items: center;
+}
+
 .check {
     margin-top: 40px;
     display: flex;
     justify-content: end;
     gap: 40px;
 }
+
 .pay {
     display: flex;
     align-items: center;

@@ -1,0 +1,10 @@
+.mainOrder {
+    max-width: 720px;
+    max-height: 718px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.mainOrder h2 {
+    text-shadow: 0 0 15px #4C4CFF;
+}

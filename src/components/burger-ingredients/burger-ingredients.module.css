@@ -1,3 +1,7 @@
 .mainBurgerIngredients {
     margin: 19px 20px 0px 0px;
 }
+
+.tabIngredients {
+    display: flex;
+}
