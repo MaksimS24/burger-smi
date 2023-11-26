@@ -1,23 +1,40 @@
 .mainBurgerConstructor {
     margin: 100px 0px 0px 20px;
     max-width: 600px;
-    max-height: 500px;
+    max-height: 912px;
 }
 
 .burgerConstructor {
     display: flex;
     align-items: flex-end;
     flex-direction: column;
-    gap: 10px;
 }
 
 .constructorElement {
+    display: block;
+    justify-content: end;
+    overflow-x: hidden;
+    height: 350px;
+    padding-inline-start: 16px;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+}
+
+.liConstructorElement {
     display: flex;
     align-items: center;
+    justify-content: end;
+    margin: 6px 0px;
+    min-height: 80px;
+}
+
+.liConstructorElement svg {
+    margin-right: 8px;
 }
 
 .check {
     margin-top: 40px;
+    margin-bottom: 40px;
     display: flex;
     justify-content: end;
     gap: 40px;

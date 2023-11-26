@@ -3,6 +3,7 @@ import styles from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import Order from "./order/order";
+import {ingredients} from "../../utils/data";
 
 
 const BurgerConstructor = () => {
@@ -19,14 +20,19 @@ const BurgerConstructor = () => {
                     price={200}
                     thumbnail={'img'}
                 />
-                <div className={styles.constructorElement}>
-                    <DragIcon type='primary'/>
-                    <ConstructorElement
-                        text="Краторная булка N-200i (верх)"
-                        price={50}
-                        thumbnail={'img'}
-                    />
-                </div>
+
+                <ul className={styles.constructorElement}>
+                    {ingredients.map(ingredient =>
+                        <li className={styles.liConstructorElement}>
+                            <DragIcon type='primary'/>
+                            <ConstructorElement
+                                text={ingredient.name}
+                                price={ingredient.price}
+                                thumbnail={ingredient.image}
+                            />
+                        </li>
+                    )}
+                </ul>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}

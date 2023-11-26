@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import styles from './burger-ingredients.module.css';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredients from "./ingredients/ingredients";
@@ -6,34 +6,19 @@ import {ingredients} from "../../utils/data";
 
 const BurgerIngredients = () => {
 
-    // useCallback(() => {
-    //     if (data.type === 'bun'){
-    //         return setCurrent('bun');
-    //     } else if (data.type === 'main') {
-    //         return setCurrent('main');
-    //     } else if (data.type === 'sauce') {
-    //         return setCurrent('sauce')
-    //     }
-    // });
-    const [current, setCurrent] = useState([])
-    const [listIngredients, setListIngredient] = useState()
+    const [current, setCurrent] = useState('bun')
+    const [listIngredients, setListIngredient] = useState([])
 
     useEffect(() => {
-        setCurrent(ingredients);
+        setListIngredient(ingredients);
     }, []);
 
+
     function getFilterIngredients() {
-        if(!listIngredients) {
-            return current;
-        }
-        return current.filter((item) => item.type === setCurrent);
+        return listIngredients.filter(item => item.type === current);
     }
 
     const filteredList = useMemo(getFilterIngredients, [listIngredients, current])
-
-    const viewCategoryIngredient = (event) => {
-        setListIngredient(event.target.value);
-    }
 
     return (
         <div className={styles.mainBurgerIngredients}>
@@ -41,25 +26,26 @@ const BurgerIngredients = () => {
             <h1>Соберите бургер</h1>
 
             <div className={styles.tabIngredients}>
-                <Tab value="bun" active={current === ['bun']}  onCLick={viewCategoryIngredient}>
+                <Tab value="bun" active={current === 'bun'} onCLick={setCurrent}>
                     Булки
                 </Tab>
-                <Tab value="main" active={current === ['main']} onCLick={viewCategoryIngredient}>
-                    Соусы
-                </Tab>
-                <Tab value="sauce" active={current === ['sauce']} onCLick={viewCategoryIngredient}>
+                <Tab value="main" active={current === 'main'} onCLick={setCurrent}>
                     Начинки
+                </Tab>
+                <Tab value="sauce" active={current === 'sauce'} onCLick={setCurrent}>
+                    Соусы
                 </Tab>
             </div>
             <div>
-                {filteredList.map((item, element, index) => (
-                    <ul>
-                        <li>
+                <ul>
+                    {filteredList.map(item => (
+                        <li >
                             <h2>{item.type}</h2>
-                            <Ingredients {...element} key={index}/>
+                            <Ingredients key={item._id}/>
                         </li>
-                    </ul>
-                ))}
+                    ))}
+                </ul>
+
             </div>
         </div>
     );
