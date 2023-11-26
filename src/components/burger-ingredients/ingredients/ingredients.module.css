@@ -14,7 +14,7 @@
     grid-template-columns: repeat(2, 270px);
     overflow-x: hidden;
     width: 585px;
-    height: 450px;
+    height: 350px;
     padding-inline-start: 0px;
     gap: 24px;
 }
