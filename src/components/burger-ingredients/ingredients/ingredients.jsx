@@ -7,16 +7,7 @@ import DetailsIngredient from "./details-ingredient/details-ingredient";
 
 const Ingredients = () => {
 
-
-    // const bun = ingredients.filter(bun =>
-    //     bun.type === 'bun');
-    // const main = ingredients.filter(main =>
-    //     main.type === 'main');
-    // const sauce = ingredients.filter(sauce =>
-    //     sauce.type === 'sauce');
-
     const [isOpen, setIsOpen] = useState(false);
-
 
     return (
         <div className={styles.mainIngredient}>

@@ -6,8 +6,6 @@ import {ingredients} from "../../utils/data";
 
 const BurgerIngredients = () => {
 
-
-    //
     const [current, setCurrent] = useState('bun')
     const [listIngredients, setListIngredient] = useState([])
 
@@ -15,26 +13,10 @@ const BurgerIngredients = () => {
         setListIngredient(ingredients);
     }, []);
 
-    // useCallback((current) => {
-    //         if (ingredients.type === 'bun'){
-    //             return current('bun');
-    //         } else if (ingredients.type === 'main') {
-    //             return current('main');
-    //         } else if (ingredients.type === 'sauce') {
-    //             return current('sauce')
-    //         }
-    //     });
 
     function getFilterIngredients() {
         return listIngredients.filter(item => item.type === current);
     }
-    // return listIngredients.filter(item => {
-    //     if (item.type === 'bun') {
-    //         return !item;
-    //     } else if (item.type === 'main') {
-    //         return item;
-    //     }
-    // });
 
     const filteredList = useMemo(getFilterIngredients, [listIngredients, current])
 
