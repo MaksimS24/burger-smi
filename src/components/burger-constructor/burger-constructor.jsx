@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import styles from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import Order from "./order/order";
+import OrderDetails from "./order-details/order-details";
 import {ingredients} from "../../utils/data";
 
 
@@ -51,7 +51,7 @@ const BurgerConstructor = () => {
                         Оформить заказ
                     </Button>
                 </div>
-                {isOpen && <Modal children={<Order/>} setIsOpen={setIsOpen}/>}
+                {isOpen && <Modal children={<OrderDetails/>} setIsOpen={setIsOpen}/>}
             </div>
         </div>
     );

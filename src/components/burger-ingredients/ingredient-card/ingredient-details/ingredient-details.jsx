@@ -1,11 +1,10 @@
 import React from "react";
-import styles from './details-ingredient.module.css'
+import styles from './ingredient-details.module.css'
 import {ingredients} from "../../../../utils/data";
 
-const DetailsIngredient = () => {
+const IngredientDetails = ({id}) => {
 
-    const details = ingredients.find((ingredient) =>
-        ingredient._id === ingredient._id);
+    const details = ingredients.find((ingredient) => ingredient._id === id);
 
     return (
         <>
@@ -37,4 +36,4 @@ const DetailsIngredient = () => {
     )
 }
 
-export default DetailsIngredient;
+export default IngredientDetails;
