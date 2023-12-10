@@ -31,6 +31,8 @@ const BurgerIngredients = () => {
         setId(id)
     }
 
+
+    
     const handleTabClick = (tabValue) => {
         setSelectedTab(tabValue);
         switch (tabValue) {
