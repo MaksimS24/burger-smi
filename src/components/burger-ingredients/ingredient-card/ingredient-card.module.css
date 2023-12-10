@@ -1,0 +1,13 @@
+.liIngredients {
+    text-align: center;
+    margin: 20px 8px 20px 8px;
+    height: 208px;
+    width: 272px;
+    box-sizing: border-box;
+    cursor: pointer;
+    list-style: none;
+    padding-inline-start: 0px;
+}
+li svg {
+    margin-left: 12px;
+}

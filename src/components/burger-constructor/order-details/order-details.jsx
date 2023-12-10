@@ -1,12 +1,12 @@
 import React from "react";
-import styles from "./order.module.css";
+import styles from "./order-details.module.css";
 import {ReactSVG} from "react-svg";
 
 // Image
 import imageDone from '../../../images/image-done.svg'
 
 
-const Order = () => {
+const OrderDetails = () => {
     return(
         <div className={styles.mainOrder}>
 
@@ -34,4 +34,4 @@ const Order = () => {
     )
 }
 
-export default Order;
+export default OrderDetails;

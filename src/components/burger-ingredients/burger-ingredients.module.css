@@ -1,7 +1,21 @@
 .mainBurgerIngredients {
-    margin: 19px 20px 0px 0px;
+    margin: 40px 20px 0px 0px;
+    width: 600px;
+    max-height: 912px;
 }
 
 .tabIngredients {
     display: flex;
+}
+
+.cardsIngredient {
+    max-height: 570px;
+    overflow-y: auto;
+}
+
+.ulIngredient {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-inline-start: 0px;
 }

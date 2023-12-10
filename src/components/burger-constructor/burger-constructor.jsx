@@ -2,13 +2,15 @@ import React, {useState} from "react";
 import styles from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import Order from "./order/order";
-import {ingredients} from "../../utils/data";
+import OrderDetails from "./order-details/order-details";
+import {useSelector} from "react-redux";
 
 
 const BurgerConstructor = () => {
 
     const [isOpen, setIsOpen] = useState(false);
+
+    const ingredients = useSelector((state) => state.ingredients.ingredients);
 
     return (
         <div className={styles.mainBurgerConstructor}>
@@ -22,13 +24,13 @@ const BurgerConstructor = () => {
                 />
 
                 <ul className={styles.constructorElement}>
-                    {ingredients.map(ingredient =>
-                        <li className={styles.liConstructorElement}>
+                    {ingredients?.data?.map(ingredient =>
+                        <li className={styles.liConstructorElement} key={ingredient?._id}>
                             <DragIcon type='primary'/>
                             <ConstructorElement
-                                text={ingredient.name}
-                                price={ingredient.price}
-                                thumbnail={ingredient.image}
+                                text={ingredient?.name}
+                                price={ingredient?.price}
+                                thumbnail={ingredient?.image}
                             />
                         </li>
                     )}
@@ -51,7 +53,9 @@ const BurgerConstructor = () => {
                         Оформить заказ
                     </Button>
                 </div>
-                {isOpen && <Modal children={<Order/>} setIsOpen={setIsOpen}/>}
+                {isOpen && <Modal
+                    children={<OrderDetails/>}
+                    setIsOpen={setIsOpen}/>}
             </div>
         </div>
     );
