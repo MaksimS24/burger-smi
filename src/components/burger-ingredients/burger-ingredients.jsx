@@ -4,9 +4,8 @@ import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCard from "./ingredient-card/ingredient-card";
 import IngredientDetails from "./ingredient-card/ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-
 import {useDispatch, useSelector} from "react-redux";
-import {fetchIngredients} from "../../services/ingredients/ingredients-slice";
+import {fetchIngredients, openModal} from "../../services/ingredients/ingredients-slice";
 
 const BurgerIngredients = () => {
 
@@ -23,16 +22,16 @@ const BurgerIngredients = () => {
     const sauceRef = useRef(null);
     const [selectedTab, setSelectedTab] = useState('bun');
     const [id, setId] = useState();
-    const [isOpen, setModalIsOpen] = useState(false);
 
 
-    const handleModal = (id) => {
-        setModalIsOpen(true)
-        setId(id)
-    }
+    const { isOpen } = useSelector((state) => state.modal);
+    const { closeModal } = useSelector((state) => state.modal)
 
+    // const handleModal = (id) => {
+    //     setModalIsOpen(true)
+    //     setId(id)
+    // }
 
-    
     const handleTabClick = (tabValue) => {
         setSelectedTab(tabValue);
         switch (tabValue) {
@@ -56,7 +55,7 @@ const BurgerIngredients = () => {
             {isOpen && <Modal
                 title={"Детали ингредиента"}
                 children={<IngredientDetails id={id}/>}
-                setIsOpen={setModalIsOpen}/>
+                setIsOpen={closeModal}/>
             }
 
             <h1 className="text text_type_main-large">
@@ -83,7 +82,7 @@ const BurgerIngredients = () => {
                 <h2 ref={bunRef}>Булки</h2>
                 <ul className={styles.ulIngredient}>
                     {ingredients?.data?.filter((ingredient) => ingredient?.type === 'bun')?.map((ingredient) => (
-                            <IngredientCard onClick={handleModal} {...ingredient} key={ingredient?._id}/>
+                            <IngredientCard onClick={() => {dispatch(openModal())}} {...ingredient} key={ingredient?._id}/>
                         ))}
                 </ul>
 
@@ -91,7 +90,7 @@ const BurgerIngredients = () => {
                 <h2 ref={mainRef}>Начинки</h2>
                 <ul className={styles.ulIngredient}>
                     {ingredients?.data?.filter((ingredient) => ingredient?.type === 'main')?.map((ingredient) => (
-                            <IngredientCard onClick={handleModal} {...ingredient} key={ingredient?._id}/>
+                            <IngredientCard onClick={() => {dispatch(openModal())}} {...ingredient} key={ingredient?._id}/>
                         ))}
                 </ul>
 
@@ -99,7 +98,7 @@ const BurgerIngredients = () => {
                 <h2 ref={sauceRef}>Соусы</h2>
                 <ul className={styles.ulIngredient}>
                     {ingredients?.data?.filter((ingredient) => ingredient?.type === 'sauce')?.map((ingredient) => (
-                            <IngredientCard onClick={handleModal} {...ingredient} key={ingredient?._id}/>
+                            <IngredientCard onClick={() => {dispatch(openModal())}} {...ingredient} key={ingredient?._id}/>
                         ))}
                 </ul>
             </div>

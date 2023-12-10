@@ -1,4 +1,5 @@
 import {PayloadAction, createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {Ingredient} from "../../utils/types-ingredients";
 
 
 export const fetchIngredients = createAsyncThunk(
@@ -17,9 +18,15 @@ const initialState = {
 };
 
 export const ingredientsSlice = createSlice({
-    name: 'ingredients',
+    name: 'modal',
     initialState,
     reducers: {
+        openModal: (state, action) => {
+            state.isModalOpen = true;
+        },
+        closeModal: (state, action) => {
+            state.isModalOpen = false;
+        }
         // setIngredients: (state, { payload }: PayloadAction<Ingredient[]>) => {
         //     if (payload) {
         //         console.log('payload', payload)
@@ -43,5 +50,5 @@ export const ingredientsSlice = createSlice({
     },
 });
 
-// export const { setIngredients } = ingredientsSlice.actions;
+export const { openModal, closeModal } = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;
