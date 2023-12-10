@@ -1,4 +1,4 @@
-export interface TypesIngredients {
+export type Ingredient = {
     _id: string;
     name: string;
     type: string;
