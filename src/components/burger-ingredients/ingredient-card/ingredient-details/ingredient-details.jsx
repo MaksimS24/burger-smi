@@ -1,33 +1,41 @@
-import React from "react";
+import React, {useMemo} from "react";
 import styles from './ingredient-details.module.css'
-import {ingredients} from "../../../../utils/data";
+import {useSelector} from "react-redux";
+import {useTypedSelector} from "../../../../services/selectors/use-typed-selector";
 
 const IngredientDetails = ({id}) => {
 
-    const details = ingredients.find((ingredient) => ingredient._id === id);
+    const ingredients = useSelector((state) => state.ingredients.ingredients);
+
+    const details = useMemo(() =>
+        ingredients.data.find(
+            (ingredient) => ingredient._id === id),[id, ingredients]
+    );
+    console.log(id);
+
 
     return (
         <>
-            <ul className={styles.ulDetailsIngredient} key={details._id}>
+            <ul className={styles.ulDetailsIngredient} key={details?._id}>
                 <li>
-                    <img src={details.image_large} alt={'img'}/>
-                    <h2 className={"text text_type_main-medium mt-4 mb-8"}>{details.name}</h2>
+                    <img src={details?.image_large} alt={'img'}/>
+                    <h2 className={"text text_type_main-medium mt-4 mb-8"}>{details?.name}</h2>
                     <ul className={styles.ulDetails}>
                         <li className={styles.liCalories}>
                             <p className="text text_type_main-default">Калории, ккал</p>
-                            <span className="text text_type_digits-default">{details.calories}</span>
+                            <span className="text text_type_digits-default">{details?.calories}</span>
                         </li>
                         <li className={styles.liProteins}>
                             <p className="text text_type_main-default">Белки, г</p>
-                            <span className="text text_type_digits-default">{details.proteins}</span>
+                            <span className="text text_type_digits-default">{details?.proteins}</span>
                         </li>
                         <li className={styles.liFat}>
                             <p className="text text_type_main-default">Жиры, г</p>
-                            <span className="text text_type_digits-default">{details.fat}</span>
+                            <span className="text text_type_digits-default">{details?.fat}</span>
                         </li>
                         <li className={styles.liCarbohydrates}>
                             <p className="text text_type_main-default">Углеводы, г</p>
-                            <span className="text text_type_digits-default">{details.carbohydrates}</span>
+                            <span className="text text_type_digits-default">{details?.carbohydrates}</span>
                         </li>
                     </ul>
                 </li>

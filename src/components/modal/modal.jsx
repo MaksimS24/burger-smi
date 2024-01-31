@@ -1,18 +1,23 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect} from "react";
 import styles from './modal.module.css';
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "./modal-overlay/modal-overlay";
+import {useDispatch, useSelector} from "react-redux";
+import {closeModal} from "../../services/slice/ingredients-slice";
 
-const Modal = ({title, children, setIsOpen}) => {
+const Modal = ({title, children}) => {
+
+    const {isOpen} = useSelector((state) => state.modal);
+    const dispatch = useDispatch();
 
     //Закрытие модального окна по Esc
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const keyPress = useCallback(
         e => {
-            if (e.key === 'Escape' && setIsOpen) {
-                setIsOpen(false);
+            if (e.key === 'Escape' && isOpen) {
+                return dispatch(closeModal());
             }
-        },
-        [setIsOpen]
+        }
     );
 
     useEffect(
@@ -26,7 +31,9 @@ const Modal = ({title, children, setIsOpen}) => {
 
     return (
         <>
-            <div className={styles.backgroundModal} onClick={() => setIsOpen(false)}/>
+            <div className={styles.backgroundModal} onClick={() => {
+                dispatch(closeModal())
+            }}/>
 
             <div className={styles.centeredModal}>
                 <div className={styles.modal}>
@@ -37,7 +44,9 @@ const Modal = ({title, children, setIsOpen}) => {
                             {title}
                         </h1>
                         <button className={styles.closeButton}>
-                            <CloseIcon onClick={() => setIsOpen(false)} type="primary"/>
+                            <CloseIcon onClick={() => {
+                                dispatch(closeModal())
+                            }} type="primary"/>
                         </button>
 
                     </div>

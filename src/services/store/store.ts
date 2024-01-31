@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import ingredientsReducer from '../ingredients/ingredients-slice';
-import modalReducer from '../ingredients/ingredients-slice';
+import ingredientsReducer from '../slice/ingredients-slice';
+import {rootReducer} from '../slice/index';
 
 const ingredientsPersistConfig = {
     key: 'ingredients',
@@ -12,17 +12,14 @@ const ingredientsPersistConfig = {
 const persistedIngredientsReducer = persistReducer(ingredientsPersistConfig, ingredientsReducer);
 
 export const store = configureStore({
-    reducer: {
-        ingredients: ingredientsReducer,
-        modal: modalReducer,
-    }
-    // devTools: process.env.NODE_ENV !== 'production',
-    // middleware: (getDefaultMiddleware) =>
-    //     getDefaultMiddleware({
-    //         serializableCheck: false,
-    //     }),
+    reducer: rootReducer,
+    devTools: process.env.NODE_ENV !== 'production',
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 
-    
+
 });
 export const persistor = persistStore(store);
 

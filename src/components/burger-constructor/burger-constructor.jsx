@@ -14,6 +14,9 @@ const BurgerConstructor = () => {
 
     return (
         <div className={styles.mainBurgerConstructor}>
+            {isOpen && <Modal
+                children={<OrderDetails/>}
+                setIsOpen={setIsOpen}/>}
             <div className={styles.burgerConstructor}>
                 <ConstructorElement
                     type="top"
@@ -53,9 +56,6 @@ const BurgerConstructor = () => {
                         Оформить заказ
                     </Button>
                 </div>
-                {isOpen && <Modal
-                    children={<OrderDetails/>}
-                    setIsOpen={setIsOpen}/>}
             </div>
         </div>
     );
