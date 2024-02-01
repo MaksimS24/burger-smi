@@ -48,7 +48,7 @@ const BurgerIngredients = () => {
     useEffect(() => {
         dispatch(fetchIngredients());
     }, [dispatch]);
-    const handleModal = () => {
+    const handleModal = (id) => {
         dispatch(openModal())
         dispatch(setId(id))
     }
@@ -60,7 +60,7 @@ const BurgerIngredients = () => {
             {isOpen && <Modal
                 title={"Детали ингредиента"}
                 children={<IngredientDetails key={id} id={id}/>}
-                onClick={handleModal}/>
+                />
             }
 
             <h1 className="text text_type_main-large">
