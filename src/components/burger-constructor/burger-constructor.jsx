@@ -4,6 +4,7 @@ import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/
 import Modal from "../modal/modal";
 import OrderDetails from "./order-details/order-details";
 import {useSelector} from "react-redux";
+import BurgerConstructorElement from "./burger-constructor-element/burger-constructor-element";
 
 
 const BurgerConstructor = () => {
@@ -16,7 +17,7 @@ const BurgerConstructor = () => {
         <div className={styles.mainBurgerConstructor}>
             {isOpen && <Modal
                 children={<OrderDetails/>}
-                setIsOpen={setIsOpen}/>}
+                closeModal={setIsOpen}/>}
             <div className={styles.burgerConstructor}>
                 <ConstructorElement
                     type="top"
@@ -27,15 +28,12 @@ const BurgerConstructor = () => {
                 />
 
                 <ul className={styles.constructorElement}>
-                    {ingredients?.data?.map(ingredient =>
-                        <li className={styles.liConstructorElement} key={ingredient?._id}>
-                            <DragIcon type='primary'/>
-                            <ConstructorElement
-                                text={ingredient?.name}
-                                price={ingredient?.price}
-                                thumbnail={ingredient?.image}
-                            />
-                        </li>
+                    {ingredients?.data?.map((ingredient, i) =>
+                        <BurgerConstructorElement
+                            {...ingredient}
+                            key={ingredient._id}
+                            index={i}
+                        />
                     )}
                 </ul>
                 <ConstructorElement

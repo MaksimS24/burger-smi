@@ -1,11 +1,11 @@
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import styles from './burger-ingredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCard from "./ingredient-card/ingredient-card";
 import IngredientDetails from "./ingredient-card/ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import {useSelector} from "react-redux";
-import {openModal, setId} from "../../services/slice/ingredients-slice";
+import {closeModal, openModal, setId} from "../../services/slice/ingredients-slice";
 import {fetchIngredients} from "../../utils/api";
 import {useAppDispatch} from "../../hooks/use-app-redux";
 
@@ -35,7 +35,7 @@ const BurgerIngredients = () => {
 
     const dispatch = useAppDispatch();
     const ingredients = useSelector((state) => state.ingredients.ingredients);
-    const {isOpen} = useSelector((state) => state.modal);
+    const {isIngredientsOpen} = useSelector((state) => state.modal);
 
     const id = useMemo(() =>
         ingredients.data?.map((ingredientsId) => ingredientsId._id), [ingredients]
@@ -52,15 +52,18 @@ const BurgerIngredients = () => {
         dispatch(openModal())
         dispatch(setId(id))
     }
+    const closeIngredientsModal = () => {
+        dispatch(closeModal())
+    }
 
     return (
 
         <div className={styles.mainBurgerIngredients}>
 
-            {isOpen && <Modal
+            {isIngredientsOpen && <Modal
                 title={"Детали ингредиента"}
                 children={<IngredientDetails key={id} id={id}/>}
-                />
+                closeModal={closeIngredientsModal}/>
             }
 
             <h1 className="text text_type_main-large">

@@ -5,7 +5,7 @@ import {fetchIngredients} from "../../utils/api";
 export const initialState = {
     ingredients: [],
     status: 'idle',
-    isOpen: false,
+    isIngredientsOpen: false,
     id: null,
 };
 
@@ -13,11 +13,11 @@ export const ingredientsSlice = createSlice({
     name: 'modal',
     initialState,
     reducers: {
-        openModal: (state, action) => {
-            state.isOpen = true;
+        openModal: (state) => {
+            state.isIngredientsOpen = true;
         },
         closeModal: (state) => {
-            state.isOpen = !state.isOpen;
+            state.isIngredientsOpen = !state.isIngredientsOpen;
         },
         setId: (state, action) => {
                 state.id = action.payload;

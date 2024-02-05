@@ -1,0 +1,11 @@
+.liConstructorElement {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin: 6px 0px;
+    min-height: 80px;
+}
+
+.liConstructorElement svg {
+    margin-right: 8px;
+}

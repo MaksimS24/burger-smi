@@ -12,8 +12,6 @@ const IngredientDetails = () => {
         ingredients.data?.find(
             (ingredient) => ingredient?._id === id),[id, ingredients]
     );
-    console.log(details);
-
 
     return (
         <>
