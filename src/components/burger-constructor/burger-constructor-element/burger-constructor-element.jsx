@@ -69,7 +69,12 @@ const BurgerConstructorElement = ({name, price, image, _id, index}) => {
     drag(drop(ref))
 
     return (
-        <li className={styles.liConstructorElement} style={{ opacity }} key={_id} data-handler-id={handlerId}>
+        <li className={styles.liConstructorElement}
+            key={_id}
+            style={{ opacity }}
+            data-handler-id={handlerId}
+            ref={drop}
+        >
             <DragIcon type='primary'/>
             <ConstructorElement
                 text={name}

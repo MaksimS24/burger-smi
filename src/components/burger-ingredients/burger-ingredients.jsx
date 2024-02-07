@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import {closeModal, openModal, setId} from "../../services/slice/ingredients-slice";
 import {fetchIngredients} from "../../utils/api";
 import {useAppDispatch} from "../../hooks/use-app-redux";
+import {useDrag} from "react-dnd";
 
 const BurgerIngredients = () => {
 
@@ -41,10 +42,6 @@ const BurgerIngredients = () => {
         ingredients.data?.map((ingredientsId) => ingredientsId._id), [ingredients]
     )
 
-    // const id = useSelector(selectIngredientsId, shallowEqual);
-    // console.log(id);
-
-
     useEffect(() => {
         dispatch(fetchIngredients());
     }, [dispatch]);
@@ -55,6 +52,7 @@ const BurgerIngredients = () => {
     const closeIngredientsModal = () => {
         dispatch(closeModal())
     }
+
 
     return (
 
