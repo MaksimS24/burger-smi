@@ -8,6 +8,7 @@ import BurgerConstructorElement from "./burger-constructor-element/burger-constr
 import {useDrop} from "react-dnd";
 import {useAppDispatch} from "../../hooks/use-app-redux";
 import {addIngredients} from "../../services/slice/constructor-slice";
+import {Ingredient} from "../../utils/types/types-ingredients";
 
 
 const BurgerConstructor = () => {
@@ -17,9 +18,9 @@ const BurgerConstructor = () => {
     const dispatch = useAppDispatch();
     const ingredients = useSelector((state) => state.ingredients.ingredients);
     const bun = useSelector((state) => state.constructorIngredients.bun);
-    const id = useMemo(() =>
-        ingredients.data?.map((ingredientsId) => ingredientsId._id), [ingredients]
-    );
+    const bunArray = useMemo(() =>
+        ingredients.data?.filter((ingredientsId) => ingredientsId.type === 'bun'), [ingredients]);
+    console.log(bunArray);
 
     const [{isHover}, dropIngredients] = useDrop(() => ({
         accept: "ingredients",
@@ -27,17 +28,16 @@ const BurgerConstructor = () => {
             isHover: monitor.isOver(),
         }),
         drop(_item) {
-            dispatch(addIngredients(id));
+            dispatch(addIngredients(bunArray));
         },
     }));
-    console.log(dropIngredients);
 
     return (
         <div className={styles.mainBurgerConstructor} ref={dropIngredients} style={{isHover}}>
             {isOpen &&
                 <Modal
-                children={<OrderDetails/>}
-                closeModal={setIsOpen}
+                    children={<OrderDetails/>}
+                    closeModal={setIsOpen}
                 />
             }
 
@@ -45,9 +45,9 @@ const BurgerConstructor = () => {
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={`${bun.name} (верх)`}
-                    price={bun.price}
-                    thumbnail={bun.image_mobile}
+                    text={`${bun?.name} (верх)`}
+                    price={bun?.price}
+                    thumbnail={bun?.image_mobile}
                 />
 
                 <ul className={styles.constructorElement}>
@@ -62,9 +62,9 @@ const BurgerConstructor = () => {
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${bun.name} (низ)`}
-                    price={bun.price}
-                    thumbnail={bun.image_mobile}
+                    text={`${bun?.name} (низ)`}
+                    price={bun?.price}
+                    thumbnail={bun?.image_mobile}
                 />
             </div>
             <div className={styles.check}>

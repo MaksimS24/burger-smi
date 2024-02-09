@@ -6,7 +6,7 @@ import {useDrag, useDrop} from "react-dnd";
 const IngredientCard = ({name, price, image, onClick, _id}) => {
 
     const [{isDrag}, dropTarget] = useDrag(() => ({
-        type: 'ingredient',
+        type: 'ingredients',
         item: {_id},
         collect: monitor => ({
             isDrag: monitor.isDragging()
@@ -17,10 +17,10 @@ const IngredientCard = ({name, price, image, onClick, _id}) => {
         <li
             className={styles.liIngredients}
             onClick={() => onClick(_id)}
-            ref={dropTarget}
         >
             <img src={image}
                  alt={'burger-ingredient-card'}
+                 ref={dropTarget}
             />
             <div className={'text text_type_digits-default'}>{price}
                 <CurrencyIcon type={"primary"}/>

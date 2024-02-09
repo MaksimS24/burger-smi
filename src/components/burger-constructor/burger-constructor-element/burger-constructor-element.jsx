@@ -1,7 +1,7 @@
 import styles from "../burger-constructor.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useRef} from "react";
-import { useDrag, useDrop } from 'react-dnd';
+import {useDrag, useDrop} from 'react-dnd';
 import {useAppDispatch} from "../../../hooks/use-app-redux";
 import {sortIngredients} from "../../../services/slice/constructor-slice";
 
@@ -14,7 +14,7 @@ const BurgerConstructorElement = ({name, price, image, _id, index}) => {
     }
 
     const ref = useRef(null)
-    const [{ handlerId }, drop] = useDrop({
+    const [{handlerId}, drop] = useDrop({
         accept: ItemTypes.CARD,
         collect(monitor) {
             return {
@@ -56,10 +56,10 @@ const BurgerConstructorElement = ({name, price, image, _id, index}) => {
             item.index = hoverIndex
         },
     })
-    const [{ isDragging }, drag] = useDrag({
+    const [{isDragging}, drag] = useDrag({
         type: ItemTypes.CARD,
         item: () => {
-            return { _id, index }
+            return {_id, index}
         },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
@@ -71,12 +71,12 @@ const BurgerConstructorElement = ({name, price, image, _id, index}) => {
     return (
         <li className={styles.liConstructorElement}
             key={_id}
-            style={{ opacity }}
+            style={{opacity}}
             data-handler-id={handlerId}
-            ref={drop}
         >
             <DragIcon type='primary'/>
             <ConstructorElement
+                ref={drop}
                 text={name}
                 price={price}
                 thumbnail={image}
