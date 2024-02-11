@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {forwardRef, useMemo, useState} from "react";
 import styles from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
@@ -8,39 +8,39 @@ import BurgerConstructorElement from "./burger-constructor-element/burger-constr
 import {useDrop} from "react-dnd";
 import {useAppDispatch} from "../../hooks/use-app-redux";
 import {addIngredients} from "../../services/slice/constructor-slice";
-import {Ingredient} from "../../utils/types/types-ingredients";
-
+import {orderCloseModal, orderOpenModal} from "../../services/slice/order-slice";
 
 const BurgerConstructor = () => {
 
-    const [isOpen, setIsOpen] = useState(false);
-
     const dispatch = useAppDispatch();
     const ingredients = useSelector((state) => state.ingredients.ingredients);
+    const {isOrderOpen} = useSelector((state) => state.order);
     const bun = useSelector((state) => state.constructorIngredients.bun);
-    const bunArray = useMemo(() =>
-        ingredients.data?.filter((ingredientsId) => ingredientsId.type === 'bun'), [ingredients]);
-    console.log(bunArray);
+    const mainAndSauce = useSelector((state) => state.constructorIngredients.mainAndSauce);
 
-    const [{isHover}, dropIngredients] = useDrop(() => ({
-        accept: "ingredients",
+    const [{isHover}, dropIngredients] = useDrop({
+        accept: 'ingredients',
+        item: {},
         collect: monitor => ({
             isHover: monitor.isOver(),
         }),
-        drop(_item) {
-            dispatch(addIngredients(bunArray));
+        drop: (item) => {
+            dispatch(addIngredients(item));
         },
-    }));
+    });
+
+    const openModalOrder = () => {
+        dispatch(orderOpenModal())
+    }
+    const closeModalOrder = () => {
+        dispatch(orderCloseModal())
+    }
 
     return (
-        <div className={styles.mainBurgerConstructor} ref={dropIngredients} style={{isHover}}>
-            {isOpen &&
-                <Modal
-                    children={<OrderDetails/>}
-                    closeModal={setIsOpen}
-                />
-            }
-
+        <div className={styles.mainBurgerConstructor}
+             ref={dropIngredients}
+             style={{isHover}}
+        >
             <div className={styles.burgerConstructor}>
                 <ConstructorElement
                     type="top"
@@ -51,7 +51,7 @@ const BurgerConstructor = () => {
                 />
 
                 <ul className={styles.constructorElement}>
-                    {ingredients?.data?.map((ingredient, i) =>
+                    {mainAndSauce?.map((ingredient, i) =>
                         <BurgerConstructorElement
                             {...ingredient}
                             key={ingredient._id}
@@ -67,12 +67,18 @@ const BurgerConstructor = () => {
                     thumbnail={bun?.image_mobile}
                 />
             </div>
+
+            {isOrderOpen && <Modal
+                children={<OrderDetails/>}
+                closeModal={closeModalOrder}
+            />}
+
             <div className={styles.check}>
                 <div className={styles.pay}>
                     <p className="text text_type_digits-medium mr-2">0</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <div onClick={() => setIsOpen(true)}>
+                <div onClick={openModalOrder}>
                     <Button htmlType="button" type="primary" size="large">
                         Оформить заказ
                     </Button>

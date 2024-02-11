@@ -6,6 +6,7 @@ import {rootReducer} from '../slice/index';
 import constructorIngredients from '../slice/constructor-slice';
 import ingredients from '../slice/ingredients-slice';
 import modal from '../slice/ingredients-slice';
+import order from'../slice/order-slice';
 
 const ingredientsPersistConfig = {
     key: 'ingredients',
@@ -15,7 +16,7 @@ const ingredientsPersistConfig = {
 const persistedIngredientsReducer = persistReducer(ingredientsPersistConfig, ingredientsReducer);
 
 export const store = configureStore({
-    reducer: {ingredients, modal, constructorIngredients},
+    reducer: {ingredients, modal, constructorIngredients, order},
     devTools: process.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

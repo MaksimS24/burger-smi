@@ -1,13 +1,13 @@
-import React from "react";
+import React, {useRef} from "react";
 import styles from "./ingredient-card.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDrag, useDrop} from "react-dnd";
+import {useDrag} from "react-dnd";
 
-const IngredientCard = ({name, price, image, onClick, _id}) => {
+const IngredientCard = ({name, price, image, image_mobile, onClick, _id, type}) => {
 
     const [{isDrag}, dropTarget] = useDrag(() => ({
         type: 'ingredients',
-        item: {_id},
+        item: {name, price, image_mobile, type},
         collect: monitor => ({
             isDrag: monitor.isDragging()
         }),
@@ -17,6 +17,7 @@ const IngredientCard = ({name, price, image, onClick, _id}) => {
         <li
             className={styles.liIngredients}
             onClick={() => onClick(_id)}
+
         >
             <img src={image}
                  alt={'burger-ingredient-card'}
