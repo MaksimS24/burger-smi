@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import ingredientsReducer from '../slice/ingredients-slice';
-import {rootReducer} from '../slice/index';
 import constructorIngredients from '../slice/constructor-slice';
 import ingredients from '../slice/ingredients-slice';
 import modal from '../slice/ingredients-slice';

@@ -19,11 +19,11 @@
 }
 
 .liConstructorElement {
-    display: flex;
     align-items: center;
     justify-content: end;
     margin: 6px 0px;
     min-height: 80px;
+    list-style-type: none;
 }
 
 .liConstructorElement svg {
@@ -41,4 +41,8 @@
 .pay {
     display: flex;
     align-items: center;
+}
+
+.buttonOn {
+    animation: fadeIn .1.5s normal;
 }

@@ -8,22 +8,75 @@ import {deleteIngredients, sortIngredients} from "../../../services/slice/constr
 const BurgerConstructorElement = ({name, price, image_mobile, _id, index}) => {
 
     const dispatch = useAppDispatch();
+    const refConstructorElement = useRef(null);
 
     const deleteMainAndSauce = useCallback(() => {
-        dispatch(deleteIngredients())
+        dispatch(deleteIngredients(_id))
     })
+
+    const cardDrop = {_id, index};
+
+    const [, drag] = useDrag({
+        type: 'burgerConstructor',
+        item: cardDrop,
+        collect: (monitor) => {
+            const result = {
+                dataId: monitor.getHandlerId(),
+                isDragging: monitor.isDragging(),
+            }
+            return result
+        },
+    });
+
+    const [{dataId}, drop] = useDrop({
+        accept: 'burgerConstructor',
+        collect(monitor) {
+            return {
+                dataId: monitor.getHandlerId(),
+            }
+        },
+        hover(item, monitor) {
+            if (!refConstructorElement.current) {
+                return
+            }
+            const dragIndex = item.index
+            const dropIndex = index
+            if (dragIndex === dropIndex) {
+                return
+            }
+            const hoverBoundingRect = refConstructorElement.current?.getBoundingClientRect()
+            const hoverMiddleY =
+                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+            const clientOffset = monitor.getClientOffset()
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top
+            if (dragIndex < dropIndex && hoverClientY < hoverMiddleY) {
+                return
+            }
+            if (dragIndex > dropIndex && hoverClientY > hoverMiddleY) {
+                return
+            }
+
+            dispatch(sortIngredients({dragIndex, dropIndex}))
+            item.index = dropIndex
+        },
+    })
+    drag(drop(refConstructorElement));
 
     return (
         <li className={styles.liConstructorElement}
             key={_id}
+            data-handler-id={dataId}
         >
-            <DragIcon type='primary'/>
-            <ConstructorElement
-                text={name}
-                price={price}
-                thumbnail={image_mobile}
-                handleClose={deleteMainAndSauce}
-            />
+            <div ref={refConstructorElement}>
+                <DragIcon type='primary'/>
+                <ConstructorElement
+                    text={name}
+                    price={price}
+                    thumbnail={image_mobile}
+                    handleClose={deleteMainAndSauce}
+                    extraClass={drop}
+                />
+            </div>
         </li>
     );
 };

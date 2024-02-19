@@ -1,12 +1,10 @@
 import React, {useMemo} from "react";
 import styles from './ingredient-details.module.css'
 import {useSelector} from "react-redux";
-import {useTypedSelector} from "../../../../services/selectors/use-typed-selector";
 
-const IngredientDetails = () => {
+const IngredientDetails = ({id}) => {
 
     const ingredients = useSelector((state) => state.ingredients.ingredients);
-    const id = useSelector((state) => state.ingredients.id)
 
     const details = useMemo(() =>
         ingredients.data?.find(

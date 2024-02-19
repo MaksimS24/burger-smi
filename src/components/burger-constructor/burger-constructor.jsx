@@ -1,4 +1,4 @@
-import React, {forwardRef, useMemo, useState} from "react";
+import React, {forwardRef, useEffect, useMemo, useState} from "react";
 import styles from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
@@ -13,10 +13,11 @@ import {orderCloseModal, orderOpenModal} from "../../services/slice/order-slice"
 const BurgerConstructor = () => {
 
     const dispatch = useAppDispatch();
-    const ingredients = useSelector((state) => state.ingredients.ingredients);
     const {isOrderOpen} = useSelector((state) => state.order);
     const bun = useSelector((state) => state.constructorIngredients.bun);
     const mainAndSauce = useSelector((state) => state.constructorIngredients.mainAndSauce);
+    const ingredientsAdd = useSelector((state) => state.constructorIngredients.ingredientsAdd);
+
 
     const [{isHover}, dropIngredients] = useDrop({
         accept: 'ingredients',
@@ -28,6 +29,16 @@ const BurgerConstructor = () => {
             dispatch(addIngredients(item));
         },
     });
+
+    const buttonWork = mainAndSauce && ingredientsAdd ? null : styles.buttonOn;
+    const statusButton = null
+        ? 'Оформляем заказ'
+        : buttonWork ? 'Добавьте ингредиент' : 'Оформить заказ'
+
+    const calculate = useMemo(() =>
+            [...mainAndSauce, {...bun}, {...bun}].reduce((total, amount) =>
+                total + (amount.price === undefined ? 0 : amount.price), 0),
+        [mainAndSauce, bun]);
 
     const openModalOrder = () => {
         dispatch(orderOpenModal())
@@ -42,29 +53,31 @@ const BurgerConstructor = () => {
              style={{isHover}}
         >
             <div className={styles.burgerConstructor}>
+
                 <ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${bun?.name} (верх)`}
                     price={bun?.price}
-                    thumbnail={bun?.image_mobile}
+                    thumbnail={bun?.image_mobile || '/up-chevron.png'}
                 />
 
                 <ul className={styles.constructorElement}>
-                    {mainAndSauce?.map((ingredient, i) =>
+                    {mainAndSauce?.map((ingredient, index) =>
                         <BurgerConstructorElement
                             {...ingredient}
-                            key={ingredient._id}
-                            index={i}
+                            key={index}
+                            index={index}
                         />
                     )}
                 </ul>
+
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
                     text={`${bun?.name} (низ)`}
                     price={bun?.price}
-                    thumbnail={bun?.image_mobile}
+                    thumbnail={bun?.image_mobile || '/down-chevron.png'}
                 />
             </div>
 
@@ -75,12 +88,17 @@ const BurgerConstructor = () => {
 
             <div className={styles.check}>
                 <div className={styles.pay}>
-                    <p className="text text_type_digits-medium mr-2">0</p>
+                    <p className="text text_type_digits-medium mr-2">{calculate ? calculate : 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
                 <div onClick={openModalOrder}>
-                    <Button htmlType="button" type="primary" size="large">
-                        Оформить заказ
+                    <Button
+                        disabled={buttonWork}
+                        htmlType="button"
+                        type="primary"
+                        size="large"
+                    >
+                        {statusButton}
                     </Button>
                 </div>
             </div>

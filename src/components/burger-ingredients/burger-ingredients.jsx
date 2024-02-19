@@ -8,7 +8,6 @@ import {useSelector} from "react-redux";
 import {closeModal, openModal, setId} from "../../services/slice/ingredients-slice";
 import {fetchIngredients} from "../../utils/api";
 import {useAppDispatch} from "../../hooks/use-app-redux";
-import {useDrag} from "react-dnd";
 
 const BurgerIngredients = () => {
 
@@ -37,10 +36,7 @@ const BurgerIngredients = () => {
     const dispatch = useAppDispatch();
     const ingredients = useSelector((state) => state.ingredients.ingredients);
     const {isIngredientsOpen} = useSelector((state) => state.modal);
-
-    const id = useMemo(() =>
-        ingredients.data?.map((ingredientsId) => ingredientsId._id), [ingredients]
-    )
+    const id = useSelector((state) => state.ingredients.id)
 
     useEffect(() => {
         dispatch(fetchIngredients());
@@ -53,14 +49,13 @@ const BurgerIngredients = () => {
         dispatch(closeModal())
     }
 
-
     return (
 
         <div className={styles.mainBurgerIngredients}>
 
             {isIngredientsOpen && <Modal
                 title={"Детали ингредиента"}
-                children={<IngredientDetails key={id} id={id}/>}
+                children={<IngredientDetails id={id}/>}
                 closeModal={closeIngredientsModal}/>
             }
 
@@ -88,7 +83,10 @@ const BurgerIngredients = () => {
                 <h2 ref={bunRef}>Булки</h2>
                 <ul className={styles.ulIngredient}>
                     {ingredients.data?.filter((ingredient) => ingredient.type === 'bun')?.map((ingredient) => (
-                        <IngredientCard onClick={handleModal} {...ingredient} key={ingredient?._id}/>
+                        <IngredientCard
+                            onClick={handleModal}
+                            {...ingredient}
+                            key={ingredient?._id}/>
                     ))}
                 </ul>
 
@@ -96,7 +94,10 @@ const BurgerIngredients = () => {
                 <h2 ref={mainRef}>Начинки</h2>
                 <ul className={styles.ulIngredient}>
                     {ingredients.data?.filter((ingredient) => ingredient.type === 'main')?.map((ingredient) => (
-                        <IngredientCard onClick={handleModal} {...ingredient} key={ingredient?._id}/>
+                        <IngredientCard
+                            onClick={handleModal}
+                            {...ingredient}
+                            key={ingredient?._id}/>
                     ))}
                 </ul>
 
@@ -104,7 +105,10 @@ const BurgerIngredients = () => {
                 <h2 ref={sauceRef}>Соусы</h2>
                 <ul className={styles.ulIngredient}>
                     {ingredients.data?.filter((ingredient) => ingredient.type === 'sauce')?.map((ingredient) => (
-                        <IngredientCard onClick={handleModal} {...ingredient} key={ingredient?._id}/>
+                        <IngredientCard
+                            onClick={handleModal}
+                            {...ingredient}
+                            key={ingredient?._id}/>
                     ))}
                 </ul>
             </div>

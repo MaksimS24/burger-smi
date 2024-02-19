@@ -9,13 +9,14 @@ interface bunConstructor {
 }
 
 interface constructor {
-    ingredients: [],
-    bun: bunConstructor | Ingredient,
+    ingredientsConstructor: [] | Ingredient[],
+    bun: bunConstructor | Ingredient[],
     mainAndSauce: Ingredient[],
+    ingredientsAdd: boolean,
 }
 
 export const initialState: constructor = {
-    ingredients: [],
+    ingredientsConstructor: [],
     bun: {
         name: 'Выберете булку',
         price: 0,
@@ -23,6 +24,7 @@ export const initialState: constructor = {
         _id: '',
     },
     mainAndSauce: [],
+    ingredientsAdd: false,
 }
 
 export const constructorSlice = createSlice({
@@ -30,23 +32,24 @@ export const constructorSlice = createSlice({
     initialState,
     reducers: {
         addIngredients: (state, action: PayloadAction<Ingredient>) => {
-            if (action.payload.type === 'bun') {
-                state.bun = action.payload
+            if (action.payload.type === 'bun' || action.payload._id === 'id') {
+                state.bun = {...action.payload};
+                state.ingredientsAdd = true
             } else {
-                state.mainAndSauce.unshift(action.payload)
+                state.mainAndSauce.unshift(action.payload);
             }
         },
 
-        sortIngredients: (state, action) => {
-            state.mainAndSauce[action.payload.hoverIndex] = state.mainAndSauce[action.payload.dragIndex];
-            state.mainAndSauce[action.payload.dragIndex] = state.mainAndSauce[action.payload.hoverIndex];
+        sortIngredients: (state, action: PayloadAction<{ dragIndex: number; dropIndex: number }>) => {
+            const sort = state.mainAndSauce[action.payload.dropIndex]
+            state.mainAndSauce[action.payload.dropIndex] = state.mainAndSauce[action.payload.dragIndex];
+            state.mainAndSauce[action.payload.dragIndex] = sort;
         },
 
         deleteIngredients: (state, action) => {
-            state.mainAndSauce = [...state.mainAndSauce.filter(({_id}) => _id != action.payload)]
+            state.mainAndSauce = [...state.mainAndSauce].filter(({_id}) => _id !== action.payload)
         },
     },
-
 });
 
 export const {addIngredients, sortIngredients, deleteIngredients} = constructorSlice.actions;
