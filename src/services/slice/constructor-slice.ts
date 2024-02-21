@@ -9,8 +9,8 @@ interface bunConstructor {
 }
 
 interface constructor {
-    ingredientsConstructor: [] | Ingredient[],
-    bun: bunConstructor | Ingredient[],
+    ingredientsConstructor: [] | Ingredient,
+    bun: bunConstructor | Ingredient,
     mainAndSauce: Ingredient[],
     ingredientsAdd: boolean,
 }
@@ -31,13 +31,16 @@ export const constructorSlice = createSlice({
     name: 'constructorIngredients',
     initialState,
     reducers: {
-        addIngredients: (state, action: PayloadAction<Ingredient>) => {
-            if (action.payload.type === 'bun' || action.payload._id === 'id') {
-                state.bun = {...action.payload};
-                state.ingredientsAdd = true
-            } else {
-                state.mainAndSauce.unshift(action.payload);
-            }
+        addIngredients: {
+            reducer(state, action: PayloadAction<Ingredient>) {
+                if (action.payload.type === 'bun') {
+                    state.bun = action.payload;
+                    state.ingredientsAdd = true
+                } else {
+                    state.mainAndSauce = [action.payload, ...state.mainAndSauce];
+                }
+            },
+            prepare: (payload: Ingredient) => ({payload: {...payload, _uuid: nanoid()}})
         },
 
         sortIngredients: (state, action: PayloadAction<{ dragIndex: number; dropIndex: number }>) => {

@@ -22,7 +22,7 @@ const BurgerConstructorElement = ({name, price, image_mobile, _id, index}) => {
         collect: (monitor) => {
             const result = {
                 dataId: monitor.getHandlerId(),
-                isDragging: monitor.isDragging(),
+                isDragging: monitor.isDragging() ? 1 : 1,
             }
             return result
         },

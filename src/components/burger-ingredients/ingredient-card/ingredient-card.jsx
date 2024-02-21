@@ -17,16 +17,15 @@ const IngredientCard = ({name, price, image, image_mobile, onClick, _id, type}) 
     }));
 
     const ingredients = useSelector((state) => state.constructorIngredients.mainAndSauce);
+    const bun = useSelector((state) => state.constructorIngredients.bun);
 
-    let counter = 0;
-    ingredients.data?.map(ingredient => {
-        if (ingredient._id === _id) {
-            counter += 1;
-        }
-        return counter
-    })
-    console.log(counter)
+    const counter = useMemo(() => {
+        return bun, ingredients.filter((ingredient) =>
+            ingredient._id === cardDrag._id || bun._id === cardDrag._id).length
+    }, [ingredients])
 
+
+    console.log(counter);
 
     return (
         <li className={styles.liIngredients}

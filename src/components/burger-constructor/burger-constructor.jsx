@@ -66,7 +66,7 @@ const BurgerConstructor = () => {
                     {mainAndSauce?.map((ingredient, index) =>
                         <BurgerConstructorElement
                             {...ingredient}
-                            key={index}
+                            key={ingredient._uuid}
                             index={index}
                         />
                     )}
