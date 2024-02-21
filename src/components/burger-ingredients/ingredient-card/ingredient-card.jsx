@@ -19,11 +19,10 @@ const IngredientCard = ({name, price, image, image_mobile, onClick, _id, type}) 
     const ingredients = useSelector((state) => state.constructorIngredients.mainAndSauce);
     const bun = useSelector((state) => state.constructorIngredients.bun);
 
-    const counter = useMemo(() => {
-        return bun, ingredients.filter((ingredient) =>
-            ingredient._id === cardDrag._id || bun._id === cardDrag._id).length
-    }, [ingredients])
-
+    let allIngredients = [].concat(ingredients, bun, bun);
+    const counter = useMemo (() => {
+        return allIngredients. filter( (ingredient) => ingredient._id === cardDrag._id). length
+    }, [allIngredients])
 
     console.log(counter);
 
