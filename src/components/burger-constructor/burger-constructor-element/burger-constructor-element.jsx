@@ -1,20 +1,28 @@
-import styles from "../burger-constructor.module.css";
+import styles from "./burger-constructor-element.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useCallback, useRef} from "react";
 import {useDrag, useDrop} from 'react-dnd';
 import {useAppDispatch} from "../../../hooks/use-app-redux";
 import {deleteIngredients, sortIngredients} from "../../../services/slice/constructor-slice";
+import {ingredientConstructorPropsTypes} from "../../../utils/types/props-types";
+import IngredientCard from "../../burger-ingredients/ingredient-card/ingredient-card";
 
-const BurgerConstructorElement = ({name, price, image_mobile, _id, index}) => {
+const BurgerConstructorElement = ({ingredientData, index}) => {
+
+    IngredientCard.propTypes = {
+        ingredientData: ingredientConstructorPropsTypes.isRequired,
+    }
+
+    const {name, price, image_mobile, _uuid} = ingredientData;
 
     const dispatch = useAppDispatch();
     const refConstructorElement = useRef(null);
 
     const deleteMainAndSauce = useCallback(() => {
-        dispatch(deleteIngredients(_id))
+        dispatch(deleteIngredients(_uuid))
     })
 
-    const cardDrop = {_id, index};
+    const cardDrop = {_uuid, index};
 
     const [, drag] = useDrag({
         type: 'burgerConstructor',
@@ -64,13 +72,13 @@ const BurgerConstructorElement = ({name, price, image_mobile, _id, index}) => {
 
     return (
         <li className={styles.liConstructorElement}
-            key={_id}
+            key={_uuid}
             data-handler-id={dataId}
         >
             <div ref={refConstructorElement}>
                 <DragIcon type='primary'/>
                 <ConstructorElement
-                    text={name}
+                    text={name || 'Начинки, соусы'}
                     price={price}
                     thumbnail={image_mobile}
                     handleClose={deleteMainAndSauce}

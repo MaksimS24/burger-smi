@@ -1,7 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {fetchIngredients} from "../../utils/api";
 
-
 export const initialState = {
     ingredients: [],
     status: 'idle',

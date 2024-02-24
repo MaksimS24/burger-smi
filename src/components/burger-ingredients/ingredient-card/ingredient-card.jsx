@@ -1,34 +1,43 @@
-import React, {useMemo, useRef} from "react";
+import React, {useMemo} from "react";
 import styles from "./ingredient-card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag} from "react-dnd";
 import {useSelector} from "react-redux";
+import {ingredientPropsTypes} from "../../../utils/types/props-types";
+import PropTypes from "prop-types";
 
-const IngredientCard = ({name, price, image, image_mobile, onClick, _id, type}) => {
+const IngredientCard = ({ingredientData, onClick}) => {
 
-    const cardDrag = {name, price, image_mobile, type, _id}
+    IngredientCard.propTypes = {
+        ingredientData: ingredientPropsTypes.isRequired,
+        onClick: PropTypes.func.isRequired
+    }
+
+    const {name, price, image} = ingredientData;
 
     const [{isDrag}, dragTarget] = useDrag(() => ({
         type: 'ingredients',
-        item: cardDrag,
+        item: ingredientData,
         collect: monitor => ({
             isDrag: monitor.isDragging()
         }),
     }));
 
-    const ingredients = useSelector((state) => state.constructorIngredients.mainAndSauce);
+    const mainAndSauce = useSelector((state) => state.constructorIngredients.mainAndSauce);
     const bun = useSelector((state) => state.constructorIngredients.bun);
 
-    let allIngredients = [].concat(ingredients, bun, bun);
-    const counter = useMemo (() => {
-        return allIngredients. filter( (ingredient) => ingredient._id === cardDrag._id). length
-    }, [allIngredients])
+    let allIngredients = [].concat(mainAndSauce, bun, bun);
+    const counter = useMemo( () => {
+        return allIngredients.filter((ingredient) => ingredient._id === ingredientData._id).length
+    }, [allIngredients]);
 
-    console.log(counter);
+    const handleClick = () => {
+        onClick(ingredientData._id);
+    };
 
     return (
         <li className={styles.liIngredients}
-            onClick={() => onClick(_id)}
+            onClick={handleClick}
             style={{isDrag}}
         >
             {counter ? <Counter count={counter} size={"default"} extraClass={styles.count}/> : null}
@@ -43,8 +52,10 @@ const IngredientCard = ({name, price, image, image_mobile, onClick, _id, type}) 
             <div className={'text text_type_main-default'}>
                 {name}
             </div>
+
         </li>
     );
+
 };
 
 export default IngredientCard;

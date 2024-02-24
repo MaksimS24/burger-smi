@@ -50,7 +50,7 @@ export const constructorSlice = createSlice({
         },
 
         deleteIngredients: (state, action) => {
-            state.mainAndSauce = [...state.mainAndSauce].filter(({_id}) => _id !== action.payload)
+            state.mainAndSauce = [...state.mainAndSauce].filter(({_uuid}) => _uuid !== action.payload)
         },
     },
 });

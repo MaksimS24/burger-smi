@@ -8,7 +8,7 @@ import BurgerConstructorElement from "./burger-constructor-element/burger-constr
 import {useDrop} from "react-dnd";
 import {useAppDispatch} from "../../hooks/use-app-redux";
 import {addIngredients} from "../../services/slice/constructor-slice";
-import {orderCloseModal, orderOpenModal} from "../../services/slice/order-slice";
+import {orderCloseModal, orderOpenModal, pushOrder} from "../../services/slice/order-slice";
 
 const BurgerConstructor = () => {
 
@@ -17,6 +17,7 @@ const BurgerConstructor = () => {
     const bun = useSelector((state) => state.constructorIngredients.bun);
     const mainAndSauce = useSelector((state) => state.constructorIngredients.mainAndSauce);
     const ingredientsAdd = useSelector((state) => state.constructorIngredients.ingredientsAdd);
+    const numberOrder = useSelector((state) => state.order.dataOrder.orderNumber)
 
 
     const [{isHover}, dropIngredients] = useDrop({
@@ -31,18 +32,21 @@ const BurgerConstructor = () => {
     });
 
     const buttonWork = mainAndSauce && ingredientsAdd ? null : styles.buttonOn;
-    const statusButton = null
-        ? 'Оформляем заказ'
-        : buttonWork ? 'Добавьте ингредиент' : 'Оформить заказ'
+    const statusOrder = null
+        ? 'Оформляем Ваш заказ'
+        : buttonWork ? 'Соберите бургер' : 'Оформить заказ'
 
     const calculate = useMemo(() =>
             [...mainAndSauce, {...bun}, {...bun}].reduce((total, amount) =>
                 total + (amount.price === undefined ? 0 : amount.price), 0),
         [mainAndSauce, bun]);
 
-    const openModalOrder = () => {
-        dispatch(orderOpenModal())
+    const sendOrder = () => {
+        const ingredientsId = [...mainAndSauce, {...bun}].map(ingredientId => ingredientId._id);
+        const orderData = {ingredientsId};
+        dispatch(pushOrder(orderData));
     }
+
     const closeModalOrder = () => {
         dispatch(orderCloseModal())
     }
@@ -63,9 +67,9 @@ const BurgerConstructor = () => {
                 />
 
                 <ul className={styles.constructorElement}>
-                    {mainAndSauce?.map((ingredient, index) =>
+                    {mainAndSauce.map((ingredient, index) =>
                         <BurgerConstructorElement
-                            {...ingredient}
+                            ingredientData={ingredient}
                             key={ingredient._uuid}
                             index={index}
                         />
@@ -81,27 +85,27 @@ const BurgerConstructor = () => {
                 />
             </div>
 
-            {isOrderOpen && <Modal
-                children={<OrderDetails/>}
-                closeModal={closeModalOrder}
-            />}
-
             <div className={styles.check}>
                 <div className={styles.pay}>
                     <p className="text text_type_digits-medium mr-2">{calculate ? calculate : 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <div onClick={openModalOrder}>
+                <div>
                     <Button
                         disabled={buttonWork}
                         htmlType="button"
                         type="primary"
                         size="large"
+                        onClick={sendOrder}
                     >
-                        {statusButton}
+                        {statusOrder}
                     </Button>
                 </div>
             </div>
+            {isOrderOpen && <Modal
+                children={<OrderDetails _uuid={numberOrder}/>}
+                closeModal={closeModalOrder}
+            />}
         </div>
     );
 }

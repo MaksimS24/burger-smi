@@ -1,16 +1,23 @@
 import React from "react";
 import styles from "./order-details.module.css";
-import {ReactSVG} from "react-svg";
-
 // Image
+import {ReactSVG} from "react-svg";
 import imageDone from '../../../images/image-done.svg'
+import IngredientCard from "../../burger-ingredients/ingredient-card/ingredient-card";
+import {ingredientConstructorPropsTypes} from "../../../utils/types/props-types";
+import PropTypes from "prop-types";
 
 
-const OrderDetails = () => {
-    return(
+const OrderDetails = ({_uuid}) => {
+
+    OrderDetails.propTypes = {
+        _uuid: PropTypes.number.isRequired,
+    }
+
+    return (
         <div className={styles.mainOrder}>
 
-            <h2 className='text text_type_digits-large mt-10'>034536</h2>
+            <h2 className='text text_type_digits-large mt-10'>{_uuid}</h2>
 
             <p className='text text_type_main-medium mt-8'>идентификатор заказа</p>
 

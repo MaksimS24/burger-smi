@@ -36,7 +36,7 @@ const BurgerIngredients = () => {
     const dispatch = useAppDispatch();
     const ingredients = useSelector((state) => state.ingredients.ingredients);
     const {isIngredientsOpen} = useSelector((state) => state.modal);
-    const id = useSelector((state) => state.ingredients.id)
+    const _id = useSelector((state) => state.ingredients.id)
 
     useEffect(() => {
         dispatch(fetchIngredients());
@@ -52,12 +52,6 @@ const BurgerIngredients = () => {
     return (
 
         <div className={styles.mainBurgerIngredients}>
-
-            {isIngredientsOpen && <Modal
-                title={"Детали ингредиента"}
-                children={<IngredientDetails id={id}/>}
-                closeModal={closeIngredientsModal}/>
-            }
 
             <h1 className="text text_type_main-large">
                 Соберите бургер
@@ -85,8 +79,9 @@ const BurgerIngredients = () => {
                     {ingredients.data?.filter((ingredient) => ingredient.type === 'bun')?.map((ingredient) => (
                         <IngredientCard
                             onClick={handleModal}
-                            {...ingredient}
-                            key={ingredient?._id}/>
+                            ingredientData={ingredient}
+                            key={ingredient?._id}
+                        />
                     ))}
                 </ul>
 
@@ -96,8 +91,9 @@ const BurgerIngredients = () => {
                     {ingredients.data?.filter((ingredient) => ingredient.type === 'main')?.map((ingredient) => (
                         <IngredientCard
                             onClick={handleModal}
-                            {...ingredient}
-                            key={ingredient?._id}/>
+                            ingredientData={ingredient}
+                            key={ingredient?._id}
+                        />
                     ))}
                 </ul>
 
@@ -107,11 +103,17 @@ const BurgerIngredients = () => {
                     {ingredients.data?.filter((ingredient) => ingredient.type === 'sauce')?.map((ingredient) => (
                         <IngredientCard
                             onClick={handleModal}
-                            {...ingredient}
-                            key={ingredient?._id}/>
+                            ingredientData={ingredient}
+                            key={ingredient?._id}
+                        />
                     ))}
                 </ul>
             </div>
+            {isIngredientsOpen && <Modal
+                title={"Детали ингредиента"}
+                children={<IngredientDetails key={_id}/>}
+                closeModal={closeIngredientsModal}/>
+            }
         </div>
     )
 }
