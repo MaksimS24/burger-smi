@@ -29,3 +29,7 @@ export const ingredientConstructorPropsTypes = PropTypes.shape({
     __v: PropTypes.number.isRequired,
     _uuid: PropTypes.string.isRequired,
 });
+
+export const orderPropsTypes = PropTypes.shape({
+    uid: PropTypes.string.isRequired,
+})

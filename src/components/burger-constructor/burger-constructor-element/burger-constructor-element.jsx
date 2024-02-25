@@ -5,13 +5,9 @@ import {useDrag, useDrop} from 'react-dnd';
 import {useAppDispatch} from "../../../hooks/use-app-redux";
 import {deleteIngredients, sortIngredients} from "../../../services/slice/constructor-slice";
 import {ingredientConstructorPropsTypes} from "../../../utils/types/props-types";
-import IngredientCard from "../../burger-ingredients/ingredient-card/ingredient-card";
+import PropTypes from "prop-types";
 
 const BurgerConstructorElement = ({ingredientData, index}) => {
-
-    IngredientCard.propTypes = {
-        ingredientData: ingredientConstructorPropsTypes.isRequired,
-    }
 
     const {name, price, image_mobile, _uuid} = ingredientData;
 
@@ -90,3 +86,8 @@ const BurgerConstructorElement = ({ingredientData, index}) => {
 };
 
 export default BurgerConstructorElement;
+
+BurgerConstructorElement.propTypes = {
+    ingredientData: ingredientConstructorPropsTypes.isRequired,
+    index: PropTypes.number.isRequired,
+}

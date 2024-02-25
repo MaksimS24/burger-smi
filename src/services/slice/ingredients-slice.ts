@@ -19,7 +19,7 @@ export const ingredientsSlice = createSlice({
             state.isIngredientsOpen = !state.isIngredientsOpen;
         },
         setId: (state, action) => {
-                state.id = action.payload;
+            {state.id = action.payload}
         },
     },
     extraReducers: (builder) => {

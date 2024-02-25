@@ -36,7 +36,6 @@ const BurgerIngredients = () => {
     const dispatch = useAppDispatch();
     const ingredients = useSelector((state) => state.ingredients.ingredients);
     const {isIngredientsOpen} = useSelector((state) => state.modal);
-    const _id = useSelector((state) => state.ingredients.id)
 
     useEffect(() => {
         dispatch(fetchIngredients());
@@ -111,7 +110,7 @@ const BurgerIngredients = () => {
             </div>
             {isIngredientsOpen && <Modal
                 title={"Детали ингредиента"}
-                children={<IngredientDetails key={_id}/>}
+                children={<IngredientDetails/>}
                 closeModal={closeIngredientsModal}/>
             }
         </div>

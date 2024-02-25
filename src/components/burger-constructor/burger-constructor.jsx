@@ -1,6 +1,6 @@
-import React, {forwardRef, useEffect, useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import styles from './burger-constructor.module.css';
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "./order-details/order-details";
 import {useSelector} from "react-redux";
@@ -8,7 +8,7 @@ import BurgerConstructorElement from "./burger-constructor-element/burger-constr
 import {useDrop} from "react-dnd";
 import {useAppDispatch} from "../../hooks/use-app-redux";
 import {addIngredients} from "../../services/slice/constructor-slice";
-import {orderCloseModal, orderOpenModal, pushOrder} from "../../services/slice/order-slice";
+import {orderCloseModal, pushOrder} from "../../services/slice/order-slice";
 
 const BurgerConstructor = () => {
 
@@ -18,7 +18,6 @@ const BurgerConstructor = () => {
     const mainAndSauce = useSelector((state) => state.constructorIngredients.mainAndSauce);
     const ingredientsAdd = useSelector((state) => state.constructorIngredients.ingredientsAdd);
     const numberOrder = useSelector((state) => state.order.dataOrder.orderNumber)
-
 
     const [{isHover}, dropIngredients] = useDrop({
         accept: 'ingredients',

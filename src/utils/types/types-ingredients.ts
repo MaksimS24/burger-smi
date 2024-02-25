@@ -15,6 +15,9 @@ export interface Ingredient {
 }
 
 export interface Order {
-    progress: boolean,
-    orderNumber: number
+    success: boolean,
+    name: string
+    order: {
+        orderNumber: number
+    }
 }

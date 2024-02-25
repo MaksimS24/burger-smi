@@ -15,7 +15,7 @@ const IngredientDetails = () => {
     return (
         <>
             <ul className={styles.ulDetailsIngredient}>
-                <li key={details?._id}>
+                <li>
                     <img src={details?.image_large} alt={'img'}/>
                     <h2 className={"text text_type_main-medium mt-4 mb-8"}>{details?.name}</h2>
                     <ul className={styles.ulDetails}>

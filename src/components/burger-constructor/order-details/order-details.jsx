@@ -3,9 +3,8 @@ import styles from "./order-details.module.css";
 // Image
 import {ReactSVG} from "react-svg";
 import imageDone from '../../../images/image-done.svg'
-import IngredientCard from "../../burger-ingredients/ingredient-card/ingredient-card";
-import {ingredientConstructorPropsTypes} from "../../../utils/types/props-types";
 import PropTypes from "prop-types";
+import {orderPropsTypes} from "../../../utils/types/props-types";
 
 
 const OrderDetails = ({_uuid}) => {
@@ -13,6 +12,7 @@ const OrderDetails = ({_uuid}) => {
     OrderDetails.propTypes = {
         _uuid: PropTypes.number.isRequired,
     }
+
 
     return (
         <div className={styles.mainOrder}>
@@ -42,3 +42,4 @@ const OrderDetails = ({_uuid}) => {
 }
 
 export default OrderDetails;
+

@@ -8,11 +8,6 @@ import PropTypes from "prop-types";
 
 const IngredientCard = ({ingredientData, onClick}) => {
 
-    IngredientCard.propTypes = {
-        ingredientData: ingredientPropsTypes.isRequired,
-        onClick: PropTypes.func.isRequired
-    }
-
     const {name, price, image} = ingredientData;
 
     const [{isDrag}, dragTarget] = useDrag(() => ({
@@ -59,3 +54,8 @@ const IngredientCard = ({ingredientData, onClick}) => {
 };
 
 export default IngredientCard;
+
+IngredientCard.propTypes = {
+    ingredientData: ingredientPropsTypes.isRequired,
+    onClick: PropTypes.func.isRequired
+}

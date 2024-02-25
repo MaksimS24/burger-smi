@@ -3,7 +3,7 @@ import {fetchOrders} from "../../utils/api";
 
 interface dataOrder {
     progress: boolean,
-    orderNumber: number
+    orderNumber: number | null
 }
 interface OrderInterface {
     dataOrder: dataOrder,
@@ -15,7 +15,7 @@ export const initialState: OrderInterface = {
     isOrderOpen: false,
     dataOrder: {
         progress: false,
-        orderNumber: 0
+        orderNumber: null
     },
     status: '',
 }
@@ -31,10 +31,10 @@ export const orderSlice = createSlice({
     reducers: {
         orderOpenModal: (state) => {
             state.isOrderOpen = true;
-            state.dataOrder.orderNumber = 0
         },
         orderCloseModal: (state) => {
             state.isOrderOpen = !state.isOrderOpen;
+            state.dataOrder.orderNumber = null;
         },
     },
     extraReducers: (builder) => {
