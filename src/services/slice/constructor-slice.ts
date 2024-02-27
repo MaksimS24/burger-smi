@@ -13,6 +13,7 @@ interface constructor {
     bun: bunConstructor | Ingredient,
     mainAndSauce: Ingredient[],
     ingredientsAdd: boolean,
+    plug: boolean
 }
 
 export const initialState: constructor = {
@@ -25,6 +26,7 @@ export const initialState: constructor = {
     },
     mainAndSauce: [],
     ingredientsAdd: false,
+    plug: true,
 }
 
 export const constructorSlice = createSlice({
@@ -39,6 +41,7 @@ export const constructorSlice = createSlice({
                 } else {
                     state.mainAndSauce = [action.payload, ...state.mainAndSauce];
                 }
+                state.plug = false
             },
             prepare: (payload: Ingredient) => ({payload: {...payload, _uuid: nanoid()}})
         },

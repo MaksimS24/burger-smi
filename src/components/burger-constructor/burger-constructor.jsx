@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 import styles from './burger-constructor.module.css';
-import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "./order-details/order-details";
 import {useSelector} from "react-redux";
@@ -8,7 +8,9 @@ import BurgerConstructorElement from "./burger-constructor-element/burger-constr
 import {useDrop} from "react-dnd";
 import {useAppDispatch} from "../../hooks/use-app-redux";
 import {addIngredients} from "../../services/slice/constructor-slice";
-import {orderCloseModal, pushOrder} from "../../services/slice/order-slice";
+import {orderCloseModal} from "../../services/slice/order-slice";
+import {fetchOrders} from "../../utils/api";
+import DragElement from "./drag-element/drag-element";
 
 const BurgerConstructor = () => {
 
@@ -17,7 +19,8 @@ const BurgerConstructor = () => {
     const bun = useSelector((state) => state.constructorIngredients.bun);
     const mainAndSauce = useSelector((state) => state.constructorIngredients.mainAndSauce);
     const ingredientsAdd = useSelector((state) => state.constructorIngredients.ingredientsAdd);
-    const numberOrder = useSelector((state) => state.order.dataOrder.orderNumber)
+    const number = useSelector((state) => state.order.dataOrder.order.number);
+    const plug = useSelector((state) => state.constructorIngredients.plug)
 
     const [{isHover}, dropIngredients] = useDrop({
         accept: 'ingredients',
@@ -41,9 +44,9 @@ const BurgerConstructor = () => {
         [mainAndSauce, bun]);
 
     const sendOrder = () => {
-        const ingredientsId = [...mainAndSauce, {...bun}].map(ingredientId => ingredientId._id);
-        const orderData = {ingredientsId};
-        dispatch(pushOrder(orderData));
+        const ingredients = [...mainAndSauce, {...bun}, {...bun}].map((ingredientId) => ingredientId._id);
+        const dataIngredientsId = {ingredients};
+        dispatch(fetchOrders(dataIngredientsId));
     }
 
     const closeModalOrder = () => {
@@ -66,13 +69,19 @@ const BurgerConstructor = () => {
                 />
 
                 <ul className={styles.constructorElement}>
-                    {mainAndSauce.map((ingredient, index) =>
-                        <BurgerConstructorElement
-                            ingredientData={ingredient}
-                            key={ingredient._uuid}
-                            index={index}
-                        />
-                    )}
+                    {plug ?
+                        (
+                            <DragElement/>
+                        ) : (
+
+                            mainAndSauce.map((ingredient, index) =>
+                                <BurgerConstructorElement
+                                    ingredientData={ingredient}
+                                    key={ingredient._uuid}
+                                    index={index}
+                                />
+                            )
+                        )}
                 </ul>
 
                 <ConstructorElement
@@ -102,7 +111,7 @@ const BurgerConstructor = () => {
                 </div>
             </div>
             {isOrderOpen && <Modal
-                children={<OrderDetails _uuid={numberOrder}/>}
+                children={<OrderDetails number={number}/>}
                 closeModal={closeModalOrder}
             />}
         </div>

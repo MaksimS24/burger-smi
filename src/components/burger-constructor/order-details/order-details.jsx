@@ -4,20 +4,13 @@ import styles from "./order-details.module.css";
 import {ReactSVG} from "react-svg";
 import imageDone from '../../../images/image-done.svg'
 import PropTypes from "prop-types";
-import {orderPropsTypes} from "../../../utils/types/props-types";
 
-
-const OrderDetails = ({_uuid}) => {
-
-    OrderDetails.propTypes = {
-        _uuid: PropTypes.number.isRequired,
-    }
-
+const OrderDetails = ({number}) => {
 
     return (
         <div className={styles.mainOrder}>
 
-            <h2 className='text text_type_digits-large mt-10'>{_uuid}</h2>
+            <h2 className='text text_type_digits-large mt-10'>{number}</h2>
 
             <p className='text text_type_main-medium mt-8'>идентификатор заказа</p>
 
@@ -43,3 +36,6 @@ const OrderDetails = ({_uuid}) => {
 
 export default OrderDetails;
 
+OrderDetails.propTypes = {
+    number: PropTypes.number.isRequired,
+}

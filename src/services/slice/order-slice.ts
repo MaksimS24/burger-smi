@@ -1,54 +1,60 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {fetchOrders} from "../../utils/api";
 
-interface dataOrder {
-    progress: boolean,
-    orderNumber: number | null
-}
 interface OrderInterface {
-    dataOrder: dataOrder,
     isOrderOpen: boolean,
-    status: string
+    dataOrder: {
+        success: boolean,
+        name: '',
+        order: {
+            number: number | null
+        }
+    }
+    status: string,
+    error: boolean,
 }
 
 export const initialState: OrderInterface = {
     isOrderOpen: false,
     dataOrder: {
-        progress: false,
-        orderNumber: null
+        success: false,
+        name: '',
+        order: {
+            number: null
+        }
     },
     status: '',
+    error: false,
 }
-
-export const pushOrder = createAsyncThunk(
-    'orders/pushOrder',
-        fetchOrders
-)
 
 export const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        orderOpenModal: (state) => {
+        orderOpenModal: (state, action) => {
             state.isOrderOpen = true;
+            state.error = action.payload;
         },
         orderCloseModal: (state) => {
             state.isOrderOpen = !state.isOrderOpen;
-            state.dataOrder.orderNumber = null;
+            state.dataOrder.order.number = null;
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(pushOrder.pending, (state) => {
+            .addCase(fetchOrders.pending, (state) => {
                 state.status = 'loading';
+                state.error = false;
+
             })
-            .addCase(pushOrder.fulfilled, (state, action) => {
-                // @ts-ignore
+            .addCase(fetchOrders.fulfilled, (state, action) => {
                 state.dataOrder = action.payload;
                 state.isOrderOpen = true;
             })
-            .addCase(pushOrder.rejected, (state) => {
+            .addCase(fetchOrders.rejected, (state, action) => {
                 state.status = 'failed';
+                // @ts-ignore
+                state.error = action.payload;
             });
     }
 })

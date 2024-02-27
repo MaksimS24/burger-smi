@@ -1,12 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {fetchIngredients} from "../../utils/api";
+import {Ingredient} from "../../utils/types/types-ingredients";
 
-export const initialState = {
+interface InterfaceIngredientsSlice {
+    ingredients: Ingredient[],
+    status: string,
+    isIngredientsOpen: boolean,
+    id: null
+}
+export const initialState: InterfaceIngredientsSlice = {
     ingredients: [],
     status: 'idle',
     isIngredientsOpen: false,
     id: null,
 };
+
 
 export const ingredientsSlice = createSlice({
     name: 'modal',
@@ -37,4 +45,5 @@ export const ingredientsSlice = createSlice({
 });
 
 export const {openModal, closeModal, setId} = ingredientsSlice.actions;
+
 export default ingredientsSlice.reducer;

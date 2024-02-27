@@ -1,5 +1,4 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Order} from "./types/types-ingredients";
 
 const api = 'https://norma.nomoreparties.space/api';
 
@@ -23,12 +22,15 @@ export const fetchIngredients = createAsyncThunk(
 );
 
 export const fetchOrders = createAsyncThunk(
-    'slice/orderSlice',
-    async () => {
-        const res = await fetch(`${api}/orders`);
-        await fetch(`${api}/orders/`)
-            .then((res) => checkResponse(res))
-
-        return res
+    'slice/orderSlice/order',
+    async (data) => {
+        const res = await fetch(`${api}/orders`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        return await checkResponse(res)
     }
 );

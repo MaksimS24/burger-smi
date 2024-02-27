@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styles from './burger-ingredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCard from "./ingredient-card/ingredient-card";
@@ -40,6 +40,7 @@ const BurgerIngredients = () => {
     useEffect(() => {
         dispatch(fetchIngredients());
     }, [dispatch]);
+
     const handleModal = (id) => {
         dispatch(openModal())
         dispatch(setId(id))
