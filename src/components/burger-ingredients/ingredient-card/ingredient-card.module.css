@@ -7,7 +7,13 @@
     cursor: pointer;
     list-style: none;
     padding-inline-start: 0px;
+    position: relative;
 }
 li svg {
     margin-left: 12px;
+}
+.count {
+    position: absolute;
+    top: 0;
+    right: 0;
 }

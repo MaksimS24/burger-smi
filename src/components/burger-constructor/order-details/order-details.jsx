@@ -1,16 +1,16 @@
 import React from "react";
 import styles from "./order-details.module.css";
-import {ReactSVG} from "react-svg";
-
 // Image
+import {ReactSVG} from "react-svg";
 import imageDone from '../../../images/image-done.svg'
+import PropTypes from "prop-types";
 
+const OrderDetails = ({number}) => {
 
-const OrderDetails = () => {
-    return(
+    return (
         <div className={styles.mainOrder}>
 
-            <h2 className='text text_type_digits-large mt-10'>034536</h2>
+            <h2 className='text text_type_digits-large mt-10'>{number}</h2>
 
             <p className='text text_type_main-medium mt-8'>идентификатор заказа</p>
 
@@ -35,3 +35,7 @@ const OrderDetails = () => {
 }
 
 export default OrderDetails;
+
+OrderDetails.propTypes = {
+    number: PropTypes.number.isRequired,
+}

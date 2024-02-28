@@ -1,18 +1,17 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect} from "react";
 import styles from './modal.module.css';
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import ModalOverlay from "./modal-overlay/modal-overlay";
 
-const Modal = ({title, children, setIsOpen}) => {
+const Modal = ({title, children, closeModal}) => {
 
     //Закрытие модального окна по Esc
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const keyPress = useCallback(
         e => {
-            if (e.key === 'Escape' && setIsOpen) {
-                setIsOpen(false);
+            if (e.key === 'Escape') {
+                closeModal();
             }
-        },
-        [setIsOpen]
+        }
     );
 
     useEffect(
@@ -26,7 +25,7 @@ const Modal = ({title, children, setIsOpen}) => {
 
     return (
         <>
-            <div className={styles.backgroundModal} onClick={() => setIsOpen(false)}/>
+            <div className={styles.backgroundModal} onClick={closeModal}/>
 
             <div className={styles.centeredModal}>
                 <div className={styles.modal}>
@@ -37,7 +36,7 @@ const Modal = ({title, children, setIsOpen}) => {
                             {title}
                         </h1>
                         <button className={styles.closeButton}>
-                            <CloseIcon onClick={() => setIsOpen(false)} type="primary"/>
+                            <CloseIcon onClick={closeModal} type="primary"/>
                         </button>
 
                     </div>
