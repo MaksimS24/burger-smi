@@ -58,6 +58,7 @@ nav {
 header a {
     color: #8585AD;
     cursor: pointer;
+    text-decoration: none;
 }
 
 header a:hover {

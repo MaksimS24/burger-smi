@@ -14,7 +14,7 @@
     display: block;
     justify-content: end;
     overflow-x: hidden;
-    padding-inline-start: 16px;
+    padding-inline-start: 0px;
     max-height: 450px;
 }
 

@@ -4,8 +4,7 @@ import AppHeader from "./components/app-header/app-header";
 import Main from "./components/main/main";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
-import ModalOverlay from "./components/modal/modal-overlay/modal-overlay";
-
+import {Routes, Route} from "react-router-dom";
 
 function App() {
 
@@ -13,7 +12,11 @@ function App() {
         <div className="App">
             <DndProvider backend={HTML5Backend}>
                 <AppHeader/>
-                <Main/>
+                <main>
+                    <Routes>
+                        <Route path='/' element={<Main/>}/>
+                    </Routes>
+                </main>
             </DndProvider>
         </div>
     );
