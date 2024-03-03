@@ -1,16 +1,11 @@
 import styles from './app-header.module.css';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useState} from "react";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useLocation} from "react-router-dom";
 
 
 const AppHeader = () => {
 
-    const [open, setOpen] = useState('');
-
-    const unHover = () => {
-        setOpen('')
-    }
+    const {pathname} = useLocation();
 
     return (
         <header>
@@ -20,10 +15,9 @@ const AppHeader = () => {
                     <span className={styles.constructor}>
                     <NavLink
                         to='/'
-                        className={styles.aConstructor}
-                        onMouseOver={() => setOpen('burgerIcon')}
-                        onMouseOut={unHover}>
-                        <BurgerIcon type={open === 'burgerIcon' ? 'primary' : 'secondary'}/>
+                        className={({isActive}) => isActive ? `${styles.aLink} ${styles.active}` : styles.aLink}
+                    >
+                        <BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'}/>
                         <p className={`ml-2`}>Конструктор</p>
                     </NavLink>
                     </span>
@@ -32,11 +26,9 @@ const AppHeader = () => {
                     <span className={styles.lineOrder}>
                     <NavLink
                         to='/'
-                        className={styles.aLineOrder}
-                        onMouseOver={() => setOpen('listIcon')}
-                        onMouseOut={unHover}
+                        className={styles.aLink}
                     >
-                        <ListIcon type={open === 'listIcon' ? 'primary' : 'secondary'}/>
+                        <ListIcon type={pathname === '' ? 'primary' : 'secondary'}/>
                         <p className={`ml-2`}>Лента заказов</p>
                     </NavLink>
                     </span>
@@ -51,11 +43,9 @@ const AppHeader = () => {
                 <span className={styles.lk}>
                 <NavLink
                     to='/profile'
-                    className={styles.lkContainer}
-                    onMouseOver={() => setOpen('profileIcon')}
-                    onMouseOut={unHover}
+                    className={({isActive}) => isActive ? `${styles.lkContainer} ${styles.active}` : styles.lkContainer}
                 >
-                    <ProfileIcon type={open === 'profileIcon' ? 'primary' : 'secondary'}/>
+                    <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'}/>
                     <p className={`ml-2`}>Личный кабинет</p>
                 </NavLink>
                 </span>

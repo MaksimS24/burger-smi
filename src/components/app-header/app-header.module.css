@@ -30,12 +30,16 @@ nav {
     display: flex;
 }
 
-.aConstructor, .aLineOrder {
+.aLink {
     display: flex;
     align-items: center;
     border-radius: 40px;
     padding: 0px 20px;
 }
+.aLink:hover > svg {
+    fill: #f2f2f3;
+}
+
 
 .logo {
     display: flex;
@@ -54,6 +58,10 @@ nav {
     border-radius: 40px;
     padding: 0px 20px;
 }
+.lkContainer:hover > svg {
+    fill: #f2f2f3;
+}
+
 
 header a {
     color: #8585AD;
@@ -65,8 +73,14 @@ header a:hover {
     color: #F2F2F3;
 }
 
+.active p {
+    color: #F2F2F3;
+}
+
+
+
 @media (max-width: 1190px) {
-    .aConstructor, .aLineOrder, .lkContainer {
+    .aLink .lkContainer {
         padding: 0px;
     }
 }
