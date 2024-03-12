@@ -14,10 +14,3 @@ export interface Ingredient {
     _uuid: string
 }
 
-export interface Order {
-    success: boolean,
-    name: string
-    order: {
-        orderNumber: number
-    }
-}

@@ -1,10 +1,18 @@
 import style from './not-found.module.css';
+import {ReactSVG} from "react-svg";
+import React from "react";
 
 const NotFound = () => {
     return (
         <>
         <div className={style.notFound}>
-            <img src={'./error-404.svg'} alt={'error-image'}/>
+            <ReactSVG
+                beforeInjection={(svg) => {
+                    svg.classList.add('image-done')
+                }}
+                className="image-done mt-15 mb-15"
+                src={'./error-404.svg'}
+            />
             <p className="text text_type_main-large">
                 Опаньки
                 <br/>

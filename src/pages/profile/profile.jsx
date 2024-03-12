@@ -1,7 +1,20 @@
-import style from './profile-info.module.css';
-import {NavLink, Outlet} from "react-router-dom";
+import style from './profile.module.css';
+import {NavLink, Outlet, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {logoutUser} from "../../utils/api";
 
-const ProfileInfo = () => {
+const Profile = () => {
+
+    const dispatch = useDispatch();
+    const logout = async () => {
+        dispatch(logoutUser());
+    }
+
+    const navigate = useNavigate();
+    const exitProfile = () => {
+        logout().then((data) => (data.payload.success ? navigate('/login') : null));
+    }
+
     return (
         <>
             <div className={style.profileInfo}>
@@ -30,7 +43,8 @@ const ProfileInfo = () => {
                         <NavLink end to='sign-out'
                                  className={({isActive}) => isActive ? `${style.link} ${style.active}` : style.link}
                         >
-                            <p className="text text_type_main-medium">
+                            <p className="text text_type_main-medium"
+                               onClick={exitProfile}>
                                 Выход
                             </p>
                         </NavLink>
@@ -45,4 +59,4 @@ const ProfileInfo = () => {
     );
 };
 
-export default ProfileInfo;
+export default Profile;

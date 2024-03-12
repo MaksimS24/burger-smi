@@ -45,7 +45,7 @@ const AppHeader = () => {
                     to='/profile'
                     className={({isActive}) => isActive ? `${styles.lkContainer} ${styles.active}` : styles.lkContainer}
                 >
-                    <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'}/>
+                    <ProfileIcon type={pathname === '/profile/' ? 'primary' : 'secondary'}/>
                     <p className={`ml-2`}>Личный кабинет</p>
                 </NavLink>
                 </span>
