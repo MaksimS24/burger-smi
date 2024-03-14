@@ -3,7 +3,8 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {passwordSend} from "../../../utils/api";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import Loader from "../../../components/loader/loader";
 
 const ResetPassword = () => {
 
@@ -19,19 +20,15 @@ const ResetPassword = () => {
     const {state} = useLocation();
 
     const dispatch = useDispatch();
-    const sendPassword = () => {
-        dispatch(passwordSend());
-    };
-    const replacePassword = async (e) => {
+    const isLoading = useSelector((state) => state.profile.isLoading)
+
+    const sendPassword = (e) => {
         e.preventDefault();
-        await sendPassword(password, emailWithCode).then((data) => {
-            if (data.success) {
-                navigate('/login', {replace: true});
-                alert(data.message);
-            } else {
-                alert(data.message);
-            }
-        });
+        dispatch(passwordSend(password, emailWithCode)).then((data) => data.success ? navigate('/login', {replace: true}) : null)
+    };
+
+    if (isLoading) {
+        return <Loader/>
     }
 
     if (!state) {
@@ -45,7 +42,7 @@ const ResetPassword = () => {
                         Восстановление пароля
                     </p>
 
-                    <form onSubmit={replacePassword}>
+                    <form onSubmit={sendPassword}>
                         <Input
                             placeholder={'Введите новый пароль'}
                             type={hidePassword ? 'password' : 'text'}

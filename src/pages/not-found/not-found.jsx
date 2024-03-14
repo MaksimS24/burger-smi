@@ -8,9 +8,9 @@ const NotFound = () => {
         <div className={style.notFound}>
             <ReactSVG
                 beforeInjection={(svg) => {
-                    svg.classList.add('image-done')
+                    svg.classList.add('error-404')
                 }}
-                className="image-done mt-15 mb-15"
+                className="error-404 mt-15 mb-15"
                 src={'./error-404.svg'}
             />
             <p className="text text_type_main-large">

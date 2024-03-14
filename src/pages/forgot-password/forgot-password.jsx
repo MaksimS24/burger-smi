@@ -3,32 +3,21 @@ import {Link, useNavigate} from "react-router-dom";
 import style from "./forgot-password.module.css";
 import {useState} from "react";
 import {forgotPasswordEmail} from "../../utils/api";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import Loader from "../../components/loader/loader";
 
 
 const ForgotPassword = () => {
 
-    const [resetPassword, setResetPassword] = useState('');
     const [login, setLogin] = useState('');
     const ForgotSignIn = (e) => setLogin(e.target.value);
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
-    const sendEmail = () => {
-        dispatch(forgotPasswordEmail());
-    };
-    const inEmail = async (e) => {
+    const sendEmail = (e) => {
         e.preventDefault();
-        await sendEmail(login).then((data) => {
-            if (data.success) {
-                setResetPassword();
-                navigate('/reset-password', {replace: true, state: true});
-            } else {
-                setResetPassword(data.message)
-            }
-        });
+        dispatch(forgotPasswordEmail(login)).then(() => navigate('/reset-password', {replace: true, state: true}));
     };
-
     return (
         <>
             <div className={style.passwordRecover}>
@@ -38,12 +27,12 @@ const ForgotPassword = () => {
                         Восстановление пароля
                     </p>
 
-                    <form onSubmit={inEmail}>
+                    <form onSubmit={sendEmail}>
                         <EmailInput
                             placeholder={'E-mail'}
                             onChange={ForgotSignIn}
                             value={login}
-                            name={'login'}
+                            name={'email'}
                             errorText={'Ошибка'}
                             size={'default'}
                             extraClass="mb-5"
@@ -60,7 +49,7 @@ const ForgotPassword = () => {
                             Войти
                         </Link>
                     </p>
-                    <div>{resetPassword}</div>
+                    {/*<div>{resetPassword}</div>*/}
                 </div>
             </div>
         </>
