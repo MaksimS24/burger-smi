@@ -1,10 +1,10 @@
-export function getCookie(name: string): string | undefined {
-    const nameLenPlus = (name.length + 1);
-    return document.cookie
-        .split(';')
-        .map(cookie => cookie.trim())
-        .find(cookie => cookie.substring(0, nameLenPlus) === `${name}=`)
-        ?.split('=')[1];
+export function getCookie(name: string) {
+    const matches = document.cookie.match(
+        //truble with regExp
+        // eslint-disable-next-line
+        new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
+    );
+    return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
 export function setCookie(

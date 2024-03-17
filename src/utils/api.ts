@@ -7,7 +7,7 @@ import {
     apiOrders,
     ApiSendPassword,
     EditProfile,
-    ForProfileEdit,
+    ForProfileEdit, LoginUserInfo,
     Register,
     SignInUser
 } from "./types/types-api";
@@ -50,9 +50,7 @@ export async function fetchRefresh<T>(url: RequestInfo, options: RequestInit) {
                 }),
             });
             const dataRefresh = await resRefresh.json();
-            if (!dataRefresh.success) {
-                return Promise.reject(dataRefresh);
-            }
+            if (!dataRefresh.success) return Promise.reject(dataRefresh);
             setCookie('accessToken', dataRefresh.accessToken);
             setCookie('refreshToken', dataRefresh.refreshToken);
             (options.headers as { [key: string]: string }).authorization = dataRefresh.accessToken;
@@ -95,7 +93,7 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
     'user/login',
-    async (data) => {
+    async (data: LoginUserInfo) => {
         const res = await fetch(`${api}/auth/login`, {
             method: 'POST',
             headers: {
@@ -122,7 +120,6 @@ export const logoutUser = createAsyncThunk(
         return await checkResponse<ApiLogout>(res);
     },
 );
-
 
 export const profileInfo = createAsyncThunk(
     'user/authentication',
@@ -155,7 +152,6 @@ export const requestForEditing = createAsyncThunk(
         });
     },
 );
-
 
 export const forgotPasswordEmail = createAsyncThunk(
     'user/password-reset',

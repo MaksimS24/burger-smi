@@ -4,9 +4,9 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import {useDrag} from "react-dnd";
 import {useSelector} from "react-redux";
 import {ingredientPropsTypes} from "../../../utils/types/props-types";
-import PropTypes from "prop-types";
+import {useNavigate} from "react-router-dom";
 
-const IngredientCard = ({ingredientData, onClick}) => {
+const IngredientCard = ({ingredientData}) => {
 
     const {name, price, image} = ingredientData;
 
@@ -26,13 +26,14 @@ const IngredientCard = ({ingredientData, onClick}) => {
         return allIngredients.filter((ingredient) => ingredient._id === ingredientData._id).length
     }, [allIngredients]);
 
-    const handleClick = () => {
-        onClick(ingredientData._id);
-    };
+    const navigate = useNavigate();
+    const viewModal = () => {
+        navigate(`/ingredients/${ingredientData._id}`, {state: {modal: true, id: ingredientData._id}})
+    }
 
     return (
         <li className={styles.liIngredients}
-            onClick={handleClick}
+            onClick={viewModal}
             style={{isDrag}}
         >
             {counter ? <Counter count={counter} size={"default"} extraClass={styles.count}/> : null}
@@ -57,5 +58,4 @@ export default IngredientCard;
 
 IngredientCard.propTypes = {
     ingredientData: ingredientPropsTypes.isRequired,
-    onClick: PropTypes.func.isRequired
 }

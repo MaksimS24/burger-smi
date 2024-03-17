@@ -1,15 +1,16 @@
 import React, {useMemo} from "react";
 import styles from './ingredient-details.module.css'
 import {useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
 
 const IngredientDetails = () => {
 
+    const {id} = useParams();
     const ingredients = useSelector((state) => state.ingredients.ingredients);
-    const _id = useSelector((state) => state.ingredients.id)
 
     const details = useMemo(() =>
         ingredients.data?.find(
-            (ingredient) => ingredient?._id === _id), [_id, ingredients]
+            (ingredient) => ingredient?._id === id), [id, ingredients]
     );
 
     return (

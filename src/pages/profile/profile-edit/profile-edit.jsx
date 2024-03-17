@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 const ProfileEdit = () => {
 
     //Cookie
-    const accessToken = getCookie('accessToken');
+    const token = getCookie('accessToken');
 
     const dispatch = useDispatch();
     const editProfile = async (data) => {
@@ -38,7 +38,7 @@ const ProfileEdit = () => {
     //Profile editing
     const editingProfile = async (e) => {
         e.preventDefault();
-        await editProfile({name: nameProfile, email: emailProfile, password: accessToken})
+        await editProfile({name: nameProfile, email: emailProfile, password: token})
     }
 
     //Active buttons
@@ -68,8 +68,6 @@ const ProfileEdit = () => {
                         size={'default'}
                         extraClass={"mb-6"}
                         icon="EditIcon"
-                        // disabled={''}
-                        // error={'error'}
                     />
                     <EmailInput
                         placeholder={'Логин'}
@@ -79,7 +77,6 @@ const ProfileEdit = () => {
                         name={'login'}
                         extraClass={"mb-6"}
                         icon="EditIcon"
-                        // error={''}
                     />
                     <PasswordInput
                         placeholder={'Пароль'}
@@ -87,8 +84,7 @@ const ProfileEdit = () => {
                         value={password}
                         name={'password'}
                         extraClass={"mt-6"}
-                        icon="EditIcon"
-                        // error={''}
+                        icon='EditIcon'
                     />
                     {activeButton && (
                         <div className='mt-6'>

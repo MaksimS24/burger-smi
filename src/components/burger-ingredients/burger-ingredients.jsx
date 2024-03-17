@@ -2,10 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import styles from './burger-ingredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCard from "./ingredient-card/ingredient-card";
-import IngredientDetails from "./ingredient-card/ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
 import {useSelector} from "react-redux";
-import {closeModal, openModal, setId} from "../../services/slice/ingredients-slice";
 import {fetchIngredients} from "../../utils/api";
 import {useAppDispatch} from "../../hooks/use-app-redux";
 
@@ -35,19 +32,10 @@ const BurgerIngredients = () => {
 
     const dispatch = useAppDispatch();
     const ingredients = useSelector((state) => state.ingredients.ingredients);
-    const {isIngredientsOpen} = useSelector((state) => state.modal);
 
     useEffect(() => {
         dispatch(fetchIngredients());
     }, [dispatch]);
-
-    const handleModal = (id) => {
-        dispatch(openModal())
-        dispatch(setId(id))
-    }
-    const closeIngredientsModal = () => {
-        dispatch(closeModal())
-    }
 
     return (
 
@@ -78,7 +66,6 @@ const BurgerIngredients = () => {
                 <ul className={styles.ulIngredient}>
                     {ingredients.data?.filter((ingredient) => ingredient.type === 'bun')?.map((ingredient) => (
                         <IngredientCard
-                            onClick={handleModal}
                             ingredientData={ingredient}
                             key={ingredient?._id}
                         />
@@ -90,7 +77,6 @@ const BurgerIngredients = () => {
                 <ul className={styles.ulIngredient}>
                     {ingredients.data?.filter((ingredient) => ingredient.type === 'main')?.map((ingredient) => (
                         <IngredientCard
-                            onClick={handleModal}
                             ingredientData={ingredient}
                             key={ingredient?._id}
                         />
@@ -102,18 +88,12 @@ const BurgerIngredients = () => {
                 <ul className={styles.ulIngredient}>
                     {ingredients.data?.filter((ingredient) => ingredient.type === 'sauce')?.map((ingredient) => (
                         <IngredientCard
-                            onClick={handleModal}
                             ingredientData={ingredient}
                             key={ingredient?._id}
                         />
                     ))}
                 </ul>
             </div>
-            {isIngredientsOpen && <Modal
-                title={"Детали ингредиента"}
-                children={<IngredientDetails/>}
-                closeModal={closeIngredientsModal}/>
-            }
         </div>
     )
 }

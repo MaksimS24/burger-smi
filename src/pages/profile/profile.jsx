@@ -2,6 +2,7 @@ import style from './profile.module.css';
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logoutUser} from "../../utils/api";
+import NotFound from "../not-found/not-found";
 
 const Profile = () => {
 
@@ -11,8 +12,9 @@ const Profile = () => {
     }
 
     const navigate = useNavigate();
-    const exitProfile = () => {
-        logout().then((data) => (data.payload.success ? navigate('/login') : null));
+    const exitProfile = async (e) => {
+        e.preventDefault();
+        logout().then((data) => (data.payload?.success ? navigate('/login') : <NotFound/>));
     }
 
     return (

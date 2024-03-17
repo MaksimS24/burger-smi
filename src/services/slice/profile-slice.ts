@@ -47,12 +47,11 @@ export const profileSlice = createSlice({
             })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.authUser = true;
                 state.user = {
                     email: action.payload.user.email,
                     name: action.payload.user.name,
                 };
-                state.authChecked = true;
-                state.authUser = true;
                 setCookie('accessToken', action.payload.accessToken);
                 localStorage.setItem('refreshToken', action.payload.refreshToken);
             })
@@ -72,6 +71,7 @@ export const profileSlice = createSlice({
                     email: action.payload.user.email,
                     name: action.payload.user.name,
                 };
+                state.authUser = true;
             })
             .addCase(loginUser.rejected, (state) => {
                 state.isLoading = false;
@@ -94,7 +94,7 @@ export const profileSlice = createSlice({
             })
             .addCase(profileInfo.rejected, (state) => {
                 state.isLoading = false;
-                state.isError = true;
+                state.authChecked = true;
             })
 
             //Request for edit
@@ -126,13 +126,14 @@ export const profileSlice = createSlice({
                 };
                 state.authUser = false;
                 deleteCookie('accessToken');
-                localStorage.removeItem('refreshToken');
+                deleteCookie('refreshToken');
             })
             .addCase(logoutUser.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })
 
+            //Email password
             .addCase(passwordSend.pending, state => {
                 state.isLoading = true;
                 state.isError = false;
@@ -151,7 +152,7 @@ export const profileSlice = createSlice({
                 state.isLoading = true;
                 state.isError = false;
             })
-            .addCase(forgotPasswordEmail.fulfilled, (state, action) => {
+            .addCase(forgotPasswordEmail.fulfilled, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })

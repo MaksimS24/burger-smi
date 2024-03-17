@@ -17,7 +17,7 @@ export const initialState: InterfaceIngredientsSlice = {
 
 
 export const ingredientsSlice = createSlice({
-    name: 'modal',
+    name: 'ingredients',
     initialState,
     reducers: {
         openModal: (state) => {
@@ -25,9 +25,6 @@ export const ingredientsSlice = createSlice({
         },
         closeModal: (state) => {
             state.isIngredientsOpen = !state.isIngredientsOpen;
-        },
-        setId: (state, action) => {
-            {state.id = action.payload}
         },
     },
     extraReducers: (builder) => {
@@ -44,6 +41,6 @@ export const ingredientsSlice = createSlice({
     },
 });
 
-export const {openModal, closeModal, setId} = ingredientsSlice.actions;
+export const {openModal, closeModal} = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;
