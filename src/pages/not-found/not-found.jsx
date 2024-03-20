@@ -1,6 +1,7 @@
 import style from './not-found.module.css';
 import {ReactSVG} from "react-svg";
 import React from "react";
+import error404 from "../../images/error-404.svg";
 
 const NotFound = () => {
     return (
@@ -8,17 +9,17 @@ const NotFound = () => {
         <div className={style.notFound}>
             <ReactSVG
                 beforeInjection={(svg) => {
-                    svg.classList.add('error-404')
+                    svg.classList.add('error404')
                 }}
-                className="error-404 mt-15 mb-15"
-                src={'./error-404.svg'}
+                className="error404 mt-7 mb-15"
+                src={error404}
             />
             <p className="text text_type_main-large">
                 Опаньки
                 <br/>
-                <p className="text text_type_main-small">
+                <span className="text text_type_main-small">
                     Такой страницы нет. Ошибка 404!
-                </p>
+                </span>
 
             </p>
 

@@ -49,28 +49,30 @@ const Login = () => {
                     {/*Форма входа */}
                     <form onSubmit={sendLogin}>
                         <EmailInput
-                            placeholder={'E-mail'}
-                            type={'email'}
+                            placeholder='E-mail'
+                            type='email'
                             onChange={onChangeEmail}
                             value={email}
-                            name={'login'}
+                            name='login'
                             error={false}
-                            errorText={'Ошибка. Введите E-mail.'}
-                            size={'default'}
+                            errorText='Ошибка. Введите E-mail.'
+                            size='default'
                             extraClass="mb-5"
+                            autoComplete='email'
                         />
                         <Input
-                            placeholder={'Пароль'}
+                            placeholder='Пароль'
                             type={passwordHide ? 'password' : 'text'}
                             icon={passwordHide ? 'ShowIcon' : 'HideIcon'}
                             onIconClick={clickHidePassword}
                             onChange={onChangePassword}
                             value={password}
-                            name={'password'}
+                            name='password'
                             error={false}
-                            errorText={'Ошибка'}
-                            size={'default'}
+                            errorText='Ошибка'
+                            size='default'
                             extraClass="mb-5"
+                            autoComplete='current-password'
                         />
                         <Button htmlType="submit" type="primary" size="medium" extraClass="mb-10">
                             Войти

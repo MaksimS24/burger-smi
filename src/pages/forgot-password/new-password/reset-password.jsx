@@ -44,24 +44,24 @@ const ResetPassword = () => {
 
                     <form onSubmit={sendPassword}>
                         <Input
-                            placeholder={'Введите новый пароль'}
+                            placeholder='Введите новый пароль'
                             type={hidePassword ? 'password' : 'text'}
                             icon={hidePassword ? 'ShowIcon' : 'HideIcon'}
                             onChange={onChangePassword}
                             onIconClick={visionPassword}
                             value={password}
-                            name={'password'}
-                            size={'default'}
+                            name='password'
+                            size='default'
                             extraClass="mb-5"
                         />
                         <Input
-                            placeholder={'Введите код из письма'}
-                            type={'text'}
+                            placeholder='Введите код из письма'
+                            type='text'
                             onChange={onChangeEmail}
                             value={emailWithCode}
-                            name={'emailWithCode'}
-                            errorText={'Ошибка'}
-                            size={'default'}
+                            name='emailWithCode'
+                            errorText='Ошибка'
+                            size='default'
                             extraClass="mb-5"
                         />
 

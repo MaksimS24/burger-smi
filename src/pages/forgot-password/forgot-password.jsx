@@ -3,8 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import style from "./forgot-password.module.css";
 import {useState} from "react";
 import {forgotPasswordEmail} from "../../utils/api";
-import {useDispatch, useSelector} from "react-redux";
-import Loader from "../../components/loader/loader";
+import {useDispatch} from "react-redux";
 
 
 const ForgotPassword = () => {
@@ -29,12 +28,12 @@ const ForgotPassword = () => {
 
                     <form onSubmit={sendEmail}>
                         <EmailInput
-                            placeholder={'E-mail'}
+                            placeholder='E-mail'
                             onChange={ForgotSignIn}
                             value={login}
-                            name={'email'}
-                            errorText={'Ошибка'}
-                            size={'default'}
+                            name='email'
+                            errorText='Ошибка'
+                            size='default'
                             extraClass="mb-5"
                         />
                         <Button htmlType="submit" type="primary" size="medium" extraClass="mb-10">
@@ -49,7 +48,6 @@ const ForgotPassword = () => {
                             Войти
                         </Link>
                     </p>
-                    {/*<div>{resetPassword}</div>*/}
                 </div>
             </div>
         </>

@@ -40,13 +40,13 @@ function App() {
             <main>
                 <Routes location={background || location}>
                     <Route path='/' element={<Main/>}/>
-                    <Route path='/ingredeints/:id' element={<IngredientDetails/>}/>
-                    <Route path='/register' element={<ProtectedRouteElement element={<Register/>} onlyUnAuth={true}/>}/>
-                    <Route path='/login' element={<ProtectedRouteElement element={<Login/>} onlyUnAuth={true}/>}/>
+                    <Route path='/ingredients/:id' element={<IngredientDetails/>}/>
+                    <Route path='/register' element={<ProtectedRouteElement element={<Register/>} onlyUnAuth/>}/>
+                    <Route path='/login' element={<ProtectedRouteElement element={<Login/>} onlyUnAuth/>}/>
                     <Route path='/forgot-password'
-                           element={<ProtectedRouteElement element={<ForgotPassword/>} onlyUnAuth={true}/>}/>
+                           element={<ProtectedRouteElement element={<ForgotPassword/>} onlyUnAuth/>}/>
                     <Route path='/reset-password'
-                           element={<ProtectedRouteElement element={<ResetPassword/>} onlyUnAuth={true}/>}/>
+                           element={<ProtectedRouteElement element={<ResetPassword/>} onlyUnAuth/>}/>
                     <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile/>}/>}>
                         <Route path='profile-edit' element={<ProfileEdit/>}/>
                         <Route path='profile/orders' element={''}></Route>

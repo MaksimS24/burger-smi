@@ -52,36 +52,36 @@ const Register = () => {
                 {/*Форма регистрации*/}
                 <form onSubmit={sendProfile}>
                     <Input
-                        placeholder={'Имя'}
-                        type={'text'}
+                        placeholder='Имя'
+                        type='text'
                         onChange={onChangeName}
                         value={name}
-                        name={'name'}
+                        name='name'
                         error={false}
-                        errorText={'Ошибка'}
-                        size={'default'}
+                        errorText='Ошибка'
+                        size='default'
                         extraClass="mb-5"
                     />
                     <EmailInput
-                        placeholder={'E-mail'}
-                        type={'email'}
+                        placeholder='E-mail'
+                        type='email'
                         onChange={onChangeEmail}
                         value={email}
-                        name={'name'}
+                        name='name'
                         error={false}
-                        errorText={'Ошибка'}
-                        size={'default'}
+                        errorText='Ошибка'
+                        size='default'
                         extraClass="mb-5"
                     />
                     <Input
-                        placeholder={'Пароль'}
+                        placeholder='Пароль'
                         type={passwordHide ? 'password' : 'text'}
                         icon={passwordHide ? 'ShowIcon' : 'HideIcon'}
                         onIconClick={clickHidePassword}
                         onChange={onChangePassword}
                         value={password}
-                        name={'password'}
-                        size={'default'}
+                        name='password'
+                        size='default'
                         extraClass="mb-5"
                     />
                     <Button htmlType="submit" type="primary" size="medium" extraClass="mb-10">
