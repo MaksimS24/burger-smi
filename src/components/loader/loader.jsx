@@ -4,14 +4,16 @@ import React from "react";
 
 const Loader = () => {
     return (
-        <div className={style.loader}>
-            <ReactSVG
-                beforeInjection={(svg) => {
-                    svg.classList.add('loader')
-                }}
-                src={'./loader.svg'}
-            />
-    </div>
+        <div className={style.backgroundLoader}>
+            <div className={style.loader}>
+                <ReactSVG
+                    beforeInjection={(svg) => {
+                        svg.classList.add('loader')
+                    }}
+                    src={'./loader.svg'}
+                />
+            </div>
+        </div>
     );
 };
 

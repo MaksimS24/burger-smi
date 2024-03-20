@@ -22,24 +22,21 @@ const Login = () => {
     //Error
     const errorLogin = useSelector((state) => state.profile.isError);
 
-    //Login
-    const dispatch = useDispatch();
-    const loginProfile = async (data) => {
-        return dispatch(loginUser(data));
-    }
-
     const navigate = useNavigate();
     const {locationState} = useLocation();
 
+    //Login
+    const dispatch = useDispatch();
+
     const sendLogin = async (e) => {
         e.preventDefault();
-        await loginProfile({email, password}).then((data) =>
-            data.payload.success
-                ? navigate(`${locationState ? locationState.pathname : '/'}`, {replace: true})
-                : errorLogin()
-        );
+        const loginProfile = await dispatch(loginUser({email, password}));
+        if (loginUser.fulfilled.match(loginProfile)) {
+            navigate(`${locationState ? locationState.pathname : '/'}`, {replace: true});
+        } else {
+            errorLogin('');
+        }
     };
-
 
     return (
         <>

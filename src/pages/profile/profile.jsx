@@ -1,20 +1,13 @@
 import style from './profile.module.css';
-import {NavLink, Outlet, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {NavLink, Outlet} from "react-router-dom";
 import {logoutUser} from "../../utils/api";
-import NotFound from "../not-found/not-found";
+import {useAppDispatch} from "../../hooks/use-app-redux";
 
 const Profile = () => {
 
-    const dispatch = useDispatch();
-    const logout = async () => {
+    const dispatch = useAppDispatch();
+    const logout = () => {
         dispatch(logoutUser());
-    }
-
-    const navigate = useNavigate();
-    const exitProfile = async (e) => {
-        e.preventDefault();
-        logout().then((data) => (data.payload?.success ? navigate('/login') : <NotFound/>));
     }
 
     return (
@@ -42,11 +35,11 @@ const Profile = () => {
                     </li>
 
                     <li>
-                        <NavLink end to='sign-out'
+                        <NavLink end to='/login'
                                  className={({isActive}) => isActive ? `${style.link} ${style.active}` : style.link}
                         >
                             <p className="text text_type_main-medium"
-                               onClick={exitProfile}>
+                               onClick={logout}>
                                 Выход
                             </p>
                         </NavLink>

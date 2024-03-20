@@ -31,11 +31,11 @@ const BurgerIngredients = () => {
     };
 
     const dispatch = useAppDispatch();
-    const ingredients = useSelector((state) => state.ingredients.ingredients);
-
     useEffect(() => {
         dispatch(fetchIngredients());
     }, [dispatch]);
+
+    const ingredients = useSelector((state) => state.ingredients.ingredients);
 
     return (
 
@@ -64,10 +64,10 @@ const BurgerIngredients = () => {
                 {/*Булки*/}
                 <h2 ref={bunRef}>Булки</h2>
                 <ul className={styles.ulIngredient}>
-                    {ingredients.data?.filter((ingredient) => ingredient.type === 'bun')?.map((ingredient) => (
+                    {ingredients.filter((ingredient) => ingredient.type === 'bun').map((ingredient) => (
                         <IngredientCard
                             ingredientData={ingredient}
-                            key={ingredient?._id}
+                            key={ingredient._id}
                         />
                     ))}
                 </ul>
@@ -75,10 +75,10 @@ const BurgerIngredients = () => {
                 {/*Начинки*/}
                 <h2 ref={mainRef}>Начинки</h2>
                 <ul className={styles.ulIngredient}>
-                    {ingredients.data?.filter((ingredient) => ingredient.type === 'main')?.map((ingredient) => (
+                    {ingredients.filter((ingredient) => ingredient.type === 'main').map((ingredient) => (
                         <IngredientCard
                             ingredientData={ingredient}
-                            key={ingredient?._id}
+                            key={ingredient._id}
                         />
                     ))}
                 </ul>
@@ -86,10 +86,10 @@ const BurgerIngredients = () => {
                 {/*Соусы*/}
                 <h2 ref={sauceRef}>Соусы</h2>
                 <ul className={styles.ulIngredient}>
-                    {ingredients.data?.filter((ingredient) => ingredient.type === 'sauce')?.map((ingredient) => (
+                    {ingredients.filter((ingredient) => ingredient.type === 'sauce').map((ingredient) => (
                         <IngredientCard
                             ingredientData={ingredient}
-                            key={ingredient?._id}
+                            key={ingredient._id}
                         />
                     ))}
                 </ul>

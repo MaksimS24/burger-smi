@@ -6,13 +6,19 @@ interface InterfaceIngredientsSlice {
     ingredients: Ingredient[],
     status: string,
     isIngredientsOpen: boolean,
-    id: null
+    id: null,
+    isLoading: boolean,
+    isError: boolean,
+
 }
 export const initialState: InterfaceIngredientsSlice = {
     ingredients: [],
     status: 'idle',
     isIngredientsOpen: false,
     id: null,
+    isLoading: false,
+    isError: false,
+
 };
 
 
@@ -30,13 +36,13 @@ export const ingredientsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchIngredients.pending, (state) => {
-                state.status = 'loading';
+                state.isLoading = true;
             })
             .addCase(fetchIngredients.fulfilled, (state, action) => {
-                state.ingredients = action.payload;
+                state.ingredients = action.payload.data;
             })
             .addCase(fetchIngredients.rejected, (state) => {
-                state.status = 'failed';
+                state.isError = true;
             });
     },
 });

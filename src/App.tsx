@@ -55,13 +55,15 @@ function App() {
                 </Routes>
                 {background && (
                     <Routes>
-                        <Route path='ingredients/:id' element={
-                            <Modal title={'Детали ингредиента'} closeModal={closeModal}>
-                                <IngredientDetails/>
-                            </Modal>}/>
+                        <Route path='/ingredients/:id'
+                               element={
+                                   <Modal title={'Детали ингредиента'} closeModal={closeModal}>
+                                       <IngredientDetails/>
+                                   </Modal>
+                               }/>
                     </Routes>
                 )}
-                {isLoading && <Loader/>}
+                {isLoading ? (<Loader/>) : null}
             </main>
         </div>
     );

@@ -1,5 +1,5 @@
 import style from './profile-edit.module.css';
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useEffect, useState} from "react";
 import {requestForEditing} from "../../../utils/api";
 import {getCookie} from "../../../utils/cookie";
@@ -32,13 +32,13 @@ const ProfileEdit = () => {
     const undoInfo = () => {
         setNameProfile(name);
         setEmailProfile(email);
-        setPassword(password)
+        setPassword('')
     }
 
     //Profile editing
     const editingProfile = async (e) => {
         e.preventDefault();
-        await editProfile({name: nameProfile, email: emailProfile, password: token})
+        await editProfile({name: nameProfile, email: emailProfile, password, token})
     }
 
     //Active buttons
@@ -60,30 +60,30 @@ const ProfileEdit = () => {
                 <form className={style.formProfileEdit} onSubmit={editingProfile}>
 
                     <Input
-                        placeholder={'Имя'}
-                        type={'text'}
+                        placeholder='Имя'
+                        type='text'
                         onChange={onChangeName}
                         value={nameProfile}
-                        name={'name'}
-                        size={'default'}
-                        extraClass={"mb-6"}
+                        name='name'
+                        size='default'
+                        extraClass="mb-6"
                         icon="EditIcon"
                     />
                     <EmailInput
-                        placeholder={'Логин'}
-                        type={'email'}
+                        placeholder='Логин'
+                        type='email'
                         onChange={onChangeEmail}
                         value={emailProfile}
-                        name={'login'}
-                        extraClass={"mb-6"}
+                        name='login'
+                        extraClass="mb-6"
                         icon="EditIcon"
                     />
-                    <PasswordInput
-                        placeholder={'Пароль'}
+                    <Input
+                        placeholder='Пароль'
                         onChange={onChangePassword}
                         value={password}
-                        name={'password'}
-                        extraClass={"mt-6"}
+                        name='password'
+                        extraClass="mt-6"
                         icon='EditIcon'
                     />
                     {activeButton && (

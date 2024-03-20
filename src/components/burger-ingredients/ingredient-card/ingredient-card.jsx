@@ -48,7 +48,6 @@ const IngredientCard = ({ingredientData}) => {
             <div className={'text text_type_main-default'}>
                 {name}
             </div>
-
         </li>
     );
 

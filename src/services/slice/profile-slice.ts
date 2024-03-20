@@ -72,6 +72,8 @@ export const profileSlice = createSlice({
                     name: action.payload.user.name,
                 };
                 state.authUser = true;
+                setCookie('accessToken', action.payload.accessToken);
+                localStorage.setItem('refreshToken', action.payload.refreshToken);
             })
             .addCase(loginUser.rejected, (state) => {
                 state.isLoading = false;
@@ -116,7 +118,7 @@ export const profileSlice = createSlice({
 
             //Logout
             .addCase(logoutUser.pending, (state) => {
-                state.isLoading = true;
+                state.isLoading = false;
                 state.isError = false;
             })
             .addCase(logoutUser.fulfilled, (state) => {
@@ -126,10 +128,10 @@ export const profileSlice = createSlice({
                 };
                 state.authUser = false;
                 deleteCookie('accessToken');
-                deleteCookie('refreshToken');
+                localStorage.removeItem('refreshToken');
             })
             .addCase(logoutUser.rejected, (state) => {
-                state.isLoading = false;
+                state.isLoading = true;
                 state.isError = true;
             })
 

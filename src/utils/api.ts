@@ -5,6 +5,7 @@ import {
     apiIngredients,
     ApiLogout,
     apiOrders,
+    ApiResRefresh,
     ApiSendPassword,
     EditProfile,
     ForProfileEdit, LoginUserInfo,
@@ -21,17 +22,30 @@ const checkResponse = <T>(res: Response): Promise<T> => {
     return Promise.reject(`Error ${res.status}`);
 }
 
-export const fetchIngredients = createAsyncThunk(
+export const fetchIngredients = createAsyncThunk<apiIngredients>(
     'slice/fetchIngredients',
     async () => {
-        const response = await fetch(`${api}/ingredients`);
+        const res = await fetch(`${api}/ingredients`);
         await fetch(`${api}/ingredients`)
             .then((res) => checkResponse<apiIngredients>(res))
-        const data = await response.json();
+        const data = await res.json();
 
         return data;
     }
 );
+
+async function resRefresh(): Promise<ApiResRefresh> {
+    const res = await fetch(`${api}/auth/token`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            token: getCookie('refreshToken'),
+        }),
+    });
+    return await res.json();
+}
 
 export async function fetchRefresh<T>(url: RequestInfo, options: RequestInit) {
     try {
@@ -40,16 +54,8 @@ export async function fetchRefresh<T>(url: RequestInfo, options: RequestInit) {
     } catch (err) {
         if ((err as Error).message === 'jwt expected' ||
             (err as Error).message === 'You should be authorised') {
-            const resRefresh = await fetch(`${api}/auth/token`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    token: getCookie('refreshToken'),
-                }),
-            });
-            const dataRefresh = await resRefresh.json();
+
+            const dataRefresh = await resRefresh();
             if (!dataRefresh.success) return Promise.reject(dataRefresh);
             setCookie('accessToken', dataRefresh.accessToken);
             setCookie('refreshToken', dataRefresh.refreshToken);
@@ -91,7 +97,7 @@ export const registerUser = createAsyncThunk(
     },
 );
 
-export const loginUser = createAsyncThunk(
+export const loginUser = createAsyncThunk<SignInUser, LoginUserInfo>(
     'user/login',
     async (data: LoginUserInfo) => {
         const res = await fetch(`${api}/auth/login`, {
@@ -105,8 +111,8 @@ export const loginUser = createAsyncThunk(
     },
 );
 
-export const logoutUser = createAsyncThunk(
-    'user/logout',
+export const logoutUser = createAsyncThunk<ApiLogout>(
+    'auth/logout',
     async () => {
         const res = await fetch(`${api}/auth/logout`, {
             method: 'POST',
@@ -114,14 +120,14 @@ export const logoutUser = createAsyncThunk(
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                token: getCookie('refreshToken')
+                token: localStorage.getItem('refreshToken'),
             }),
         });
         return await checkResponse<ApiLogout>(res);
     },
 );
 
-export const profileInfo = createAsyncThunk(
+export const profileInfo = createAsyncThunk<ForProfileEdit>(
     'user/authentication',
     async () => {
         return await fetchRefresh<ForProfileEdit>(`${api}/auth/user`, {
@@ -136,7 +142,7 @@ export const profileInfo = createAsyncThunk(
         });
     });
 
-export const requestForEditing = createAsyncThunk(
+export const requestForEditing = createAsyncThunk<ForProfileEdit, EditProfile>(
     'user/auth',
     async (data: EditProfile) => {
         return await fetchRefresh<ForProfileEdit>(`${api}/auth/user`, {

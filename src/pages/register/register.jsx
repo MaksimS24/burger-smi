@@ -37,7 +37,7 @@ const Register = () => {
     const sendProfile = async (e) => {
         e.preventDefault();
         registerProfile({name, email, password}).then((data) =>
-            data.payload.success ? navigate('/', {replace: true}) : errorRegister()
+            data?.payload.success ? navigate('/', {replace: true}) : errorRegister()
         );
     };
 

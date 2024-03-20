@@ -22,7 +22,7 @@ export interface apiRequest {
     }
 }
 
-interface UserInfo {
+export interface UserInfo {
     name: string,
     email: string,
 }
@@ -35,7 +35,7 @@ export interface SignInUser {
     user: UserInfo,
     refreshToken: string,
     accessToken: string,
-    success: boolean
+    success: boolean,
 }
 
 export interface LoginUserInfo {
@@ -52,17 +52,22 @@ export interface ForProfileEdit {
 }
 
 export interface ApiLogout {
-    success: string,
+    success: boolean,
     message: string,
 }
 
 export interface ApiForgotPassword {
-    success: string,
+    success: boolean,
     message: string,
 }
 
 export interface ApiSendPassword {
     password: string,
-    token?: string,
+    token: string,
 }
 
+export interface ApiResRefresh {
+    accessToken: string;
+    refreshToken: string;
+    success: boolean;
+}
