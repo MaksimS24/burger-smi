@@ -4,20 +4,22 @@ import {Ingredient} from "../../utils/types/types-ingredients";
 
 interface InterfaceIngredientsSlice {
     ingredients: Ingredient[],
-    status: string,
     isIngredientsOpen: boolean,
-    id: null
+    isLoading: boolean,
+    isError: boolean,
+
 }
 export const initialState: InterfaceIngredientsSlice = {
     ingredients: [],
-    status: 'idle',
     isIngredientsOpen: false,
-    id: null,
+    isLoading: false,
+    isError: false,
+
 };
 
 
 export const ingredientsSlice = createSlice({
-    name: 'modal',
+    name: 'ingredients',
     initialState,
     reducers: {
         openModal: (state) => {
@@ -26,24 +28,21 @@ export const ingredientsSlice = createSlice({
         closeModal: (state) => {
             state.isIngredientsOpen = !state.isIngredientsOpen;
         },
-        setId: (state, action) => {
-            {state.id = action.payload}
-        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchIngredients.pending, (state) => {
-                state.status = 'loading';
+                state.isLoading = true;
             })
             .addCase(fetchIngredients.fulfilled, (state, action) => {
-                state.ingredients = action.payload;
+                state.ingredients = action.payload.data;
             })
             .addCase(fetchIngredients.rejected, (state) => {
-                state.status = 'failed';
+                state.isError = true;
             });
     },
 });
 
-export const {openModal, closeModal, setId} = ingredientsSlice.actions;
+export const {openModal, closeModal,} = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;

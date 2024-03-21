@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 import styles from './burger-constructor.module.css';
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "./order-details/order-details";
 import {useSelector} from "react-redux";
@@ -22,6 +22,7 @@ const BurgerConstructor = () => {
     const number = useSelector((state) => state.order.dataOrder.order.number);
     const plug = useSelector((state) => state.constructorIngredients.plug)
 
+    // DND (drop)
     const [{isHover}, dropIngredients] = useDrop({
         accept: 'ingredients',
         item: {},
@@ -33,16 +34,19 @@ const BurgerConstructor = () => {
         },
     });
 
+    // Начальное состояние кнопки "Оформить заказ"
     const buttonWork = mainAndSauce && ingredientsAdd ? null : styles.buttonOn;
     const statusOrder = null
         ? 'Оформляем Ваш заказ'
         : buttonWork ? 'Соберите бургер' : 'Оформить заказ'
 
+    // Калькулятор суммы
     const calculate = useMemo(() =>
             [...mainAndSauce, {...bun}, {...bun}].reduce((total, amount) =>
                 total + (amount.price === undefined ? 0 : amount.price), 0),
         [mainAndSauce, bun]);
 
+    // Отправка заказа и отображение его номера
     const sendOrder = () => {
         const ingredients = [...mainAndSauce, {...bun}, {...bun}].map((ingredientId) => ingredientId._id);
         const dataIngredientsId = {ingredients};
@@ -60,6 +64,7 @@ const BurgerConstructor = () => {
         >
             <div className={styles.burgerConstructor}>
 
+                {/*Булка верх*/}
                 <ConstructorElement
                     type="top"
                     isLocked={true}
@@ -68,6 +73,7 @@ const BurgerConstructor = () => {
                     thumbnail={bun?.image_mobile || '/up-chevron.png'}
                 />
 
+                {/*Начинки и соусы*/}
                 <ul className={styles.constructorElement}>
                     {plug ?
                         (
@@ -84,6 +90,7 @@ const BurgerConstructor = () => {
                         )}
                 </ul>
 
+                {/*Булка низ*/}
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
@@ -93,6 +100,7 @@ const BurgerConstructor = () => {
                 />
             </div>
 
+            {/*Кнопка "Оформить заказ"*/}
             <div className={styles.check}>
                 <div className={styles.pay}>
                     <p className="text text_type_digits-medium mr-2">{calculate ? calculate : 0}</p>
@@ -110,6 +118,8 @@ const BurgerConstructor = () => {
                     </Button>
                 </div>
             </div>
+
+            {/*Модальное окно с номером заказа*/}
             {isOrderOpen && <Modal
                 children={<OrderDetails number={number}/>}
                 closeModal={closeModalOrder}

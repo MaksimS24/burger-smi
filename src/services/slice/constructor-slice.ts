@@ -37,23 +37,23 @@ export const constructorSlice = createSlice({
             reducer(state, action: PayloadAction<Ingredient>) {
                 if (action.payload.type === 'bun') {
                     state.bun = action.payload;
-                    state.ingredientsAdd = true
+                    state.ingredientsAdd = true;
                 } else {
                     state.mainAndSauce = [action.payload, ...state.mainAndSauce];
                 }
-                state.plug = false
+                state.plug = false;
             },
             prepare: (payload: Ingredient) => ({payload: {...payload, _uuid: nanoid()}})
         },
 
         sortIngredients: (state, action: PayloadAction<{ dragIndex: number; dropIndex: number }>) => {
-            const sort = state.mainAndSauce[action.payload.dropIndex]
+            const sort = state.mainAndSauce[action.payload.dropIndex];
             state.mainAndSauce[action.payload.dropIndex] = state.mainAndSauce[action.payload.dragIndex];
             state.mainAndSauce[action.payload.dragIndex] = sort;
         },
 
         deleteIngredients: (state, action) => {
-            state.mainAndSauce = [...state.mainAndSauce].filter(({_uuid}) => _uuid !== action.payload)
+            state.mainAndSauce = [...state.mainAndSauce].filter(({_uuid}) => _uuid !== action.payload);
         },
     },
 });

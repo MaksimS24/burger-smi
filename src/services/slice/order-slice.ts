@@ -5,7 +5,7 @@ interface OrderInterface {
     isOrderOpen: boolean,
     dataOrder: {
         success: boolean,
-        name: '',
+        name: string,
         order: {
             number: number | null
         }

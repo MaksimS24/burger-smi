@@ -18,6 +18,7 @@ const BurgerConstructorElement = ({ingredientData, index}) => {
         dispatch(deleteIngredients(_uuid))
     })
 
+    // DND (drag, перемещение ингредиентов внутри списка)
     const cardDrop = {_uuid, index};
 
     const [, drag] = useDrag({
@@ -32,6 +33,7 @@ const BurgerConstructorElement = ({ingredientData, index}) => {
         },
     });
 
+    // DND (drop, перемещение ингредиентов внутри списка)
     const [{dataId}, drop] = useDrop({
         accept: 'burgerConstructor',
         collect(monitor) {
@@ -71,6 +73,7 @@ const BurgerConstructorElement = ({ingredientData, index}) => {
             key={_uuid}
             data-handler-id={dataId}
         >
+            {/*Начинки и соусы*/}
             <div ref={refConstructorElement}>
                 <DragIcon type='primary'/>
                 <ConstructorElement
