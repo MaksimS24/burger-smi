@@ -14,3 +14,6 @@ export interface Ingredient {
     _uuid: string
 }
 
+export interface BurgerConstructor extends Ingredient {
+    _uuid: string,
+}

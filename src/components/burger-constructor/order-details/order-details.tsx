@@ -1,11 +1,15 @@
-import React from "react";
+import React, {FC} from "react";
 import styles from "./order-details.module.css";
 // Image
 import {ReactSVG} from "react-svg";
 import imageDone from '../../../images/image-done.svg'
-import PropTypes from "prop-types";
+import PropTypes, {number} from "prop-types";
 
-const OrderDetails = ({number}) => {
+interface OrderDetails {
+    number: number,
+}
+
+const OrderDetails: FC<OrderDetails> = ({number}) => {
 
     return (
         <div className={styles.mainOrder}>
@@ -35,7 +39,3 @@ const OrderDetails = ({number}) => {
 }
 
 export default OrderDetails;
-
-OrderDetails.propTypes = {
-    number: PropTypes.number.isRequired,
-}
