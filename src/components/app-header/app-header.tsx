@@ -3,7 +3,6 @@ import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-devel
 import {Link, NavLink, useLocation} from "react-router-dom";
 import {FC} from "react";
 
-
 const AppHeader: FC = () => {
 
     const {pathname} = useLocation();

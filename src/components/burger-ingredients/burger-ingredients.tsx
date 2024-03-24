@@ -1,29 +1,28 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef, useState} from "react";
 import styles from './burger-ingredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCard from "./ingredient-card/ingredient-card";
-import {useSelector} from "react-redux";
 import {fetchIngredients} from "../../utils/api";
-import {useAppDispatch} from "../../hooks/use-app-redux";
+import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
 
-    const bunRef = useRef(null);
-    const mainRef = useRef(null);
-    const sauceRef = useRef(null);
+    const bunRef = useRef<HTMLDivElement>(null);
+    const mainRef = useRef<HTMLDivElement>(null);
+    const sauceRef = useRef<HTMLDivElement>(null);
     const [selectedTab, setSelectedTab] = useState('bun');
 
-    const handleTabClick = (tabValue) => {
+    const handleTabClick = (tabValue: any) => {
         setSelectedTab(tabValue);
         switch (tabValue) {
             case 'bun':
-                bunRef?.current.scrollIntoView({behavior: 'smooth'});
+                bunRef.current?.scrollIntoView({block: 'start', behavior: 'smooth'});
                 break;
             case 'main':
-                mainRef?.current.scrollIntoView({behavior: 'smooth'});
+                mainRef.current?.scrollIntoView({block: 'start', behavior: 'smooth'});
                 break;
             case 'sauce':
-                sauceRef?.current.scrollIntoView({behavior: 'smooth'});
+                sauceRef.current?.scrollIntoView({block: 'start', behavior: 'smooth'});
                 break;
             default:
                 break;
@@ -35,7 +34,7 @@ const BurgerIngredients = () => {
         dispatch(fetchIngredients());
     }, [dispatch]);
 
-    const ingredients = useSelector((state) => state.ingredients.ingredients);
+    const ingredients = useAppSelector((state) => state.ingredients.ingredients);
 
     return (
 

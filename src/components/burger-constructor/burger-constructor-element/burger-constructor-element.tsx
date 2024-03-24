@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import {BurgerConstructor} from "../../../utils/types/types-ingredients";
 import type { Identifier, XYCoord } from 'dnd-core';
 
-interface BurgerConstructorElement {
+interface BurgerConstructorElementInterface {
     ingredientData: BurgerConstructor,
     index: number,
 }
@@ -20,7 +20,7 @@ interface DndConstructor {
     type: string,
 }
 
-const BurgerConstructorElement: FC<BurgerConstructorElement> = ({ingredientData, index}) => {
+const BurgerConstructorElement: FC<BurgerConstructorElementInterface> = ({ingredientData, index}) => {
 
     const {name, price, image_mobile, _uuid} = ingredientData;
 

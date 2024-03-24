@@ -3,13 +3,12 @@ import styles from "./order-details.module.css";
 // Image
 import {ReactSVG} from "react-svg";
 import imageDone from '../../../images/image-done.svg'
-import PropTypes, {number} from "prop-types";
 
-interface OrderDetails {
+interface OrderDetailsInterface {
     number: number,
 }
 
-const OrderDetails: FC<OrderDetails> = ({number}) => {
+const OrderDetails: FC<OrderDetailsInterface> = ({number}) => {
 
     return (
         <div className={styles.mainOrder}>

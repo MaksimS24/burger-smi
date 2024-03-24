@@ -1,33 +1,34 @@
-import React, {useMemo} from "react";
+import React, {FC, useMemo} from "react";
 import styles from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "./order-details/order-details";
-import {useSelector} from "react-redux";
 import BurgerConstructorElement from "./burger-constructor-element/burger-constructor-element";
 import {useDrop} from "react-dnd";
-import {useAppDispatch} from "../../hooks/use-app-redux";
+import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 import {addIngredients} from "../../services/slice/constructor-slice";
 import {orderCloseModal} from "../../services/slice/order-slice";
 import {fetchOrders} from "../../utils/api";
 import DragElement from "./drag-element/drag-element";
+import {Ingredient} from '../../utils/types/types-ingredients';
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
 
     const dispatch = useAppDispatch();
-    const {isOrderOpen} = useSelector((state) => state.order);
-    const bun = useSelector((state) => state.constructorIngredients.bun);
-    const mainAndSauce = useSelector((state) => state.constructorIngredients.mainAndSauce);
-    const ingredientsAdd = useSelector((state) => state.constructorIngredients.ingredientsAdd);
-    const number = useSelector((state) => state.order.dataOrder.order.number);
-    const plug = useSelector((state) => state.constructorIngredients.plug)
+    const {isOrderOpen} = useAppSelector((state) => state.order);
+    const bun = useAppSelector((state) => state.constructorIngredients.bun);
+    const mainAndSauce = useAppSelector((state) => state.constructorIngredients.mainAndSauce);
+    const ingredientsAdd = useAppSelector((state) => state.constructorIngredients.ingredientsAdd);
+    const number = useAppSelector((state) => state.order.dataOrder.order.number);
+    const isLoading = useAppSelector((state) => state.order.isLoading);
+    const plug = useAppSelector((state) => state.constructorIngredients.plug)
 
     // DND (drop)
-    const [{isHover}, dropIngredients] = useDrop({
+    // @ts-ignore
+    const [{background}, dropIngredients] = useDrop<Ingredient, unknown, {background: string}>({
         accept: 'ingredients',
-        item: {},
-        collect: monitor => ({
-            isHover: monitor.isOver(),
+        collect: (monitor) => ({
+            background: monitor.isOver() ? '#171719' : "",
         }),
         drop: (item) => {
             dispatch(addIngredients(item));
@@ -49,7 +50,7 @@ const BurgerConstructor = () => {
     // Отправка заказа и отображение его номера
     const sendOrder = () => {
         const ingredients = [...mainAndSauce, {...bun}, {...bun}].map((ingredientId) => ingredientId._id);
-        const dataIngredientsId = {ingredients};
+        const dataIngredientsId: {ingredients: string[]} = {ingredients};
         dispatch(fetchOrders(dataIngredientsId));
     }
 
@@ -60,7 +61,7 @@ const BurgerConstructor = () => {
     return (
         <div className={styles.mainBurgerConstructor}
              ref={dropIngredients}
-             style={{isHover}}
+             style={{background}}
         >
             <div className={styles.burgerConstructor}>
 
@@ -108,7 +109,7 @@ const BurgerConstructor = () => {
                 </div>
                 <div>
                     <Button
-                        disabled={buttonWork}
+                        disabled={plug || isLoading}
                         htmlType="button"
                         type="primary"
                         size="large"
@@ -120,7 +121,7 @@ const BurgerConstructor = () => {
             </div>
 
             {/*Модальное окно с номером заказа*/}
-            {isOrderOpen && <Modal
+            {isOrderOpen && number && <Modal
                 children={<OrderDetails number={number}/>}
                 closeModal={closeModalOrder}
             />}
