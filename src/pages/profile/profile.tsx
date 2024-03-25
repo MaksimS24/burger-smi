@@ -2,8 +2,9 @@ import style from './profile.module.css';
 import {NavLink, Outlet} from "react-router-dom";
 import {logoutUser} from "../../utils/api";
 import {useAppDispatch} from "../../hooks/use-app-redux";
+import {FC} from "react";
 
-const Profile = () => {
+const Profile: FC = () => {
 
     const dispatch = useAppDispatch();
     const logout = () => {

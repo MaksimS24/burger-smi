@@ -1,30 +1,35 @@
 import style from './reset-password.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import React, {FC, FormEvent, useState} from "react";
 import {passwordSend} from "../../../utils/api";
-import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../../components/loader/loader";
+import {useAppDispatch, useAppSelector} from "../../../hooks/use-app-redux";
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
 
     const [password, setPassword] = useState('');
-    const onChangePassword = (e) => setPassword(e.target.value);
+    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
     const [hidePassword, setHidePassword] = useState(true);
     const visionPassword = () => setHidePassword(!hidePassword);
 
     const [emailWithCode, setEmailWithCode] = useState('');
-    const onChangeEmail = (e) => setEmailWithCode(e.target.value);
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => setEmailWithCode(e.target.value);
 
     const navigate = useNavigate();
     const {state} = useLocation();
 
-    const dispatch = useDispatch();
-    const isLoading = useSelector((state) => state.profile.isLoading)
+    const dispatch = useAppDispatch();
+    const isLoading = useAppSelector((state) => state.profile.isLoading);
 
-    const sendPassword = (e) => {
+    const emailToken = async (data: any) => {
+        return dispatch(passwordSend(data));
+    }
+
+    const sendPassword = async (e: FormEvent) => {
         e.preventDefault();
-        dispatch(passwordSend(password, emailWithCode)).then((data) => data.success ? navigate('/login', {replace: true}) : null)
+        emailToken({password, emailWithCode})
+            .then((data: any) => data.success ? navigate('/login', {replace: true}) : null)
     };
 
     if (isLoading) {

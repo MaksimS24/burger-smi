@@ -181,7 +181,7 @@ export const passwordSend = createAsyncThunk(
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({data}),
         });
         return await checkResponse<ApiForgotPassword>(res);
     },

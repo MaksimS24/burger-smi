@@ -1,41 +1,43 @@
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from './login.module.css';
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, {FC, FormEvent, useState} from "react";
 import {loginUser} from "../../utils/api";
+import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 
-const Login = () => {
+const Login: FC = () => {
 
     //Use e-mail
-    const [email, setEmail] = useState('');
-    const onChangeEmail = e => setEmail(e.target.value);
+    const [emailLogin, setEmailLogin] = useState('');
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => setEmailLogin(e.target.value);
 
     //Use password
-    const [password, setPassword] = useState('');
-    const onChangePassword = (e) => setPassword(e.target.value);
+    const [passwordLogin, setPasswordLogin] = useState('');
+    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPasswordLogin(e.target.value);
 
     //Use hide the password
     const [passwordHide, setPasswordHide] = useState(true);
     const clickHidePassword = () => setPasswordHide(!passwordHide);
 
     //Error
-    const errorLogin = useSelector((state) => state.profile.isError);
+    const errorLogin = useAppSelector((state) => state.profile.isError);
 
     const navigate = useNavigate();
-    const {locationState} = useLocation();
+    const {state} = useLocation();
 
     //Login
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const loginProfile = async (data: any) => {
+        return dispatch(loginUser(data));
+    }
 
-    const sendLogin = async (e) => {
+    const sendLogin = async (e: FormEvent) => {
         e.preventDefault();
-        const loginProfile = await dispatch(loginUser({email, password}));
-        if (loginUser.fulfilled.match(loginProfile)) {
-            navigate(`${locationState ? locationState.pathname : '/'}`, {replace: true});
-        } else {
-            errorLogin('');
-        }
+        loginProfile({email: emailLogin, password: passwordLogin}).then(() =>
+            loginUser.fulfilled.match(loginProfile) ? navigate(`${state ? state.pathname : '/'}`, {replace: true})
+                :
+                errorLogin
+        );
     };
 
     return (
@@ -50,9 +52,10 @@ const Login = () => {
                     <form onSubmit={sendLogin}>
                         <EmailInput
                             placeholder='E-mail'
+                            // @ts-ignore
                             type='email'
                             onChange={onChangeEmail}
-                            value={email}
+                            value={emailLogin}
                             name='login'
                             error={false}
                             errorText='Ошибка. Введите E-mail.'
@@ -66,7 +69,7 @@ const Login = () => {
                             icon={passwordHide ? 'ShowIcon' : 'HideIcon'}
                             onIconClick={clickHidePassword}
                             onChange={onChangePassword}
-                            value={password}
+                            value={passwordLogin}
                             name='password'
                             error={false}
                             errorText='Ошибка'

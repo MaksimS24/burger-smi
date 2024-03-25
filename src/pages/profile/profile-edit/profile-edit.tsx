@@ -1,32 +1,32 @@
 import style from './profile-edit.module.css';
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useEffect, useState} from "react";
+import React, {FC, FormEvent, useEffect, useState} from "react";
 import {requestForEditing} from "../../../utils/api";
 import {getCookie} from "../../../utils/cookie";
-import {useDispatch, useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../../hooks/use-app-redux";
 
-const ProfileEdit = () => {
+const ProfileEdit: FC = () => {
 
     //Cookie
     const token = getCookie('accessToken');
 
-    const dispatch = useDispatch();
-    const editProfile = async (data) => {
+    const dispatch = useAppDispatch();
+    const editProfile = async (data: any) => {
         dispatch(requestForEditing(data))
     }
-    const {name, email} = useSelector((state) => state.profile.user);
+    const {name, email} = useAppSelector((state) => state.profile.user);
 
     //Use name
     const [nameProfile, setNameProfile] = useState(name);
-    const onChangeName = (e) => setNameProfile(e.target.value);
+    const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => setNameProfile(e.target.value);
 
     //Use e-mail
     const [emailProfile, setEmailProfile] = useState(email);
-    const onChangeEmail = (e) => setEmailProfile(e.target.value);
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => setEmailProfile(e.target.value);
 
     //Use password
     const [password, setPassword] = useState('');
-    const onChangePassword = (e) => setPassword(e.target.value);
+    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
     //Undo profile info
     const undoInfo = () => {
@@ -36,7 +36,7 @@ const ProfileEdit = () => {
     }
 
     //Profile editing
-    const editingProfile = async (e) => {
+    const editingProfile = async (e: FormEvent) => {
         e.preventDefault();
         await editProfile({name: nameProfile, email: emailProfile, password, token})
     }
@@ -71,6 +71,7 @@ const ProfileEdit = () => {
                     />
                     <EmailInput
                         placeholder='Логин'
+                        // @ts-ignore
                         type='email'
                         onChange={onChangeEmail}
                         value={emailProfile}

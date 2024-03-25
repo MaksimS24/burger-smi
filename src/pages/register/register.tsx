@@ -1,46 +1,45 @@
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from './register.module.css';
 import {Link, useNavigate} from "react-router-dom";
-import {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, {FC, FormEvent, useState} from "react";
 import {registerUser} from "../../utils/api";
+import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 
 
-const Register = () => {
+const Register: FC = () => {
 
     //Use name
     const [name, setName] = useState('');
-    const onChangeName = (e) => setName(e.target.value);
+    const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value);
 
     //Use e-mail
     const [email, setEmail] = useState('');
-    const onChangeEmail = (e) => setEmail(e.target.value);
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
 
     //Use password
     const [password, setPassword] = useState('');
-    const onChangePassword = (e) => setPassword(e.target.value);
+    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
     //Use hide the password
     const [passwordHide, setPasswordHide] = useState(true);
     const clickHidePassword = () => setPasswordHide(!passwordHide);
 
     //Error
-    const errorRegister = useSelector((state) => state.profile.isError);
+    const errorRegister = useAppSelector((state) => state.profile.isError);
 
     //Register
-    const dispatch = useDispatch();
-    const registerProfile = async (data) => {
+    const dispatch = useAppDispatch();
+    const registerProfile = async (data: any) => {
         return dispatch(registerUser(data));
     }
 
     const navigate = useNavigate();
-    const sendProfile = async (e) => {
+    const sendProfile = async (e: FormEvent) => {
         e.preventDefault();
-        registerProfile({name, email, password}).then((data) =>
-            data?.payload.success ? navigate('/', {replace: true}) : errorRegister()
+        registerProfile({name, email, password}).then(() =>
+            registerUser.fulfilled.match(registerProfile) ? navigate('/', {replace: true}) : errorRegister
         );
     };
-
 
     return (
         <div className={style.registration}>
@@ -64,11 +63,10 @@ const Register = () => {
                     />
                     <EmailInput
                         placeholder='E-mail'
-                        type='email'
                         onChange={onChangeEmail}
                         value={email}
                         name='name'
-                        error={false}
+                        // @ts-ignore
                         errorText='Ошибка'
                         size='default'
                         extraClass="mb-5"
