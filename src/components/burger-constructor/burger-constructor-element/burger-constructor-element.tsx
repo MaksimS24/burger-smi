@@ -4,23 +4,21 @@ import React, {FC, useCallback, useRef} from "react";
 import {useDrag, useDrop} from 'react-dnd';
 import {useAppDispatch} from "../../../hooks/use-app-redux";
 import {deleteIngredients, sortIngredients} from "../../../services/slice/constructor-slice";
-import {ingredientConstructorPropsTypes} from "../../../utils/types/props-types";
-import PropTypes from "prop-types";
-import {BurgerConstructor} from "../../../utils/types/types-ingredients";
+import {IBurgerConstructor} from "../../../utils/types/types-ingredients";
 import type { Identifier, XYCoord } from 'dnd-core';
 
-interface BurgerConstructorElementInterface {
-    ingredientData: BurgerConstructor,
+interface IBurgerConstructorElementInterface {
+    ingredientData: IBurgerConstructor,
     index: number,
 }
 
-interface DndConstructor {
+interface IDndConstructor {
     _uuid: string,
     index: number,
     type: string,
 }
 
-const BurgerConstructorElement: FC<BurgerConstructorElementInterface> = ({ingredientData, index}) => {
+const BurgerConstructorElement: FC<IBurgerConstructorElementInterface> = ({ingredientData, index}) => {
 
     const {name, price, image_mobile, _uuid} = ingredientData;
 
@@ -38,17 +36,16 @@ const BurgerConstructorElement: FC<BurgerConstructorElementInterface> = ({ingred
         type: 'burgerConstructor',
         item: cardDrop,
         collect: (monitor) => {
-            const result = {
+            return {
                 dataId: monitor.getHandlerId(),
-                isDragging: monitor.isDragging() ? 1 : 1,
+                isDragging: monitor.isDragging() ? 0.1 : 0.3,
                 drop: monitor.isDragging() ? styles.drop : ""
             }
-            return result
         },
     });
 
     // DND (drop, перемещение ингредиентов внутри списка)
-    const [{dataId}, dropElement] = useDrop<DndConstructor, void, {dataId: Identifier | null}>({
+    const [{dataId}, dropElement] = useDrop<IDndConstructor, void, {dataId: Identifier | null}>({
         accept: 'burgerConstructor',
         collect(monitor) {
             return {
@@ -103,8 +100,3 @@ const BurgerConstructorElement: FC<BurgerConstructorElementInterface> = ({ingred
 };
 
 export default BurgerConstructorElement;
-
-BurgerConstructorElement.propTypes = {
-    ingredientData: ingredientConstructorPropsTypes.isRequired,
-    index: PropTypes.number.isRequired,
-}

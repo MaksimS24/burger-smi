@@ -4,13 +4,13 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import {useDrag} from "react-dnd";
 import {useNavigate} from "react-router-dom";
 import {useAppSelector} from "../../../hooks/use-app-redux";
-import {Ingredient} from "../../../utils/types/types-ingredients";
+import {IIngredient} from "../../../utils/types/types-ingredients";
 
-interface IngredientCardInterface {
-    ingredientData: Ingredient,
+interface IIngredientCardInterface {
+    ingredientData: IIngredient,
 }
 
-const IngredientCard: FC<IngredientCardInterface> = ({ingredientData}) => {
+const IngredientCard: FC<IIngredientCardInterface> = ({ingredientData}) => {
 
     const {name, price, image} = ingredientData;
 
@@ -30,7 +30,7 @@ const IngredientCard: FC<IngredientCardInterface> = ({ingredientData}) => {
     const counter = useMemo( () => {
         // @ts-ignore
         return allIngredients.filter((ingredient) => ingredient._id === ingredientData._id).length
-    }, [allIngredients]);
+    }, [ingredientData._id, allIngredients]);
 
     const navigate = useNavigate();
     const viewModal = () => {

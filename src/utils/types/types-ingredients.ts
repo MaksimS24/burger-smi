@@ -1,4 +1,4 @@
-export interface Ingredient {
+export interface IIngredient {
     _id: string;
     name: string;
     type: string;
@@ -14,6 +14,6 @@ export interface Ingredient {
     _uuid: string
 }
 
-export interface BurgerConstructor extends Ingredient {
+export interface IBurgerConstructor extends IIngredient {
     _uuid: string,
 }

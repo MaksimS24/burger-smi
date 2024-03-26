@@ -1,15 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {fetchIngredients} from "../../utils/api";
-import {Ingredient} from "../../utils/types/types-ingredients";
+import {IIngredient} from "../../utils/types/types-ingredients";
 
-interface InterfaceIngredientsSlice {
-    ingredients: Ingredient[],
+interface IInterfaceIngredientsSlice {
+    ingredients: IIngredient[],
     isIngredientsOpen: boolean,
     isLoading: boolean,
     isError: boolean,
 
 }
-export const initialState: InterfaceIngredientsSlice = {
+export const initialState: IInterfaceIngredientsSlice = {
     ingredients: [],
     isIngredientsOpen: false,
     isLoading: false,

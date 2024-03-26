@@ -10,7 +10,7 @@ import {addIngredients} from "../../services/slice/constructor-slice";
 import {orderCloseModal} from "../../services/slice/order-slice";
 import {fetchOrders} from "../../utils/api";
 import DragElement from "./drag-element/drag-element";
-import {Ingredient} from '../../utils/types/types-ingredients';
+import {IIngredient} from '../../utils/types/types-ingredients';
 
 const BurgerConstructor: FC = () => {
 
@@ -25,10 +25,10 @@ const BurgerConstructor: FC = () => {
 
     // DND (drop)
     // @ts-ignore
-    const [{background}, dropIngredients] = useDrop<Ingredient, unknown, {background: string}>({
+    const [{background}, dropIngredients] = useDrop<IIngredient, unknown, {background: string}>({
         accept: 'ingredients',
         collect: (monitor) => ({
-            background: monitor.isOver() ? '#171719' : "",
+            background: monitor.isOver() ? '#131316' : "",
         }),
         drop: (item) => {
             dispatch(addIngredients(item));
