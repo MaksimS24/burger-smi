@@ -1,11 +1,11 @@
-import {Ingredient} from "./types-ingredients";
+import {IIngredient} from "./types-ingredients";
 
-export interface apiIngredients {
+export interface IApiIngredients {
     success: boolean,
-    data: Ingredient[];
+    data: IIngredient[];
 }
 
-export interface apiOrders {
+export interface IApiOrders {
     success: boolean,
     name: string,
     order: {
@@ -22,51 +22,51 @@ export interface apiRequest {
     }
 }
 
-export interface UserInfo {
+export interface IUserInfo {
     name: string,
     email: string,
 }
 
-export interface Register extends UserInfo{
+export interface IRegister extends IUserInfo{
     password: string,
 }
 
-export interface SignInUser {
-    user: UserInfo,
+export interface ISignInUser {
+    user: IUserInfo,
     refreshToken: string,
     accessToken: string,
     success: boolean,
 }
 
-export interface LoginUserInfo {
+export interface ILoginUserInfo {
     email: string,
     password: string,
 }
-export interface EditProfile extends UserInfo{
+export interface IEditProfile extends IUserInfo{
     accessToken: string,
     password: string,
 }
-export interface ForProfileEdit {
-    user: UserInfo,
+export interface IForProfileEdit {
+    user: IUserInfo,
     success: boolean,
 }
 
-export interface ApiLogout {
-    success: boolean,
-    message: string,
-}
-
-export interface ApiForgotPassword {
+export interface IApiLogout {
     success: boolean,
     message: string,
 }
 
-export interface ApiSendPassword {
+export interface IApiForgotPassword {
+    success: boolean,
+    message: string,
+}
+
+export interface IApiSendPassword {
     password: string,
     token: string,
 }
 
-export interface ApiResRefresh {
+export interface IApiResRefresh {
     accessToken: string;
     refreshToken: string;
     success: boolean;

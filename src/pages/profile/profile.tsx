@@ -2,11 +2,12 @@ import style from './profile.module.css';
 import {NavLink, Outlet} from "react-router-dom";
 import {logoutUser} from "../../utils/api";
 import {useAppDispatch} from "../../hooks/use-app-redux";
+import {FC} from "react";
 
-const Profile = () => {
+const Profile: FC = () => {
 
     const dispatch = useAppDispatch();
-    const logout = () => {
+    const isLogout = () => {
         dispatch(logoutUser());
     }
 
@@ -39,7 +40,7 @@ const Profile = () => {
                                  className={({isActive}) => isActive ? `${style.link} ${style.active}` : style.link}
                         >
                             <p className="text text_type_main-medium"
-                               onClick={logout}>
+                               onClick={isLogout}>
                                 Выход
                             </p>
                         </NavLink>

@@ -1,30 +1,36 @@
 import style from './reset-password.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import React, {FC, FormEvent, useState} from "react";
 import {passwordSend} from "../../../utils/api";
-import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../../components/loader/loader";
+import {useAppDispatch, useAppSelector} from "../../../hooks/use-app-redux";
+import { IApiSendPassword } from '../../../utils/types/types-api';
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
 
     const [password, setPassword] = useState('');
-    const onChangePassword = (e) => setPassword(e.target.value);
+    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
     const [hidePassword, setHidePassword] = useState(true);
-    const visionPassword = () => setHidePassword(!hidePassword);
+    const isVisionPassword = () => setHidePassword(!hidePassword);
 
-    const [emailWithCode, setEmailWithCode] = useState('');
-    const onChangeEmail = (e) => setEmailWithCode(e.target.value);
+    const [token, setToken] = useState('');
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => setToken(e.target.value);
 
     const navigate = useNavigate();
     const {state} = useLocation();
 
-    const dispatch = useDispatch();
-    const isLoading = useSelector((state) => state.profile.isLoading)
+    const dispatch = useAppDispatch();
+    const isLoading = useAppSelector((state) => state.profile.isLoading);
 
-    const sendPassword = (e) => {
+    const isEmailToken = async (data: IApiSendPassword) => {
+        return dispatch(passwordSend(data));
+    }
+
+    const toSendPassword = async (e: FormEvent) => {
         e.preventDefault();
-        dispatch(passwordSend(password, emailWithCode)).then((data) => data.success ? navigate('/login', {replace: true}) : null)
+        isEmailToken({password, token})
+            .then((data: any) => data.success ? navigate('/login', {replace: true}) : null)
     };
 
     if (isLoading) {
@@ -42,13 +48,13 @@ const ResetPassword = () => {
                         Восстановление пароля
                     </p>
 
-                    <form onSubmit={sendPassword}>
+                    <form onSubmit={toSendPassword}>
                         <Input
                             placeholder='Введите новый пароль'
                             type={hidePassword ? 'password' : 'text'}
                             icon={hidePassword ? 'ShowIcon' : 'HideIcon'}
                             onChange={onChangePassword}
-                            onIconClick={visionPassword}
+                            onIconClick={isVisionPassword}
                             value={password}
                             name='password'
                             size='default'
@@ -58,7 +64,7 @@ const ResetPassword = () => {
                             placeholder='Введите код из письма'
                             type='text'
                             onChange={onChangeEmail}
-                            value={emailWithCode}
+                            value={token}
                             name='emailWithCode'
                             errorText='Ошибка'
                             size='default'

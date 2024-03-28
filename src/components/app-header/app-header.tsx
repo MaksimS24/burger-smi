@@ -1,9 +1,9 @@
 import styles from './app-header.module.css';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, NavLink, useLocation} from "react-router-dom";
+import {FC} from "react";
 
-
-const AppHeader = () => {
+const AppHeader: FC = () => {
 
     const {pathname} = useLocation();
 
@@ -12,7 +12,7 @@ const AppHeader = () => {
             <div className={styles.containerHeader}>
                 <nav>
                     {/*Конструктор*/}
-                    <span className={styles.constructor}>
+                    <span className={styles.lineOrder}>
                     <NavLink
                         to='/'
                         className={({isActive}) => isActive ? `${styles.aLink} ${styles.active}` : styles.aLink}

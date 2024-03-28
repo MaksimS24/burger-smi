@@ -15,7 +15,7 @@ header {
 }
 
 
-nav, .constructor, .lineOrder, .logo, .lk {
+nav, .lineOrder, .logo, .lk {
     flex: 1;
 }
 
@@ -26,7 +26,7 @@ nav {
     margin: 16px 0px;
 }
 
-.constructor, .lineOrder {
+.lineOrder {
     display: flex;
 }
 

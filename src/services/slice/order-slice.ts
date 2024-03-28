@@ -10,8 +10,8 @@ interface OrderInterface {
             number: number | null
         }
     }
-    status: string,
-    error: boolean,
+    isLoading: boolean,
+    isError: boolean,
 }
 
 export const initialState: OrderInterface = {
@@ -23,8 +23,8 @@ export const initialState: OrderInterface = {
             number: null
         }
     },
-    status: '',
-    error: false,
+    isLoading: false,
+    isError: false,
 }
 
 export const orderSlice = createSlice({
@@ -33,7 +33,7 @@ export const orderSlice = createSlice({
     reducers: {
         orderOpenModal: (state, action) => {
             state.isOrderOpen = true;
-            state.error = action.payload;
+            state.isError = action.payload;
         },
         orderCloseModal: (state) => {
             state.isOrderOpen = !state.isOrderOpen;
@@ -43,8 +43,8 @@ export const orderSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchOrders.pending, (state) => {
-                state.status = 'loading';
-                state.error = false;
+                state.isLoading =true;
+                state.isError = false;
 
             })
             .addCase(fetchOrders.fulfilled, (state, action) => {
@@ -52,9 +52,8 @@ export const orderSlice = createSlice({
                 state.isOrderOpen = true;
             })
             .addCase(fetchOrders.rejected, (state, action) => {
-                state.status = 'failed';
-                // @ts-ignore
-                state.error = action.payload;
+                state.isLoading = false;
+                state.isError = true;
             });
     }
 })

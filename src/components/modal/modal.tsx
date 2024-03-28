@@ -1,24 +1,28 @@
-import React, {useEffect} from "react";
+import React, {FC, PropsWithChildren, useEffect} from "react";
 import styles from './modal.module.css';
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
-const Modal = ({title, children, closeModal}) => {
+interface ModalInterface {
+    title?: string,
+    children: React.ReactNode,
+    closeModal: () => void,
+}
+
+const Modal: FC<PropsWithChildren<ModalInterface>> = ({title, children, closeModal}) => {
 
     //Закрытие модального окна по Esc и по клику  
     useEffect(() => {
-        const keyPress = (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
+        const keyPress = (e: KeyboardEvent) => {
+            e.key === 'Escape' && closeModal()
         };
         document.addEventListener('keyup', keyPress, false);
-        document.getElementById('root').classList.add('overflow');
+        document.getElementById('root')?.classList.add('overflow');
         return () => {
-            document.removeEventListener('keydown', keyPress, false);
-            document.getElementById('root').classList.remove('overflow');
+            document.removeEventListener('keyup', keyPress, false);
+            document.getElementById('root')?.classList.remove('overflow');
         }
-    });
+        // eslint-disable-next-line
+    }, []);
 
 
     return (
@@ -50,12 +54,3 @@ const Modal = ({title, children, closeModal}) => {
 }
 
 export default Modal;
-
-Modal.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.node
-    ]).isRequired,
-    closeModal: PropTypes.func.isRequired,
-    title: PropTypes.string,
-}

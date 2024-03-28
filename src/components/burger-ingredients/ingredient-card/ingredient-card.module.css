@@ -6,7 +6,7 @@
     box-sizing: border-box;
     cursor: pointer;
     list-style: none;
-    padding-inline-start: 0px;
+    padding-inline-start: 0;
     position: relative;
 }
 li svg {

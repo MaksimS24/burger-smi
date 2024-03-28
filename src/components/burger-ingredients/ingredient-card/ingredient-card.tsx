@@ -1,40 +1,46 @@
-import React, {useMemo} from "react";
+import React, {FC, useMemo} from "react";
 import styles from "./ingredient-card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag} from "react-dnd";
-import {useSelector} from "react-redux";
-import {ingredientPropsTypes} from "../../../utils/types/props-types";
 import {useNavigate} from "react-router-dom";
+import {useAppSelector} from "../../../hooks/use-app-redux";
+import {IIngredient} from "../../../utils/types/types-ingredients";
 
-const IngredientCard = ({ingredientData}) => {
+interface IIngredientCardInterface {
+    ingredientData: IIngredient,
+}
+
+const IngredientCard: FC<IIngredientCardInterface> = ({ingredientData}) => {
 
     const {name, price, image} = ingredientData;
 
-    const [{isDrag}, dragTarget] = useDrag(() => ({
+    const [{opacity}, dragTarget] = useDrag(() => ({
         type: 'ingredients',
         item: ingredientData,
         collect: monitor => ({
-            isDrag: monitor.isDragging()
+            opacity: monitor.isDragging() ? 0.2 : 1
         }),
     }));
 
-    const mainAndSauce = useSelector((state) => state.constructorIngredients.mainAndSauce);
-    const bun = useSelector((state) => state.constructorIngredients.bun);
+    const mainAndSauce = useAppSelector((state) => state.constructorIngredients.mainAndSauce);
+    const bun = useAppSelector((state) => state.constructorIngredients.bun);
 
+    // @ts-ignore
     let allIngredients = [].concat(mainAndSauce, bun, bun);
     const counter = useMemo( () => {
+        // @ts-ignore
         return allIngredients.filter((ingredient) => ingredient._id === ingredientData._id).length
-    }, [allIngredients]);
+    }, [ingredientData._id, allIngredients]);
 
     const navigate = useNavigate();
-    const viewModal = () => {
+    const toViewModal = () => {
         navigate(`/ingredients/${ingredientData._id}`, {state: {modal: true, id: ingredientData._id}})
     }
 
     return (
         <li className={styles.liIngredients}
-            onClick={viewModal}
-            style={{isDrag}}
+            onClick={toViewModal}
+            style={{opacity}}
         >
             {counter ? <Counter count={counter} size={"default"} extraClass={styles.count}/> : null}
             <img src={image}
@@ -54,7 +60,3 @@ const IngredientCard = ({ingredientData}) => {
 };
 
 export default IngredientCard;
-
-IngredientCard.propTypes = {
-    ingredientData: ingredientPropsTypes.isRequired,
-}

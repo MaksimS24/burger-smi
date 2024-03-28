@@ -17,7 +17,7 @@ const IngredientDetails = () => {
     const ingredients = useAppSelector((state) => state.ingredients.ingredients);
 
     const details = useMemo(() =>
-        ingredients.find((ingredient: any) => ingredient?._id === id), [id, ingredients]
+        ingredients.find((ingredient) => ingredient._id === id), [id, ingredients]
     );
 
     return (

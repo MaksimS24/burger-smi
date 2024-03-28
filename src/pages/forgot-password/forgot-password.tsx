@@ -1,19 +1,19 @@
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
 import style from "./forgot-password.module.css";
-import {useState} from "react";
+import React, {FC, FormEvent, useState} from "react";
 import {forgotPasswordEmail} from "../../utils/api";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../hooks/use-app-redux";
 
 
-const ForgotPassword = () => {
+const ForgotPassword: FC = () => {
 
     const [login, setLogin] = useState('');
-    const ForgotSignIn = (e) => setLogin(e.target.value);
+    const isForgotSignIn = (e: React.ChangeEvent<HTMLInputElement>) => setLogin(e.target.value);
     const navigate = useNavigate();
 
-    const dispatch = useDispatch();
-    const sendEmail = (e) => {
+    const dispatch = useAppDispatch();
+    const toSendEmail = (e: FormEvent) => {
         e.preventDefault();
         dispatch(forgotPasswordEmail(login)).then(() => navigate('/reset-password', {replace: true, state: true}));
     };
@@ -26,12 +26,13 @@ const ForgotPassword = () => {
                         Восстановление пароля
                     </p>
 
-                    <form onSubmit={sendEmail}>
+                    <form onSubmit={toSendEmail}>
                         <EmailInput
                             placeholder='E-mail'
-                            onChange={ForgotSignIn}
+                            onChange={isForgotSignIn}
                             value={login}
                             name='email'
+                            //@ts-ignore
                             errorText='Ошибка'
                             size='default'
                             extraClass="mb-5"
