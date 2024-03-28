@@ -29,7 +29,7 @@ function App() {
     }, [dispatch]);
 
     const navigate = useNavigate();
-    const closeModal = useCallback(() => {
+    const onCloseModal = useCallback(() => {
         navigate(-1)
     }, [navigate])
 
@@ -56,7 +56,7 @@ function App() {
                     <Routes>
                         <Route path='/ingredients/:id'
                                element={
-                                   <Modal title={'Детали ингредиента'} closeModal={closeModal}>
+                                   <Modal title={'Детали ингредиента'} onCloseModal={onCloseModal}>
                                        <IngredientDetails/>
                                    </Modal>
                                }/>

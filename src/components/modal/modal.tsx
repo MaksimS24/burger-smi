@@ -5,20 +5,20 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 interface ModalInterface {
     title?: string,
     children: React.ReactNode,
-    closeModal: () => void,
+    onCloseModal: () => void,
 }
 
-const Modal: FC<PropsWithChildren<ModalInterface>> = ({title, children, closeModal}) => {
+const Modal: FC<PropsWithChildren<ModalInterface>> = ({title, children, onCloseModal}) => {
 
     //Закрытие модального окна по Esc и по клику  
     useEffect(() => {
-        const keyPress = (e: KeyboardEvent) => {
-            e.key === 'Escape' && closeModal()
+        const handleKeyPress = (e: KeyboardEvent) => {
+            e.key === 'Escape' && onCloseModal()
         };
-        document.addEventListener('keyup', keyPress, false);
+        document.addEventListener('keyup', handleKeyPress, false);
         document.getElementById('root')?.classList.add('overflow');
         return () => {
-            document.removeEventListener('keyup', keyPress, false);
+            document.removeEventListener('keyup', handleKeyPress, false);
             document.getElementById('root')?.classList.remove('overflow');
         }
         // eslint-disable-next-line
@@ -27,7 +27,7 @@ const Modal: FC<PropsWithChildren<ModalInterface>> = ({title, children, closeMod
 
     return (
         <>
-            <div className={styles.backgroundModal} onClick={closeModal}/>
+            <div className={styles.backgroundModal} onClick={onCloseModal}/>
 
             <div className={styles.centeredModal}>
                 <div className={styles.modal}>
@@ -38,7 +38,7 @@ const Modal: FC<PropsWithChildren<ModalInterface>> = ({title, children, closeMod
                             {title}
                         </h1>
                         <button className={styles.closeButton}>
-                            <CloseIcon onClick={closeModal} type="primary"/>
+                            <CloseIcon onClick={onCloseModal} type="primary"/>
                         </button>
 
                     </div>

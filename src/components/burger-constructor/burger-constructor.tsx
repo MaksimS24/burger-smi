@@ -123,7 +123,7 @@ const BurgerConstructor: FC = () => {
             {/*Модальное окно с номером заказа*/}
             {isOrderOpen && number && <Modal
                 children={<OrderDetails number={number}/>}
-                closeModal={toCloseModalOrder}
+                onCloseModal={toCloseModalOrder}
             />}
         </div>
     );
