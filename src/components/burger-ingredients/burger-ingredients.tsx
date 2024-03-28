@@ -1,34 +1,31 @@
-import React, {FC, useEffect, useRef, useState} from "react";
+import React, {FC, RefObject, useEffect, useRef, useState} from "react";
 import styles from './burger-ingredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCard from "./ingredient-card/ingredient-card";
 import {fetchIngredients} from "../../utils/api";
 import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
+import {tabScroll} from "../../hooks/tabScroll";
 
 const BurgerIngredients: FC = () => {
+
+    //Tabs and scroll
+    const [selectedTab, setSelectedTab] = useState<'bun' | 'main' | 'sauce'>('bun');
 
     const bunRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
     const sauceRef = useRef<HTMLDivElement>(null);
-    const [selectedTab, setSelectedTab] = useState('bun');
+    const tabRef = useRef<HTMLDivElement>(null);
 
-    const handleTabClick = (tabValue: any) => {
-        setSelectedTab(tabValue);
-        switch (tabValue) {
-            case 'bun':
-                bunRef.current?.scrollIntoView({block: 'start', behavior: 'smooth'});
-                break;
-            case 'main':
-                mainRef.current?.scrollIntoView({block: 'start', behavior: 'smooth'});
-                break;
-            case 'sauce':
-                sauceRef.current?.scrollIntoView({block: 'start', behavior: 'smooth'});
-                break;
-            default:
-                break;
-        }
-    };
+    const getActive = () => {
+        setSelectedTab(tabScroll({bunRef, sauceRef, mainRef, tabRef}));
+    }
+    console.log(getActive)
 
+    const toHandleTabClick = (ref: RefObject<HTMLElement>) => {
+        ref.current?.scrollIntoView({block: 'start', behavior: 'smooth'});
+    }
+
+    //Array ingredients
     const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(fetchIngredients());
@@ -45,54 +42,56 @@ const BurgerIngredients: FC = () => {
             </h1>
 
             {/*Табы*/}
-            <div className={styles.tabIngredients}>
-                <Tab value="bun" active={selectedTab === 'bun'} onClick={handleTabClick}>
+            <div className={styles.tabIngredients} ref={tabRef}>
+                <Tab value={"bun"} active={selectedTab === 'bun'} key={1} onClick={() => toHandleTabClick(bunRef)}>
                     Булки
                 </Tab>
-                <Tab value="main" active={selectedTab === 'main'} onClick={handleTabClick}>
+                <Tab value={"main"} active={selectedTab === 'main'} key={2} onClick={() => toHandleTabClick(mainRef)}>
                     Начинки
                 </Tab>
-                <Tab value="sauce" active={selectedTab === 'sauce'} onClick={handleTabClick}>
+                <Tab value={"sauce"} active={selectedTab === 'sauce'} key={3} onClick={() => toHandleTabClick(sauceRef)}>
                     Соусы
                 </Tab>
             </div>
 
             {/*Ингредиенты*/}
-            <div className={styles.cardsIngredient}>
+            <main>
+                <div className={styles.cardsIngredient} onScroll={() => getActive()}>
 
-                {/*Булки*/}
-                <h2 ref={bunRef}>Булки</h2>
-                <ul className={styles.ulIngredient}>
-                    {ingredients.filter((ingredient) => ingredient.type === 'bun').map((ingredient) => (
-                        <IngredientCard
-                            ingredientData={ingredient}
-                            key={ingredient._id}
-                        />
-                    ))}
-                </ul>
+                    {/*Булки*/}
+                    <h2 ref={bunRef}>Булки</h2>
+                    <ul className={styles.ulIngredient}>
+                        {ingredients.filter((ingredient) => ingredient.type === 'bun').map((ingredient) => (
+                            <IngredientCard
+                                ingredientData={ingredient}
+                                key={ingredient._id}
+                            />
+                        ))}
+                    </ul>
 
-                {/*Начинки*/}
-                <h2 ref={mainRef}>Начинки</h2>
-                <ul className={styles.ulIngredient}>
-                    {ingredients.filter((ingredient) => ingredient.type === 'main').map((ingredient) => (
-                        <IngredientCard
-                            ingredientData={ingredient}
-                            key={ingredient._id}
-                        />
-                    ))}
-                </ul>
+                    {/*Начинки*/}
+                    <h2 ref={mainRef}>Начинки</h2>
+                    <ul className={styles.ulIngredient}>
+                        {ingredients.filter((ingredient) => ingredient.type === 'main').map((ingredient) => (
+                            <IngredientCard
+                                ingredientData={ingredient}
+                                key={ingredient._id}
+                            />
+                        ))}
+                    </ul>
 
-                {/*Соусы*/}
-                <h2 ref={sauceRef}>Соусы</h2>
-                <ul className={styles.ulIngredient}>
-                    {ingredients.filter((ingredient) => ingredient.type === 'sauce').map((ingredient) => (
-                        <IngredientCard
-                            ingredientData={ingredient}
-                            key={ingredient._id}
-                        />
-                    ))}
-                </ul>
-            </div>
+                    {/*Соусы*/}
+                    <h2 ref={sauceRef}>Соусы</h2>
+                    <ul className={styles.ulIngredient}>
+                        {ingredients.filter((ingredient) => ingredient.type === 'sauce').map((ingredient) => (
+                            <IngredientCard
+                                ingredientData={ingredient}
+                                key={ingredient._id}
+                            />
+                        ))}
+                    </ul>
+                </div>
+            </main>
         </div>
     )
 }

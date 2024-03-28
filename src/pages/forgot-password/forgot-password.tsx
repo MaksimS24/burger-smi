@@ -9,11 +9,11 @@ import {useAppDispatch} from "../../hooks/use-app-redux";
 const ForgotPassword: FC = () => {
 
     const [login, setLogin] = useState('');
-    const ForgotSignIn = (e: React.ChangeEvent<HTMLInputElement>) => setLogin(e.target.value);
+    const isForgotSignIn = (e: React.ChangeEvent<HTMLInputElement>) => setLogin(e.target.value);
     const navigate = useNavigate();
 
     const dispatch = useAppDispatch();
-    const sendEmail = (e: FormEvent) => {
+    const toSendEmail = (e: FormEvent) => {
         e.preventDefault();
         dispatch(forgotPasswordEmail(login)).then(() => navigate('/reset-password', {replace: true, state: true}));
     };
@@ -26,10 +26,10 @@ const ForgotPassword: FC = () => {
                         Восстановление пароля
                     </p>
 
-                    <form onSubmit={sendEmail}>
+                    <form onSubmit={toSendEmail}>
                         <EmailInput
                             placeholder='E-mail'
-                            onChange={ForgotSignIn}
+                            onChange={isForgotSignIn}
                             value={login}
                             name='email'
                             //@ts-ignore

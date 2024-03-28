@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import React, {FC, FormEvent, useState} from "react";
 import {registerUser} from "../../utils/api";
 import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
+import { IRegister } from "../../utils/types/types-api";
 
 
 const Register: FC = () => {
@@ -29,15 +30,15 @@ const Register: FC = () => {
 
     //Register
     const dispatch = useAppDispatch();
-    const registerProfile = async (data: any) => {
+    const isRegisterProfile = async (data: IRegister) => {
         return dispatch(registerUser(data));
     }
 
     const navigate = useNavigate();
-    const sendProfile = async (e: FormEvent) => {
+    const toSendProfile = async (e: FormEvent) => {
         e.preventDefault();
-        registerProfile({name, email, password}).then(() =>
-            registerUser.fulfilled.match(registerProfile) ? navigate('/', {replace: true}) : errorRegister
+        isRegisterProfile({name, email, password}).then(() =>
+            registerUser.fulfilled.match(isRegisterProfile) ? navigate('/', {replace: true}) : errorRegister
         );
     };
 
@@ -49,7 +50,7 @@ const Register: FC = () => {
                 </p>
 
                 {/*Форма регистрации*/}
-                <form onSubmit={sendProfile}>
+                <form onSubmit={toSendProfile}>
                     <Input
                         placeholder='Имя'
                         type='text'

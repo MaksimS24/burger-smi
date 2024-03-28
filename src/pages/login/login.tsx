@@ -4,6 +4,7 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import React, {FC, FormEvent, useState} from "react";
 import {loginUser} from "../../utils/api";
 import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
+import { ILoginUserInfo } from "../../utils/types/types-api";
 
 const Login: FC = () => {
 
@@ -27,14 +28,14 @@ const Login: FC = () => {
 
     //Login
     const dispatch = useAppDispatch();
-    const loginProfile = async (data: any) => {
+    const isLoginProfile = async (data: ILoginUserInfo) => {
         return dispatch(loginUser(data));
     }
 
-    const sendLogin = async (e: FormEvent) => {
+    const toSendLogin = async (e: FormEvent) => {
         e.preventDefault();
-        loginProfile({email: emailLogin, password: passwordLogin}).then(() =>
-            loginUser.fulfilled.match(loginProfile) ? navigate(`${state ? state.pathname : '/'}`, {replace: true})
+        isLoginProfile({email: emailLogin, password: passwordLogin}).then(() =>
+            loginUser.fulfilled.match(isLoginProfile) ? navigate(`${state ? state.pathname : '/'}`, {replace: true})
                 :
                 errorLogin
         );
@@ -49,7 +50,7 @@ const Login: FC = () => {
                     </p>
 
                     {/*Форма входа */}
-                    <form onSubmit={sendLogin}>
+                    <form onSubmit={toSendLogin}>
                         <EmailInput
                             placeholder='E-mail'
                             // @ts-ignore

@@ -1,5 +1,5 @@
 .mainBurgerIngredients {
-    margin: 40px 20px 0px 0px;
+    margin: 40px 20px 0 0;
     width: 600px;
     max-height: 912px;
 }
@@ -11,11 +11,13 @@
 .cardsIngredient {
     max-height: 800px;
     overflow-y: auto;
+    scrollbar-color: #8585AD #1C1C21;
+    scrollbar-width: thin;
 }
 
 .ulIngredient {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-inline-start: 0px;
+    padding-inline-start: 0;
 }

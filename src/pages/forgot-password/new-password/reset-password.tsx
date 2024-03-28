@@ -5,16 +5,17 @@ import React, {FC, FormEvent, useState} from "react";
 import {passwordSend} from "../../../utils/api";
 import Loader from "../../../components/loader/loader";
 import {useAppDispatch, useAppSelector} from "../../../hooks/use-app-redux";
+import { IApiSendPassword } from '../../../utils/types/types-api';
 
 const ResetPassword: FC = () => {
 
     const [password, setPassword] = useState('');
     const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
     const [hidePassword, setHidePassword] = useState(true);
-    const visionPassword = () => setHidePassword(!hidePassword);
+    const isVisionPassword = () => setHidePassword(!hidePassword);
 
-    const [emailWithCode, setEmailWithCode] = useState('');
-    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => setEmailWithCode(e.target.value);
+    const [token, setToken] = useState('');
+    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => setToken(e.target.value);
 
     const navigate = useNavigate();
     const {state} = useLocation();
@@ -22,13 +23,13 @@ const ResetPassword: FC = () => {
     const dispatch = useAppDispatch();
     const isLoading = useAppSelector((state) => state.profile.isLoading);
 
-    const emailToken = async (data: any) => {
+    const isEmailToken = async (data: IApiSendPassword) => {
         return dispatch(passwordSend(data));
     }
 
-    const sendPassword = async (e: FormEvent) => {
+    const toSendPassword = async (e: FormEvent) => {
         e.preventDefault();
-        emailToken({password, emailWithCode})
+        isEmailToken({password, token})
             .then((data: any) => data.success ? navigate('/login', {replace: true}) : null)
     };
 
@@ -47,13 +48,13 @@ const ResetPassword: FC = () => {
                         Восстановление пароля
                     </p>
 
-                    <form onSubmit={sendPassword}>
+                    <form onSubmit={toSendPassword}>
                         <Input
                             placeholder='Введите новый пароль'
                             type={hidePassword ? 'password' : 'text'}
                             icon={hidePassword ? 'ShowIcon' : 'HideIcon'}
                             onChange={onChangePassword}
-                            onIconClick={visionPassword}
+                            onIconClick={isVisionPassword}
                             value={password}
                             name='password'
                             size='default'
@@ -63,7 +64,7 @@ const ResetPassword: FC = () => {
                             placeholder='Введите код из письма'
                             type='text'
                             onChange={onChangeEmail}
-                            value={emailWithCode}
+                            value={token}
                             name='emailWithCode'
                             errorText='Ошибка'
                             size='default'

@@ -4,16 +4,13 @@ import React, {FC, FormEvent, useEffect, useState} from "react";
 import {requestForEditing} from "../../../utils/api";
 import {getCookie} from "../../../utils/cookie";
 import {useAppDispatch, useAppSelector} from "../../../hooks/use-app-redux";
+import { IEditProfile } from '../../../utils/types/types-api';
 
 const ProfileEdit: FC = () => {
 
     //Cookie
-    const token = getCookie('accessToken');
+    const accessToken = getCookie('accessToken') as string;
 
-    const dispatch = useAppDispatch();
-    const editProfile = async (data: any) => {
-        dispatch(requestForEditing(data))
-    }
     const {name, email} = useAppSelector((state) => state.profile.user);
 
     //Use name
@@ -36,9 +33,14 @@ const ProfileEdit: FC = () => {
     }
 
     //Profile editing
-    const editingProfile = async (e: FormEvent) => {
+    const dispatch = useAppDispatch();
+    const isEditProfile = async (data: IEditProfile) => {
+        dispatch(requestForEditing(data))
+    }
+
+    const toEditingProfile = async (e: FormEvent) => {
         e.preventDefault();
-        await editProfile({name: nameProfile, email: emailProfile, password, token})
+        await isEditProfile({name: nameProfile, email: emailProfile, password, accessToken})
     }
 
     //Active buttons
@@ -57,7 +59,7 @@ const ProfileEdit: FC = () => {
         <>
             <div className={style.profileEdit}>
 
-                <form className={style.formProfileEdit} onSubmit={editingProfile}>
+                <form className={style.formProfileEdit} onSubmit={toEditingProfile}>
 
                     <Input
                         placeholder='Имя'

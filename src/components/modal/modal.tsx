@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from "react";
+import React, {FC, PropsWithChildren, useEffect} from "react";
 import styles from './modal.module.css';
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -8,22 +8,21 @@ interface ModalInterface {
     closeModal: () => void,
 }
 
-const Modal: FC<ModalInterface> = ({title, children, closeModal}) => {
+const Modal: FC<PropsWithChildren<ModalInterface>> = ({title, children, closeModal}) => {
 
     //Закрытие модального окна по Esc и по клику  
     useEffect(() => {
         const keyPress = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
+            e.key === 'Escape' && closeModal()
         };
         document.addEventListener('keyup', keyPress, false);
         document.getElementById('root')?.classList.add('overflow');
         return () => {
-            document.removeEventListener('keydown', keyPress, false);
+            document.removeEventListener('keyup', keyPress, false);
             document.getElementById('root')?.classList.remove('overflow');
         }
-    });
+        // eslint-disable-next-line
+    }, []);
 
 
     return (

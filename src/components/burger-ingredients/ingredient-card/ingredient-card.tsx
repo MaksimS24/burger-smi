@@ -33,13 +33,13 @@ const IngredientCard: FC<IIngredientCardInterface> = ({ingredientData}) => {
     }, [ingredientData._id, allIngredients]);
 
     const navigate = useNavigate();
-    const viewModal = () => {
+    const toViewModal = () => {
         navigate(`/ingredients/${ingredientData._id}`, {state: {modal: true, id: ingredientData._id}})
     }
 
     return (
         <li className={styles.liIngredients}
-            onClick={viewModal}
+            onClick={toViewModal}
             style={{opacity}}
         >
             {counter ? <Counter count={counter} size={"default"} extraClass={styles.count}/> : null}

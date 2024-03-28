@@ -7,7 +7,7 @@ import {FC} from "react";
 const Profile: FC = () => {
 
     const dispatch = useAppDispatch();
-    const logout = () => {
+    const isLogout = () => {
         dispatch(logoutUser());
     }
 
@@ -40,7 +40,7 @@ const Profile: FC = () => {
                                  className={({isActive}) => isActive ? `${style.link} ${style.active}` : style.link}
                         >
                             <p className="text text_type_main-medium"
-                               onClick={logout}>
+                               onClick={isLogout}>
                                 Выход
                             </p>
                         </NavLink>

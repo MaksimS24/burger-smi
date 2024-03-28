@@ -48,13 +48,13 @@ const BurgerConstructor: FC = () => {
         [mainAndSauce, bun]);
 
     // Отправка заказа и отображение его номера
-    const sendOrder = () => {
+    const isSendOrder = () => {
         const ingredients = [...mainAndSauce, {...bun}, {...bun}].map((ingredientId) => ingredientId._id);
         const dataIngredientsId: {ingredients: string[]} = {ingredients};
         dispatch(fetchOrders(dataIngredientsId));
     }
 
-    const closeModalOrder = () => {
+    const toCloseModalOrder = () => {
         dispatch(orderCloseModal())
     }
 
@@ -113,7 +113,7 @@ const BurgerConstructor: FC = () => {
                         htmlType="button"
                         type="primary"
                         size="large"
-                        onClick={sendOrder}
+                        onClick={isSendOrder}
                     >
                         {statusOrder}
                     </Button>
@@ -123,7 +123,7 @@ const BurgerConstructor: FC = () => {
             {/*Модальное окно с номером заказа*/}
             {isOrderOpen && number && <Modal
                 children={<OrderDetails number={number}/>}
-                closeModal={closeModalOrder}
+                closeModal={toCloseModalOrder}
             />}
         </div>
     );
