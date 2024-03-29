@@ -1,26 +1,25 @@
 import React, {useCallback, useEffect} from 'react';
-import './App.css';
-import AppHeader from "./components/app-header/app-header";
-import Main from "./components/main/main";
+import style from './app.module.css';
+import AppHeader from "../app-header/app-header";
+import Main from "../main/main";
 import {Routes, Route, useLocation, useNavigate} from "react-router-dom";
-import NotFound from "./pages/not-found/not-found";
-import Register from "./pages/register/register";
-import Login from "./pages/login/login";
-import ForgotPassword from "./pages/forgot-password/forgot-password";
-import ResetPassword from "./pages/forgot-password/new-password/reset-password";
-import Profile from "./pages/profile/profile";
-import ProfileEdit from "./pages/profile/profile-edit/profile-edit";
-import ProtectedRouteElement from "./components/protected-route-element/protected-route-element";
-import {useSelector} from "react-redux";
-import {profileInfo} from "./utils/api";
-import Loader from "./components/loader/loader";
-import IngredientDetails from "./components/burger-ingredients/ingredient-card/ingredient-details/ingredient-details";
-import {useAppDispatch} from "./hooks/use-app-redux";
-import Modal from "./components/modal/modal";
+import NotFound from "../../pages/not-found/not-found";
+import Register from "../../pages/register/register";
+import Login from "../../pages/login/login";
+import ForgotPassword from "../../pages/forgot-password/forgot-password";
+import ResetPassword from "../../pages/forgot-password/new-password/reset-password";
+import Profile from "../../pages/profile/profile";
+import ProfileEdit from "../../pages/profile/profile-edit/profile-edit";
+import ProtectedRouteElement from "../protected-route-element/protected-route-element";
+import {profileInfo} from "../../utils/api";
+import Loader from "../loader/loader";
+import IngredientDetails from "../burger-ingredients/ingredient-card/ingredient-details/ingredient-details";
+import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
+import Modal from "../modal/modal";
 
 function App() {
 
-    const isLoading = useSelector((state: any) => state.profile.isLoading);
+    const isLoading = useAppSelector((state) => state.profile.isLoading);
     const location = useLocation();
     const background = location.state && location.state.modal;
     const dispatch = useAppDispatch();
@@ -30,12 +29,12 @@ function App() {
     }, [dispatch]);
 
     const navigate = useNavigate();
-    const closeModal = useCallback(() => {
+    const onCloseModal = useCallback(() => {
         navigate(-1)
     }, [navigate])
 
     return (
-        <div className="App">
+        <div className={style.app}>
             <AppHeader/>
             <main>
                 <Routes location={background || location}>
@@ -57,7 +56,7 @@ function App() {
                     <Routes>
                         <Route path='/ingredients/:id'
                                element={
-                                   <Modal title={'Детали ингредиента'} closeModal={closeModal}>
+                                   <Modal title={'Детали ингредиента'} onCloseModal={onCloseModal}>
                                        <IngredientDetails/>
                                    </Modal>
                                }/>

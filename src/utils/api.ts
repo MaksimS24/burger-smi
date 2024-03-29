@@ -1,16 +1,15 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {getCookie, setCookie} from "./cookie";
 import {
-    ApiForgotPassword,
-    apiIngredients,
-    ApiLogout,
-    apiOrders,
-    ApiResRefresh,
-    ApiSendPassword,
-    EditProfile,
-    ForProfileEdit, LoginUserInfo,
-    Register,
-    SignInUser
+    IApiForgotPassword,
+    IApiLogout,
+    IApiOrders,
+    IApiResRefresh,
+    IApiSendPassword,
+    IEditProfile,
+    IForProfileEdit, IApiIngredients, ILoginUserInfo,
+    IRegister,
+    ISignInUser
 } from "./types/types-api";
 
 const api = 'https://norma.nomoreparties.space/api';
@@ -22,19 +21,19 @@ const checkResponse = <T>(res: Response): Promise<T> => {
     return Promise.reject(`Error ${res.status}`);
 }
 
-export const fetchIngredients = createAsyncThunk<apiIngredients>(
+export const fetchIngredients = createAsyncThunk<IApiIngredients>(
     'slice/fetchIngredients',
     async () => {
         const res = await fetch(`${api}/ingredients`);
         await fetch(`${api}/ingredients`)
-            .then((res) => checkResponse<apiIngredients>(res))
+            .then((res) => checkResponse<IApiIngredients>(res))
         const data = await res.json();
 
         return data;
     }
 );
 
-async function resRefresh(): Promise<ApiResRefresh> {
+async function resRefresh(): Promise<IApiResRefresh> {
     const res = await fetch(`${api}/auth/token`, {
         method: 'POST',
         headers: {
@@ -70,7 +69,7 @@ export async function fetchRefresh<T>(url: RequestInfo, options: RequestInit) {
 export const fetchOrders = createAsyncThunk(
     'slice/orderSlice/order',
     async (data: { ingredients: string[] }) => {
-        return await fetchRefresh<apiOrders>(`${api}/orders`, {
+        return await fetchRefresh<IApiOrders>(`${api}/orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,13 +78,13 @@ export const fetchOrders = createAsyncThunk(
             body: JSON.stringify(data),
         }).then((data) => {
             if (data.success) return data;
-            return Promise.reject<apiOrders>(data);
+            return Promise.reject<IApiOrders>(data);
         });
     });
 
 export const registerUser = createAsyncThunk(
     'auth/register',
-    async (data: Register) => {
+    async (data: IRegister) => {
         const res = await fetch(`${api}/auth/register`, {
             method: 'POST',
             headers: {
@@ -93,13 +92,13 @@ export const registerUser = createAsyncThunk(
             },
             body: JSON.stringify(data),
         });
-        return await checkResponse<SignInUser>(res);
+        return await checkResponse<ISignInUser>(res);
     },
 );
 
-export const loginUser = createAsyncThunk<SignInUser, LoginUserInfo>(
+export const loginUser = createAsyncThunk<ISignInUser, ILoginUserInfo>(
     'user/login',
-    async (data: LoginUserInfo) => {
+    async (data: ILoginUserInfo) => {
         const res = await fetch(`${api}/auth/login`, {
             method: 'POST',
             headers: {
@@ -107,11 +106,11 @@ export const loginUser = createAsyncThunk<SignInUser, LoginUserInfo>(
             },
             body: JSON.stringify(data),
         });
-        return await checkResponse<SignInUser>(res);
+        return await checkResponse<ISignInUser>(res);
     },
 );
 
-export const logoutUser = createAsyncThunk<ApiLogout>(
+export const logoutUser = createAsyncThunk<IApiLogout>(
     'auth/logout',
     async () => {
         const res = await fetch(`${api}/auth/logout`, {
@@ -123,14 +122,14 @@ export const logoutUser = createAsyncThunk<ApiLogout>(
                 token: localStorage.getItem('refreshToken'),
             }),
         });
-        return await checkResponse<ApiLogout>(res);
+        return await checkResponse<IApiLogout>(res);
     },
 );
 
-export const profileInfo = createAsyncThunk<ForProfileEdit>(
+export const profileInfo = createAsyncThunk<IForProfileEdit>(
     'user/authentication',
     async () => {
-        return await fetchRefresh<ForProfileEdit>(`${api}/auth/user`, {
+        return await fetchRefresh<IForProfileEdit>(`${api}/auth/user`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -138,14 +137,14 @@ export const profileInfo = createAsyncThunk<ForProfileEdit>(
             },
         }).then((data) => {
             if (data.success) return data;
-            return Promise.reject<ForProfileEdit>(data);
+            return Promise.reject<IForProfileEdit>(data);
         });
     });
 
-export const requestForEditing = createAsyncThunk<ForProfileEdit, EditProfile>(
+export const requestForEditing = createAsyncThunk<IForProfileEdit, IEditProfile>(
     'user/auth',
-    async (data: EditProfile) => {
-        return await fetchRefresh<ForProfileEdit>(`${api}/auth/user`, {
+    async (data: IEditProfile) => {
+        return await fetchRefresh<IForProfileEdit>(`${api}/auth/user`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -154,7 +153,7 @@ export const requestForEditing = createAsyncThunk<ForProfileEdit, EditProfile>(
             body: JSON.stringify(data),
         }).then((data) => {
             if (data.success) return data;
-            return Promise.reject<ForProfileEdit>(data);
+            return Promise.reject<IForProfileEdit>(data);
         });
     },
 );
@@ -169,21 +168,21 @@ export const forgotPasswordEmail = createAsyncThunk(
             },
             body: JSON.stringify({email: email}),
         });
-        return await checkResponse<ApiForgotPassword>(res);
+        return await checkResponse<IApiForgotPassword>(res);
     },
 );
 
 export const passwordSend = createAsyncThunk(
     'user/password-reset/reset',
-    async (data: ApiSendPassword) => {
+    async (data: IApiSendPassword) => {
         const res = await fetch(`${api}/password-reset/reset`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({data}),
         });
-        return await checkResponse<ApiForgotPassword>(res);
+        return await checkResponse<IApiForgotPassword>(res);
     },
 );
 

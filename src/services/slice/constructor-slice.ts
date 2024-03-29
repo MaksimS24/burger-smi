@@ -1,5 +1,5 @@
 import {createSlice, nanoid, PayloadAction} from "@reduxjs/toolkit";
-import {Ingredient} from "../../utils/types/types-ingredients";
+import {IIngredient} from "../../utils/types/types-ingredients";
 
 interface bunConstructor {
     _id: string,
@@ -9,9 +9,9 @@ interface bunConstructor {
 }
 
 interface constructor {
-    ingredientsConstructor: [] | Ingredient,
-    bun: bunConstructor | Ingredient,
-    mainAndSauce: Ingredient[],
+    ingredientsConstructor: [] | IIngredient,
+    bun: bunConstructor | IIngredient,
+    mainAndSauce: IIngredient[],
     ingredientsAdd: boolean,
     plug: boolean
 }
@@ -34,7 +34,7 @@ export const constructorSlice = createSlice({
     initialState,
     reducers: {
         addIngredients: {
-            reducer(state, action: PayloadAction<Ingredient>) {
+            reducer(state, action: PayloadAction<IIngredient>) {
                 if (action.payload.type === 'bun') {
                     state.bun = action.payload;
                     state.ingredientsAdd = true;
@@ -43,7 +43,7 @@ export const constructorSlice = createSlice({
                 }
                 state.plug = false;
             },
-            prepare: (payload: Ingredient) => ({payload: {...payload, _uuid: nanoid()}})
+            prepare: (payload: IIngredient) => ({payload: {...payload, _uuid: nanoid()}})
         },
 
         sortIngredients: (state, action: PayloadAction<{ dragIndex: number; dropIndex: number }>) => {
