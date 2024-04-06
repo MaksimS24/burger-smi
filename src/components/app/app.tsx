@@ -16,6 +16,7 @@ import Loader from "../loader/loader";
 import IngredientDetails from "../burger-ingredients/ingredient-card/ingredient-details/ingredient-details";
 import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 import Modal from "../modal/modal";
+import Feed from "../feed/feed";
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
                         <Route path='profile-edit' element={<ProfileEdit/>}/>
                         <Route path='profile/orders' element={''}></Route>
                     </Route>
+                    <Route path='/feed' element={<Feed/>}/>
                     <Route path='*' element={<NotFound/>}/>
                 </Routes>
                 {background && (

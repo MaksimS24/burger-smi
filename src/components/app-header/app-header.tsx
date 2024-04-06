@@ -25,10 +25,10 @@ const AppHeader: FC = () => {
                     {/*Лента заказов*/}
                     <span className={styles.lineOrder}>
                     <NavLink
-                        to='/'
-                        className={styles.aLink}
+                        to='/feed'
+                        className={({isActive}) => isActive ? `${styles.aLink} ${styles.active}` : styles.aLink}
                     >
-                        <ListIcon type={pathname === '' ? 'primary' : 'secondary'}/>
+                        <ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'}/>
                         <p className={`ml-2`}>Лента заказов</p>
                     </NavLink>
                     </span>
@@ -45,7 +45,7 @@ const AppHeader: FC = () => {
                     to='/profile'
                     className={({isActive}) => isActive ? `${styles.lkContainer} ${styles.active}` : styles.lkContainer}
                 >
-                    <ProfileIcon type={pathname === '/profile/' ? 'primary' : 'secondary'}/>
+                    <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'}/>
                     <p className={`ml-2`}>Личный кабинет</p>
                 </NavLink>
                 </span>

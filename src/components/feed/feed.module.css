@@ -1,0 +1,27 @@
+.feedContainer {
+ margin: 40px 20px 0 0;
+ width: 600px;
+ max-height: 912px;
+}
+
+.feedHeader {
+ color: #F2F2F3;
+}
+
+.feedMainContainer {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+.stats {
+ max-width: 600px;
+ display: block;
+ justify-content: center;
+ align-items: center;
+
+}
+.statsUp {
+ display: flex;
+ align-items: center;
+}

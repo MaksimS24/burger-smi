@@ -13,6 +13,9 @@ import {
 } from "./types/types-api";
 
 const api = 'https://norma.nomoreparties.space/api';
+export const wsProfile = () => {
+    return `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')?.slice(8)}`;
+};
 
 const checkResponse = <T>(res: Response): Promise<T> => {
     if (res.ok) {
@@ -33,7 +36,7 @@ export const fetchIngredients = createAsyncThunk<IApiIngredients>(
     }
 );
 
-async function resRefresh(): Promise<IApiResRefresh> {
+export async function resRefresh(): Promise<IApiResRefresh> {
     const res = await fetch(`${api}/auth/token`, {
         method: 'POST',
         headers: {

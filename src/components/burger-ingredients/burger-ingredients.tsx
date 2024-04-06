@@ -19,7 +19,6 @@ const BurgerIngredients: FC = () => {
     const getActive = () => {
         setSelectedTab(tabScroll({bunRef, sauceRef, mainRef, tabRef}));
     }
-    console.log(getActive)
 
     const toHandleTabClick = (ref: RefObject<HTMLElement>) => {
         ref.current?.scrollIntoView({block: 'start', behavior: 'smooth'});

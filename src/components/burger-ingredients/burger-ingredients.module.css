@@ -4,6 +4,10 @@
     max-height: 912px;
 }
 
+.mainBurgerIngredients h1 {
+    color: #F2F2F3;
+}
+
 .tabIngredients {
     display: flex;
 }
