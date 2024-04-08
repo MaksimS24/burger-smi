@@ -1,3 +1,12 @@
+.mainFeedOrders {
+ max-width: 1280px;
+ margin: 0 auto;
+ flex: 1 1;
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+}
+
 .feedContainer {
  margin: 40px 20px 0 0;
  width: 600px;
@@ -10,11 +19,10 @@
 
 .feedMainContainer {
  display: flex;
- align-items: center;
- justify-content: center;
 }
 
 .stats {
+ margin-left: 60px;
  max-width: 600px;
  display: block;
  justify-content: center;
@@ -23,5 +31,16 @@
 }
 .statsUp {
  display: flex;
- align-items: center;
+}
+
+.readyOrder {
+ list-style-type: none;
+ max-width: 272px;
+ height: 206px;
+}
+
+.workOrders {
+ list-style-type: none;
+ max-width: 272px;
+ height: 206px;
 }

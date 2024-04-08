@@ -3,17 +3,17 @@ import {IFeedWs} from "../../utils/types/websocket";
 import {AppDispatch, RootState} from "../store/store";
 import {resRefresh, wsProfile} from "../../utils/api";
 
-interface IWsActions {
+interface IActionsWs {
+    wsConnecting: ActionCreatorWithoutPayload,
     wsConnect: ActionCreatorWithPayload<string>,
     wsDisconnect: ActionCreatorWithoutPayload,
-    wsConnecting: ActionCreatorWithoutPayload,
     wsOpen: ActionCreatorWithoutPayload,
     wsClose: ActionCreatorWithoutPayload,
     wsMessage: ActionCreatorWithPayload<IFeedWs>,
     wsError: ActionCreatorWithPayload<string>,
 }
 
-export const socketMiddleware = (wsActions: IWsActions): Middleware => {
+export const socketMiddleware = (actionsWs: IActionsWs): Middleware => {
     return (store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
         let isConnected = false;
@@ -22,7 +22,7 @@ export const socketMiddleware = (wsActions: IWsActions): Middleware => {
 
         return (next) => (action) => {
             const {dispatch} = store;
-            const {wsConnect, wsDisconnect, wsConnecting, wsOpen, wsClose, wsMessage, wsError} = wsActions;
+            const {wsConnecting, wsConnect, wsDisconnect, wsOpen, wsClose, wsMessage, wsError} = actionsWs;
 
             if (wsConnect.match(action)) {
                 url = action.payload;

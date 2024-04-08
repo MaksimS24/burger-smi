@@ -8,12 +8,7 @@ export interface IFeedOrders {
     error: string,
 }
 const initialState: IFeedOrders = {
-    data: {
-        success: false,
-        orders: [],
-        total: 0,
-        totalToday: 0,
-    },
+    data: null,
     status: TypeWsStatus.OFFLINE,
     error: '',
 };
@@ -34,8 +29,8 @@ const feedOrdersReducer = createReducer(initialState, (builder) => {
         .addCase(wsMessage, (state, action) => {
             state.data = action.payload;
         })
-        .addCase(wsError, (state) => {
-            state.error = '';
+        .addCase(wsError, (state, action) => {
+            state.error = action.payload;
         })
 })
 

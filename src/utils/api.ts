@@ -13,8 +13,9 @@ import {
 } from "./types/types-api";
 
 const api = 'https://norma.nomoreparties.space/api';
+export const feedOrdersWs = 'wss://norma.nomoreparties.space/orders/all';
 export const wsProfile = () => {
-    return `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')?.slice(8)}`;
+    return `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')?.slice(7)}`;
 };
 
 const checkResponse = <T>(res: Response): Promise<T> => {

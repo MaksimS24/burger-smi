@@ -1,7 +1,8 @@
+import style from './feed-orders.module.css';
 import {useAppSelector} from "../../../hooks/use-app-redux";
 import {useLocation} from "react-router-dom";
 import {IOrdersFeed} from "../../../utils/types/websocket";
-import {FC, ReactElement, useCallback, useMemo} from "react";
+import {FC, useCallback} from "react";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import StatusOrders from "./status-order/status-orders";
 
@@ -43,28 +44,30 @@ const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
     const orderForDisplay = createOrder();
 
     return (
-        <>
-            <div>{number}</div>
-            <time>
-                <FormattedDate date={new Date(createdAt)}/>
-            </time>
-            <h3>{name}</h3>
+        <div className={style.mainFeedOrders}>
+            <div className={style.topFeedOrder}>
+                <span className='text text_type_digits-default'>#{number}</span>
+                <time className='text text_type_main-default text_color_inactive'>
+                    <FormattedDate date={new Date(createdAt)}/>
+                </time>
+            </div>
+            <h3 className='text text_type_main-medium mt-6'>{name}</h3>
             {visibleStatus && <StatusOrders status={status}/>}
-            <div>
-                <div>
+            <div className={style.footerFeedOrder}>
+                <div className={style.imgFeedOrder}>
                     {orderForDisplay.leaf.map((thumb, i, arr) =>
-                        <div key={`${thumb.id}${i}`} style={{zIndex: arr.length -1}}>
-                            <img src={thumb.image} alt={thumb.nameBurger}></img>
-                            {thumb.isTotalNumber ? <div className={`text text_type_main-default`}>+{thumb.isTotalNumber}</div> : null }
+                        <div key={`${thumb.id}${i}`} className={style.eachImg} style={{zIndex: arr.length -1}}>
+                            <img className={style.img} src={thumb.image} alt={thumb.nameBurger}></img>
+                            {thumb.isTotalNumber ? <div className={`${style.bigOrder} text text_type_main-default`}>+{thumb.isTotalNumber}</div> : null }
                         </div>
                     )}
                 </div>
-                <div>
-                    <h3 className='text text_type_digits-default'>{orderForDisplay.total}</h3>
+                <div className={style.priceFeedOrder}>
+                    <h3 className='text text_type_digits-default mr-2'>{orderForDisplay.total}</h3>
                     <CurrencyIcon type='primary'/>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
