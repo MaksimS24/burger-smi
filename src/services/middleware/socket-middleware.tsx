@@ -66,7 +66,7 @@ export const socketMiddleware = (actionsWs: IActionsWs): Middleware => {
                     clearTimeout(reconnectTimer);
                     isConnected = false;
                     reconnectTimer = 0;
-                    socket.close(1000, 'user logged out');
+                    socket.close(1000, 'Close');
                     dispatch(wsClose());
                 }
             }

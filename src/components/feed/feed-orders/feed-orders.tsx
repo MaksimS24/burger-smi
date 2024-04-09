@@ -1,6 +1,6 @@
 import style from './feed-orders.module.css';
 import {useAppSelector} from "../../../hooks/use-app-redux";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {IOrdersFeed} from "../../../utils/types/websocket";
 import {FC, useCallback} from "react";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -10,6 +10,7 @@ interface IFeedOrders {
     data: IOrdersFeed,
     visibleStatus?: boolean,
 }
+
 interface IVisionOrder {
     image: string,
     isTotalNumber: null | number,
@@ -19,8 +20,9 @@ interface IVisionOrder {
 
 const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
 
-    const {createdAt, ingredients, status, number, name} = data;
+    const {createdAt, ingredients, status, number, name, _id} = data;
     const location = useLocation();
+    const navigate = useNavigate();
     const ingredientsFeed = useAppSelector((state) => state.ingredients.ingredients);
 
     const createOrder = useCallback(() => {
@@ -28,9 +30,9 @@ const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
         const leaf: IVisionOrder[] = [];
         ingredients.forEach((ingredientsInFeedOrder, i, arr) => {
             const dataIngredient = ingredientsFeed.find(ingredient => ingredient._id === ingredientsInFeedOrder);
-            if(dataIngredient) {
+            if (dataIngredient) {
                 total += dataIngredient?.price ? dataIngredient?.price : 0;
-                if(i < 6) leaf.push({
+                if (i < 6) leaf.push({
                     image: dataIngredient?.image_mobile,
                     isTotalNumber: i === 5 ? arr.length - (i + 1) : null,
                     id: dataIngredient?._id,
@@ -39,12 +41,16 @@ const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
             }
         })
         return {total, leaf}
-    },[ingredients, ingredientsFeed]);
+    }, [ingredients, ingredientsFeed]);
 
     const orderForDisplay = createOrder();
 
+    const openModal = () => {
+        navigate(`${location.pathname}/${_id}`, {state: {modal: location, orderNumber: number.toString()}})
+    }
+
     return (
-        <div className={style.mainFeedOrders}>
+        <div className={style.mainFeedOrders} onClick={openModal}>
             <div className={style.topFeedOrder}>
                 <span className='text text_type_digits-default'>#{number}</span>
                 <time className='text text_type_main-default text_color_inactive'>
@@ -56,9 +62,10 @@ const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
             <div className={style.footerFeedOrder}>
                 <div className={style.imgFeedOrder}>
                     {orderForDisplay.leaf.map((thumb, i, arr) =>
-                        <div key={`${thumb.id}${i}`} className={style.eachImg} style={{zIndex: arr.length -1}}>
+                        <div key={`${thumb.id}${i}`} className={style.eachImg} style={{zIndex: arr.length - 1}}>
                             <img className={style.img} src={thumb.image} alt={thumb.nameBurger}></img>
-                            {thumb.isTotalNumber ? <div className={`${style.bigOrder} text text_type_main-default`}>+{thumb.isTotalNumber}</div> : null }
+                            {thumb.isTotalNumber ? <div
+                                className={`${style.bigOrder} text text_type_main-default`}>+{thumb.isTotalNumber}</div> : null}
                         </div>
                     )}
                 </div>
@@ -68,7 +75,9 @@ const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
                 </div>
             </div>
         </div>
-    );
+
+    )
+        ;
 };
 
 export default FeedOrders;

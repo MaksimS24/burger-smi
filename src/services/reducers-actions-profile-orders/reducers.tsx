@@ -8,12 +8,7 @@ export interface IProfileOrders {
     error: string,
 }
 const initialState: IProfileOrders = {
-    data: {
-        success: false,
-        orders: [],
-        total: 0,
-        totalToday: 0,
-    },
+    data: null,
     status: TypeWsStatus.OFFLINE,
     error: '',
 };

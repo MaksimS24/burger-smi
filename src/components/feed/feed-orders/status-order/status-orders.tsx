@@ -23,7 +23,7 @@ const StatusOrders: FC<IStatusOrder> = ({status}) => {
     }
 
     return (
-        <div className={`text text_type_main-default`}>{isStatus}</div>
+        <div className={`text text_type_main-default`} style={{color: '#00CCCC'}}>{isStatus}</div>
     )
 }
 
