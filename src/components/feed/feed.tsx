@@ -7,12 +7,12 @@ import {
     wsConnectFeedOrders,
     wsDisconnectFeedOrders
 } from "../../services/reducers-actions-feed-orders/actions";
-import Stats from "./stats/stats";
-
 
 const Feed: FC = () => {
 
     const orders = useAppSelector((state) => state.feedOrders.data?.orders);
+    const total = useAppSelector((state) => state.feedOrders.data?.total);
+    const totalToday = useAppSelector((state) => state.feedOrders.data?.totalToday);
 
     const dispatch = useAppDispatch();
 
@@ -61,12 +61,15 @@ const Feed: FC = () => {
                                 )}
                             </ul>
                         </div>
+
                     </div>
 
-                    <h3 className={'text_type_main-medium'}>Выполнено за все время:</h3>
-                    <span></span>
-                    <h3 className={'text_type_main-medium'}>Выполнено за сегодня:</h3>
-                    <span></span>
+                    <div className={style.totals}>
+                        <h3 className='text_type_main-medium'>Выполнено за все время:</h3>
+                        <p className='text text_type_digits-large'>{total}</p>
+                        <h3 className='text_type_main-medium'>Выполнено за сегодня:</h3>
+                        <p className='text text_type_digits-large'>{totalToday}</p>
+                    </div>
                 </div>
             </div>
 
