@@ -11,13 +11,12 @@ import ResetPassword from "../../pages/forgot-password/new-password/reset-passwo
 import Profile from "../../pages/profile/profile";
 import ProfileEdit from "../../pages/profile/profile-edit/profile-edit";
 import ProtectedRouteElement from "../protected-route-element/protected-route-element";
-import {profileInfo} from "../../utils/api";
+import {fetchIngredients, profileInfo} from "../../utils/api";
 import Loader from "../loader/loader";
 import IngredientDetails from "../burger-ingredients/ingredient-card/ingredient-details/ingredient-details";
 import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 import Modal from "../modal/modal";
 import Feed from "../feed/feed";
-import IngredientsFeedOrder from "../feed/feed-orders/feed-details/ingredeints-feed-order/ingredients-feed-order";
 import FeedDetails from "../feed/feed-orders/feed-details/feed-details";
 import {TypeWsStatus} from "../../utils/types/websocket";
 import ProfileOrders from "../../pages/profile/profile-orders/profile-ordes";
@@ -28,12 +27,13 @@ function App() {
     const statusFeedOrders = useAppSelector((state) => state.feedOrders.status);
     const statusProfileOrders = useAppSelector((state) => state.profileOrders.status);
     const location = useLocation();
-    const locationState = location.state as {orderNumber?: string };
+    // const locationState = location.state as {orderNumber?: string };
     const background = location.state && location.state.modal;
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(profileInfo())
+        dispatch(profileInfo());
+        dispatch(fetchIngredients());
     }, [dispatch]);
 
     const navigate = useNavigate();
@@ -56,8 +56,9 @@ function App() {
                            element={<ProtectedRouteElement element={<ResetPassword/>} onlyUnAuth/>}/>
                     <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile/>}/>}>
                         <Route path='profile-edit' element={<ProfileEdit/>}/>
-                        <Route path='profile/orders' element={<ProfileOrders/>}/>
+                        <Route path='orders' element={<ProfileOrders/>}/>
                     </Route>
+                    <Route path='/profile/orders/:id' element={<ProtectedRouteElement element={<FeedDetails/>} onlyUnAuth/>}/>
                     <Route path='/feed' element={<Feed/>}/>
                     <Route path='/feed/:id' element={<FeedDetails/>}/>
                     <Route path='*' element={<NotFound/>}/>
@@ -73,14 +74,14 @@ function App() {
                         />
                         <Route path='/feed/:id'
                                element={
-                                   <Modal title={'#' + locationState.orderNumber} onCloseModal={onCloseModal}>
+                                   <Modal title={'#' + location.state.orderNumber} onCloseModal={onCloseModal}>
                                        <FeedDetails/>
                                    </Modal>
                                }
                         />
                         <Route path='profile/orders/:id'
                                element={
-                                   <Modal title={'#' + locationState.orderNumber} onCloseModal={onCloseModal}>
+                                   <Modal title={'#' + location.state.orderNumber} onCloseModal={onCloseModal}>
                                        <FeedDetails/>
                                    </Modal>
                                }

@@ -1,6 +1,6 @@
 import style from './profile-orders.module.css';
 import {useAppDispatch, useAppSelector} from "../../../hooks/use-app-redux";
-import {useEffect} from "react";
+import {FC, useEffect} from "react";
 import {
     wsConnectProfileOrders,
     wsDisconnectProfileOrders
@@ -8,7 +8,7 @@ import {
 import {wsProfile} from "../../../utils/api";
 import FeedOrders from "../../../components/feed/feed-orders/feed-orders";
 
-const ProfileOrders = () => {
+const ProfileOrders: FC = () => {
 
     const orders = useAppSelector((state) => state.profileOrders.data?.orders);
     const dispatch = useAppDispatch();
@@ -21,8 +21,10 @@ const ProfileOrders = () => {
     }, [dispatch]);
     return (
         <>
-            <div>
+            <div className={style.mainProfileOrders}>
+                <span>
                 {orders?.map((order, index) => <FeedOrders data={order} key={index}/>).reverse()}
+                </span>
             </div>
 
         </>

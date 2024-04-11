@@ -26,7 +26,7 @@ const IngredientsFeedOrder: FC<{order: IOrdersFeed; setIsTotal: (price: number) 
                 totalPrice += isIngredient.price;
                 isIngredient.count += 1;
             } else {
-                const searchIngredients = ingredients.find((ingredient: IIngredient) => ingredient._id === elementsOrder)
+                const searchIngredients = ingredients.find((ingredient: IIngredient) => ingredient._id === elementsOrder);
                 const {_id, name, price, image_mobile} = searchIngredients as IIngredient;
                 totalPrice += price;
                 data.push({

@@ -3,7 +3,7 @@ import {useAppSelector} from "./use-app-redux";
 import {IOrdersFeed} from "../utils/types/websocket";
 
 
-export const ForModalFeedOrder = () => {
+export const UseModalFeedOrder = () => {
     const {id} = useParams();
     const {pathname} = useLocation();
     const location = pathname.split('/')[1];

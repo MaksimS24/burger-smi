@@ -11,17 +11,20 @@ import {orderCloseModal} from "../../services/slice/order-slice";
 import {fetchOrders} from "../../utils/api";
 import DragElement from "./drag-element/drag-element";
 import {IIngredient} from '../../utils/types/types-ingredients';
+import {useNavigate} from "react-router-dom";
 
 const BurgerConstructor: FC = () => {
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const {isOrderOpen} = useAppSelector((state) => state.order);
     const bun = useAppSelector((state) => state.constructorIngredients.bun);
     const mainAndSauce = useAppSelector((state) => state.constructorIngredients.mainAndSauce);
     const ingredientsAdd = useAppSelector((state) => state.constructorIngredients.ingredientsAdd);
     const number = useAppSelector((state) => state.order.dataOrder.order.number);
     const isLoading = useAppSelector((state) => state.order.isLoading);
-    const plug = useAppSelector((state) => state.constructorIngredients.plug)
+    const plug = useAppSelector((state) => state.constructorIngredients.plug);
+    const user = useAppSelector((state) => state.profile.user.name);
 
     // DND (drop)
     // @ts-ignore
@@ -49,6 +52,7 @@ const BurgerConstructor: FC = () => {
 
     // Отправка заказа и отображение его номера
     const isSendOrder = () => {
+        if(!user) return navigate('login');
         const ingredients = [...mainAndSauce, {...bun}, {...bun}].map((ingredientId) => ingredientId._id);
         const dataIngredientsId: {ingredients: string[]} = {ingredients};
         dispatch(fetchOrders(dataIngredientsId));

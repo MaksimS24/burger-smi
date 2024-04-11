@@ -47,7 +47,12 @@ export async function resRefresh(): Promise<IApiResRefresh> {
             token: getCookie('refreshToken'),
         }),
     });
-    return await res.json();
+    const data = await res.json();
+    if (data.success) {
+        setCookie('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+    }
+    return data;
 }
 
 export async function fetchRefresh<T>(url: RequestInfo, options: RequestInit) {
@@ -60,8 +65,6 @@ export async function fetchRefresh<T>(url: RequestInfo, options: RequestInit) {
 
             const dataRefresh = await resRefresh();
             if (!dataRefresh.success) return Promise.reject(dataRefresh);
-            setCookie('accessToken', dataRefresh.accessToken);
-            setCookie('refreshToken', dataRefresh.refreshToken);
             (options.headers as { [key: string]: string }).authorization = dataRefresh.accessToken;
             const res = await fetch(url, options);
             return await checkResponse<T>(res);

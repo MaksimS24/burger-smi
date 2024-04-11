@@ -20,7 +20,7 @@ interface IVisionOrder {
 
 const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
 
-    const {createdAt, ingredients, status, number, name, _id} = data;
+    const {ingredients, name, createdAt, status, number, _id} = data;
     const location = useLocation();
     const navigate = useNavigate();
     const ingredientsFeed = useAppSelector((state) => state.ingredients.ingredients);
@@ -64,8 +64,10 @@ const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
                     {orderForDisplay.leaf.map((thumb, i, arr) =>
                         <div key={`${thumb.id}${i}`} className={style.eachImg} style={{zIndex: arr.length - 1}}>
                             <img className={style.img} src={thumb.image} alt={thumb.nameBurger}></img>
-                            {thumb.isTotalNumber ? <div
-                                className={`${style.bigOrder} text text_type_main-default`}>+{thumb.isTotalNumber}</div> : null}
+                            {thumb.isTotalNumber ?
+                                <div className={`${style.bigOrder} text text_type_main-default`}>
+                                    +{thumb.isTotalNumber}
+                                </div> : null}
                         </div>
                     )}
                 </div>
@@ -75,9 +77,7 @@ const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
                 </div>
             </div>
         </div>
-
-    )
-        ;
+    );
 };
 
 export default FeedOrders;

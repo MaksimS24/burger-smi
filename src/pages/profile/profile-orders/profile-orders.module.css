@@ -1,0 +1,7 @@
+.mainProfileOrders {
+    max-height: calc(100vh - 242px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+
+}
