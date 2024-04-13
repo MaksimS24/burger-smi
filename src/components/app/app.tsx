@@ -11,15 +11,17 @@ import ResetPassword from "../../pages/forgot-password/new-password/reset-passwo
 import Profile from "../../pages/profile/profile";
 import ProfileEdit from "../../pages/profile/profile-edit/profile-edit";
 import ProtectedRouteElement from "../protected-route-element/protected-route-element";
-import {fetchIngredients, profileInfo} from "../../utils/api";
 import Loader from "../loader/loader";
 import IngredientDetails from "../burger-ingredients/ingredient-card/ingredient-details/ingredient-details";
-import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 import Modal from "../modal/modal";
 import Feed from "../feed/feed";
-import FeedDetails from "../feed/feed-orders/feed-details/feed-details";
+import FeedDetails from "../feed/feed-details/feed-details";
 import {TypeWsStatus} from "../../utils/types/websocket";
 import ProfileOrders from "../../pages/profile/profile-orders/profile-ordes";
+import {useAppDispatch, useAppSelector} from "../../services/selectors/use-typed-selector";
+import {ingredientsFetch} from "../../services/slice/ingredients-slice";
+import {profileInfoFetch} from "../../services/slice/profile-slice";
+import FeedOrderPage from "../../pages/feed-orders/feed-order-page/feed-order-page";
 
 function App() {
 
@@ -27,13 +29,12 @@ function App() {
     const statusFeedOrders = useAppSelector((state) => state.feedOrders.status);
     const statusProfileOrders = useAppSelector((state) => state.profileOrders.status);
     const location = useLocation();
-    // const locationState = location.state as {orderNumber?: string };
     const background = location.state && location.state.modal;
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(profileInfo());
-        dispatch(fetchIngredients());
+        dispatch(profileInfoFetch());
+        dispatch(ingredientsFetch());
     }, [dispatch]);
 
     const navigate = useNavigate();
@@ -58,9 +59,10 @@ function App() {
                         <Route path='profile-edit' element={<ProfileEdit/>}/>
                         <Route path='orders' element={<ProfileOrders/>}/>
                     </Route>
-                    <Route path='/profile/orders/:id' element={<ProtectedRouteElement element={<FeedDetails/>} onlyUnAuth/>}/>
+                    <Route path='/profile/orders/:id'
+                           element={<ProtectedRouteElement element={<FeedOrderPage/>}/>}/>
                     <Route path='/feed' element={<Feed/>}/>
-                    <Route path='/feed/:id' element={<FeedDetails/>}/>
+                    <Route path='/feed/:id' element={<FeedOrderPage/>}/>
                     <Route path='*' element={<NotFound/>}/>
                 </Routes>
                 {background && (
@@ -79,7 +81,7 @@ function App() {
                                    </Modal>
                                }
                         />
-                        <Route path='profile/orders/:id'
+                        <Route path='/profile/orders/:id'
                                element={
                                    <Modal title={'#' + location.state.orderNumber} onCloseModal={onCloseModal}>
                                        <FeedDetails/>

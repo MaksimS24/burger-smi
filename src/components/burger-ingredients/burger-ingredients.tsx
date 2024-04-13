@@ -2,8 +2,8 @@ import React, {FC, RefObject, useRef, useState} from "react";
 import styles from './burger-ingredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCard from "./ingredient-card/ingredient-card";
-import {useAppSelector} from "../../hooks/use-app-redux";
 import {tabScroll} from "../../hooks/tabScroll";
+import {useAppSelector} from "../../services/selectors/use-typed-selector";
 
 const BurgerIngredients: FC = () => {
 

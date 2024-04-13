@@ -42,7 +42,7 @@ const AppHeader: FC = () => {
                 {/*Личный кабинет*/}
                 <span className={styles.lk}>
                 <NavLink
-                    to='/profile'
+                    to='/profile/profile-edit'
                     className={({isActive}) => isActive ? `${styles.lkContainer} ${styles.active}` : styles.lkContainer}
                 >
                     <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'}/>

@@ -1,12 +1,12 @@
 import style from './feed.module.css';
-import FeedOrders from "./feed-orders/feed-orders";
-import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
+import FeedOrders from "../../pages/feed-orders/feed-orders";
 import {FC, useEffect, useMemo} from "react";
 import {feedOrdersWs} from "../../utils/api";
 import {
     wsConnectFeedOrders,
     wsDisconnectFeedOrders
 } from "../../services/reducers-actions-feed-orders/actions";
+import {useAppDispatch, useAppSelector} from "../../services/selectors/use-typed-selector";
 
 const Feed: FC = () => {
 

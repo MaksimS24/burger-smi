@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {fetchOrders} from "../../utils/api";
 
 interface OrderInterface {
@@ -27,6 +27,11 @@ export const initialState: OrderInterface = {
     isError: false,
 }
 
+export const orderFetch = createAsyncThunk(
+    'slice/orderSlice/order',
+    fetchOrders,
+);
+
 export const orderSlice = createSlice({
     name: 'order',
     initialState,
@@ -42,23 +47,25 @@ export const orderSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchOrders.pending, (state) => {
-                state.isLoading =true;
+            .addCase(orderFetch.pending, (state) => {
+                state.isLoading = true;
                 state.isError = false;
 
             })
-            .addCase(fetchOrders.fulfilled, (state, action) => {
+            .addCase(orderFetch.fulfilled, (state, action) => {
                 state.dataOrder = action.payload;
                 state.isOrderOpen = true;
+                state.isLoading = false;
             })
-            .addCase(fetchOrders.rejected, (state, action) => {
+            .addCase(orderFetch.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
-            });
+            })
+            .addDefaultCase(() => {})
     }
 })
 
-export const {orderOpenModal, orderCloseModal} = orderSlice.actions;
+export const {orderOpenModal, orderCloseModal,} = orderSlice.actions;
 
 export default orderSlice.reducer;
 

@@ -34,3 +34,7 @@
 .buttonOn {
     animation: fadeIn .1.5s normal;
 }
+
+.buttonOff {
+    display: none;
+}

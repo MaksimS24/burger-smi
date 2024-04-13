@@ -1,9 +1,9 @@
 import style from './ingredients-feed-order.module.css';
 import {FC, useEffect, useMemo} from "react";
-import {IOrdersFeed} from "../../../../../utils/types/websocket";
-import {useAppSelector} from "../../../../../hooks/use-app-redux";
-import {IIngredient} from "../../../../../utils/types/types-ingredients";
+import {IOrdersFeed} from "../../../../utils/types/websocket";
+import {IIngredient} from "../../../../utils/types/types-ingredients";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useAppSelector} from "../../../../services/selectors/use-typed-selector";
 
 interface IData {
     _id: string,

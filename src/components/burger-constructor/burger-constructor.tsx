@@ -1,23 +1,22 @@
-import React, {FC, useMemo} from "react";
+import React, {FC, useCallback, useMemo} from "react";
 import styles from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "./order-details/order-details";
 import BurgerConstructorElement from "./burger-constructor-element/burger-constructor-element";
 import {useDrop} from "react-dnd";
-import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
-import {addIngredients} from "../../services/slice/constructor-slice";
-import {orderCloseModal} from "../../services/slice/order-slice";
-import {fetchOrders} from "../../utils/api";
+import {addIngredients, resetIngredients} from "../../services/slice/constructor-slice";
+import {orderCloseModal, orderFetch} from "../../services/slice/order-slice";
 import DragElement from "./drag-element/drag-element";
 import {IIngredient} from '../../utils/types/types-ingredients';
 import {useNavigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../services/selectors/use-typed-selector";
 
 const BurgerConstructor: FC = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const {isOrderOpen} = useAppSelector((state) => state.order);
+    const isOrderOpen = useAppSelector((state) => state.order.isOrderOpen);
     const bun = useAppSelector((state) => state.constructorIngredients.bun);
     const mainAndSauce = useAppSelector((state) => state.constructorIngredients.mainAndSauce);
     const ingredientsAdd = useAppSelector((state) => state.constructorIngredients.ingredientsAdd);
@@ -39,10 +38,10 @@ const BurgerConstructor: FC = () => {
     });
 
     // Начальное состояние кнопки "Оформить заказ"
-    const buttonWork = mainAndSauce && ingredientsAdd ? null : styles.buttonOn;
-    const statusOrder = null
-        ? 'Оформляем Ваш заказ'
-        : buttonWork ? 'Соберите бургер' : 'Оформить заказ'
+    const buttonWork = mainAndSauce && ingredientsAdd ? styles.buttonOn : styles.buttonOff;
+    const statusOrder = isLoading
+        ? 'Оформляем ваш заказ'
+        : ingredientsAdd || plug ? 'Соберите бургер' : 'Оформить заказ'
 
     // Калькулятор суммы
     const calculate = useMemo(() =>
@@ -55,12 +54,14 @@ const BurgerConstructor: FC = () => {
         if(!user) return navigate('login');
         const ingredients = [...mainAndSauce, {...bun}, {...bun}].map((ingredientId) => ingredientId._id);
         const dataIngredientsId: {ingredients: string[]} = {ingredients};
-        dispatch(fetchOrders(dataIngredientsId));
+        dispatch(orderFetch(dataIngredientsId));
     }
 
-    const toCloseModalOrder = () => {
+    //Закрытие модального окна
+    const toCloseModalOrder = useCallback(() => {
         dispatch(orderCloseModal())
-    }
+        dispatch(resetIngredients())
+    }, [dispatch]);
 
     return (
         <div className={styles.mainBurgerConstructor}
@@ -85,14 +86,15 @@ const BurgerConstructor: FC = () => {
                             <DragElement/>
                         ) : (
 
-                            mainAndSauce.map((ingredient, index) =>
+                            mainAndSauce.map((ingredient, index) => (
                                 <BurgerConstructorElement
                                     ingredientData={ingredient}
                                     key={ingredient._uuid}
                                     index={index}
                                 />
-                            )
-                        )}
+                            ))
+                        )
+                    }
                 </ul>
 
                 {/*Булка низ*/}
@@ -113,7 +115,7 @@ const BurgerConstructor: FC = () => {
                 </div>
                 <div>
                     <Button
-                        disabled={plug || isLoading}
+                        disabled={!buttonWork || plug || isLoading}
                         htmlType="button"
                         type="primary"
                         size="large"
@@ -125,10 +127,11 @@ const BurgerConstructor: FC = () => {
             </div>
 
             {/*Модальное окно с номером заказа*/}
-            {isOrderOpen && number && <Modal
+            {isOrderOpen && number &&
+                <Modal
                 children={<OrderDetails number={number}/>}
                 onCloseModal={toCloseModalOrder}
-            />}
+                />}
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import React, {useMemo} from "react";
 import styles from './ingredient-details.module.css'
 import {useParams} from "react-router-dom";
-import {useAppSelector} from "../../../../hooks/use-app-redux";
+import {useAppSelector} from "../../../../services/selectors/use-typed-selector";
 
 const IngredientDetails = () => {
 

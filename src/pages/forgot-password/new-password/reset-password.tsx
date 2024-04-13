@@ -2,10 +2,10 @@ import style from './reset-password.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import React, {FC, FormEvent, useState} from "react";
-import {passwordSend} from "../../../utils/api";
 import Loader from "../../../components/loader/loader";
-import {useAppDispatch, useAppSelector} from "../../../hooks/use-app-redux";
 import { IApiSendPassword } from '../../../utils/types/types-api';
+import {useAppDispatch, useAppSelector} from "../../../services/selectors/use-typed-selector";
+import {passwordSendFetch} from "../../../services/slice/profile-slice";
 
 const ResetPassword: FC = () => {
 
@@ -24,7 +24,7 @@ const ResetPassword: FC = () => {
     const isLoading = useAppSelector((state) => state.profile.isLoading);
 
     const isEmailToken = async (data: IApiSendPassword) => {
-        return dispatch(passwordSend(data));
+        return dispatch(passwordSendFetch(data));
     }
 
     const toSendPassword = async (e: FormEvent) => {

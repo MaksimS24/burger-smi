@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {IOrdersFeed, IOrdersStatus} from "../../../../utils/types/websocket";
+import {IOrdersFeed, IOrdersStatus} from "../../../utils/types/websocket";
 
 interface IStatusOrder {
     status: string,

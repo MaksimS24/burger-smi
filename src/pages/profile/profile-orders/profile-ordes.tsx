@@ -1,12 +1,13 @@
 import style from './profile-orders.module.css';
-import {useAppDispatch, useAppSelector} from "../../../hooks/use-app-redux";
 import {FC, useEffect} from "react";
 import {
     wsConnectProfileOrders,
     wsDisconnectProfileOrders
 } from "../../../services/reducers-actions-profile-orders/actions";
 import {wsProfile} from "../../../utils/api";
-import FeedOrders from "../../../components/feed/feed-orders/feed-orders";
+import FeedOrders from "../../feed-orders/feed-orders";
+import {useAppDispatch, useAppSelector} from "../../../services/selectors/use-typed-selector";
+import {useParams} from "react-router-dom";
 
 const ProfileOrders: FC = () => {
 
@@ -19,6 +20,7 @@ const ProfileOrders: FC = () => {
             dispatch(wsDisconnectProfileOrders())
         }
     }, [dispatch]);
+
     return (
         <>
             <div className={style.mainProfileOrders}>

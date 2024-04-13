@@ -1,10 +1,10 @@
 import style from './feed-orders.module.css';
-import {useAppSelector} from "../../../hooks/use-app-redux";
 import {useLocation, useNavigate} from "react-router-dom";
-import {IOrdersFeed} from "../../../utils/types/websocket";
+import {IOrdersFeed} from "../../utils/types/websocket";
 import {FC, useCallback} from "react";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import StatusOrders from "./status-order/status-orders";
+import {useAppSelector} from "../../services/selectors/use-typed-selector";
 
 interface IFeedOrders {
     data: IOrdersFeed,
@@ -47,7 +47,7 @@ const FeedOrders: FC<IFeedOrders> = ({data, visibleStatus = false}) => {
 
     const openModal = () => {
         navigate(`${location.pathname}/${_id}`, {state: {modal: location, orderNumber: number.toString()}})
-    }
+    };
 
     return (
         <div className={style.mainFeedOrders} onClick={openModal}>
