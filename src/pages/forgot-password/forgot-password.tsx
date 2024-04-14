@@ -2,8 +2,8 @@ import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-compon
 import {Link, useNavigate} from "react-router-dom";
 import style from "./forgot-password.module.css";
 import React, {FC, FormEvent, useState} from "react";
-import {forgotPasswordEmail} from "../../utils/api";
-import {useAppDispatch} from "../../hooks/use-app-redux";
+import {useAppDispatch} from "../../services/selectors/use-typed-selector";
+import {forgotPasswordEmailFetch} from "../../services/slice/profile-slice";
 
 
 const ForgotPassword: FC = () => {
@@ -15,7 +15,7 @@ const ForgotPassword: FC = () => {
     const dispatch = useAppDispatch();
     const toSendEmail = (e: FormEvent) => {
         e.preventDefault();
-        dispatch(forgotPasswordEmail(login)).then(() => navigate('/reset-password', {replace: true, state: true}));
+        dispatch(forgotPasswordEmailFetch(login)).then(() => navigate('/reset-password', {replace: true, state: true}));
     };
     return (
         <>

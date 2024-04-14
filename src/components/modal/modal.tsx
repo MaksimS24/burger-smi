@@ -1,6 +1,10 @@
-import React, {FC, PropsWithChildren, useEffect} from "react";
+import React, {FC, PropsWithChildren} from "react";
 import styles from './modal.module.css';
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import ModalOverlay from "./modal-overlay/modal-overlay";
+import {createPortal} from "react-dom";
+
+const modalRoot = document.getElementById('modal') as HTMLElement;
 
 interface ModalInterface {
     title?: string,
@@ -10,24 +14,9 @@ interface ModalInterface {
 
 const Modal: FC<PropsWithChildren<ModalInterface>> = ({title, children, onCloseModal}) => {
 
-    //Закрытие модального окна по Esc и по клику  
-    useEffect(() => {
-        const handleKeyPress = (e: KeyboardEvent) => {
-            e.key === 'Escape' && onCloseModal()
-        };
-        document.addEventListener('keyup', handleKeyPress, false);
-        document.getElementById('root')?.classList.add('overflow');
-        return () => {
-            document.removeEventListener('keyup', handleKeyPress, false);
-            document.getElementById('root')?.classList.remove('overflow');
-        }
-        // eslint-disable-next-line
-    }, []);
-
-
-    return (
+    return createPortal (
         <>
-            <div className={styles.backgroundModal} onClick={onCloseModal}/>
+            <ModalOverlay onCloseModal={onCloseModal}/>
 
             <div className={styles.centeredModal}>
                 <div className={styles.modal}>
@@ -49,7 +38,8 @@ const Modal: FC<PropsWithChildren<ModalInterface>> = ({title, children, onCloseM
 
                 </div>
             </div>
-        </>
+        </>,
+        modalRoot
     );
 }
 

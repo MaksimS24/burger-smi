@@ -1,10 +1,10 @@
 import style from './profile-edit.module.css';
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {FC, FormEvent, useEffect, useState} from "react";
-import {requestForEditing} from "../../../utils/api";
 import {getCookie} from "../../../utils/cookie";
-import {useAppDispatch, useAppSelector} from "../../../hooks/use-app-redux";
 import { IEditProfile } from '../../../utils/types/types-api';
+import {useAppDispatch, useAppSelector} from "../../../services/selectors/use-typed-selector";
+import {requestForEditingFetch} from "../../../services/slice/profile-slice";
 
 const ProfileEdit: FC = () => {
 
@@ -35,7 +35,7 @@ const ProfileEdit: FC = () => {
     //Profile editing
     const dispatch = useAppDispatch();
     const isEditProfile = async (data: IEditProfile) => {
-        dispatch(requestForEditing(data))
+        dispatch(requestForEditingFetch(data))
     }
 
     const toEditingProfile = async (e: FormEvent) => {
@@ -52,8 +52,6 @@ const ProfileEdit: FC = () => {
             setActiveButton(false);
         }
     }, [nameProfile, emailProfile, password, name, email]);
-
-
 
     return (
         <>

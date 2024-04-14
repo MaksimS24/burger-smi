@@ -1,0 +1,39 @@
+.mainFeedDetails {
+    width: 100%;
+    margin: 0 40px auto;
+    color: #F2F2F3;
+    height: 100%;
+}
+
+.mainFeedDetails p {
+    margin-top: 40px;
+    margin-bottom: 16px;
+}
+
+.mainFeedDetails h3 {
+    margin-top: 60px;
+}
+
+.mainFeedDetails ul {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    line-height: 0;
+    list-style: none;
+    margin-bottom: 0;
+    max-height: 304px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 0;
+    scroll-behavior: smooth;
+    width: 100%;
+
+}
+
+.footerModalFeedOrder {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 60px;
+    margin-bottom: 40px;
+}

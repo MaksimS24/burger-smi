@@ -1,0 +1,37 @@
+.ingredientsModalFeedOrder {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.eachImgModalFeed {
+    width: 60px;
+    height: 60px;
+    padding: 2px;
+    position: relative;
+    background: linear-gradient(63.18deg, #801AB3, #4C4CFF);
+    border-radius: 50%;
+    box-sizing: initial;
+}
+
+.ingredientsModalFeedOrder img {
+    width: 60px;
+    display: block;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    background: #131316;
+}
+
+.ingredientsModalFeedOrder p {
+    max-width: 415px;
+    width: 100%;
+}
+
+.ingredientsModalFeedOrder span {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-right: 30px;
+}

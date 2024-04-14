@@ -2,9 +2,9 @@ import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui
 import style from './register.module.css';
 import {Link, useNavigate} from "react-router-dom";
 import React, {FC, FormEvent, useState} from "react";
-import {registerUser} from "../../utils/api";
-import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 import { IRegister } from "../../utils/types/types-api";
+import {useAppDispatch, useAppSelector} from "../../services/selectors/use-typed-selector";
+import {registerUserFetch} from "../../services/slice/profile-slice";
 
 
 const Register: FC = () => {
@@ -31,14 +31,14 @@ const Register: FC = () => {
     //Register
     const dispatch = useAppDispatch();
     const isRegisterProfile = async (data: IRegister) => {
-        return dispatch(registerUser(data));
+        return dispatch(registerUserFetch(data));
     }
 
     const navigate = useNavigate();
     const toSendProfile = async (e: FormEvent) => {
         e.preventDefault();
         isRegisterProfile({name, email, password}).then(() =>
-            registerUser.fulfilled.match(isRegisterProfile) ? navigate('/', {replace: true}) : errorRegister
+            registerUserFetch.fulfilled.match(isRegisterProfile) ? navigate('/', {replace: true}) : errorRegister
         );
     };
 

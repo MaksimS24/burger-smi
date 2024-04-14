@@ -1,7 +1,7 @@
 import {Navigate, useLocation} from "react-router-dom";
 import PropTypes from "prop-types";
 import {FC, ReactElement} from "react";
-import {useAppSelector} from "../../hooks/use-app-redux";
+import {useAppSelector} from "../../services/selectors/use-typed-selector";
 
 const ProtectedRouteElement: FC<{element: ReactElement, onlyUnAuth?: boolean}> = ({element, onlyUnAuth = false}) => {
 

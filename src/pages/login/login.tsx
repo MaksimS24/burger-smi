@@ -2,9 +2,9 @@ import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui
 import style from './login.module.css';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import React, {FC, FormEvent, useState} from "react";
-import {loginUser} from "../../utils/api";
-import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 import { ILoginUserInfo } from "../../utils/types/types-api";
+import {useAppDispatch, useAppSelector} from "../../services/selectors/use-typed-selector";
+import {loginUserFetch} from "../../services/slice/profile-slice";
 
 const Login: FC = () => {
 
@@ -29,13 +29,13 @@ const Login: FC = () => {
     //Login
     const dispatch = useAppDispatch();
     const isLoginProfile = async (data: ILoginUserInfo) => {
-        return dispatch(loginUser(data));
+        return dispatch(loginUserFetch(data));
     }
 
     const toSendLogin = async (e: FormEvent) => {
         e.preventDefault();
         isLoginProfile({email: emailLogin, password: passwordLogin}).then(() =>
-            loginUser.fulfilled.match(isLoginProfile) ? navigate(`${state ? state.pathname : '/'}`, {replace: true})
+            loginUserFetch.fulfilled.match(isLoginProfile) ? navigate(`${state ? state.pathname : '/'}`, {replace: true})
                 :
                 errorLogin
         );

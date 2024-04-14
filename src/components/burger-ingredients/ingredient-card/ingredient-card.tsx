@@ -3,8 +3,8 @@ import styles from "./ingredient-card.module.css";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag} from "react-dnd";
 import {useNavigate} from "react-router-dom";
-import {useAppSelector} from "../../../hooks/use-app-redux";
 import {IIngredient} from "../../../utils/types/types-ingredients";
+import {useAppSelector} from "../../../services/selectors/use-typed-selector";
 
 interface IIngredientCardInterface {
     ingredientData: IIngredient,

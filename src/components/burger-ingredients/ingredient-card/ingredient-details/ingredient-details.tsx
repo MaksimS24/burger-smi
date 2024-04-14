@@ -1,18 +1,11 @@
 import React, {useMemo} from "react";
 import styles from './ingredient-details.module.css'
 import {useParams} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../../../hooks/use-app-redux";
-import {useEffect} from "react";
-import {fetchIngredients} from "../../../../utils/api";
+import {useAppSelector} from "../../../../services/selectors/use-typed-selector";
 
 const IngredientDetails = () => {
 
     const {id} = useParams();
-
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(fetchIngredients());
-    }, [dispatch]);
 
     const ingredients = useAppSelector((state) => state.ingredients.ingredients);
 

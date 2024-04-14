@@ -2,10 +2,10 @@ import styles from "./burger-constructor-element.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {FC, useCallback, useRef} from "react";
 import {useDrag, useDrop} from 'react-dnd';
-import {useAppDispatch} from "../../../hooks/use-app-redux";
 import {deleteIngredients, sortIngredients} from "../../../services/slice/constructor-slice";
 import {IBurgerConstructor} from "../../../utils/types/types-ingredients";
 import type { Identifier, XYCoord } from 'dnd-core';
+import {useAppDispatch} from "../../../services/selectors/use-typed-selector";
 
 interface IBurgerConstructorElementInterface {
     ingredientData: IBurgerConstructor,

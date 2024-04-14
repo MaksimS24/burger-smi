@@ -1,10 +1,9 @@
-import React, {FC, RefObject, useEffect, useRef, useState} from "react";
+import React, {FC, RefObject, useRef, useState} from "react";
 import styles from './burger-ingredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientCard from "./ingredient-card/ingredient-card";
-import {fetchIngredients} from "../../utils/api";
-import {useAppDispatch, useAppSelector} from "../../hooks/use-app-redux";
 import {tabScroll} from "../../hooks/tabScroll";
+import {useAppSelector} from "../../services/selectors/use-typed-selector";
 
 const BurgerIngredients: FC = () => {
 
@@ -19,17 +18,10 @@ const BurgerIngredients: FC = () => {
     const getActive = () => {
         setSelectedTab(tabScroll({bunRef, sauceRef, mainRef, tabRef}));
     }
-    console.log(getActive)
 
     const toHandleTabClick = (ref: RefObject<HTMLElement>) => {
         ref.current?.scrollIntoView({block: 'start', behavior: 'smooth'});
     }
-
-    //Array ingredients
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(fetchIngredients());
-    }, [dispatch]);
 
     const ingredients = useAppSelector((state) => state.ingredients.ingredients);
 

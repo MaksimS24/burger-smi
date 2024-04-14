@@ -1,22 +1,22 @@
 import {createSlice, nanoid, PayloadAction} from "@reduxjs/toolkit";
 import {IIngredient} from "../../utils/types/types-ingredients";
 
-interface bunConstructor {
+interface IBunConstructor {
     _id: string,
     name: string,
     price: number,
     image_mobile: string,
 }
 
-interface constructor {
+interface IConstructor {
     ingredientsConstructor: [] | IIngredient,
-    bun: bunConstructor | IIngredient,
+    bun: IBunConstructor | IIngredient,
     mainAndSauce: IIngredient[],
     ingredientsAdd: boolean,
     plug: boolean
 }
 
-export const initialState: constructor = {
+export const initialState: IConstructor = {
     ingredientsConstructor: [],
     bun: {
         name: 'Выберете булку',
@@ -54,9 +54,12 @@ export const constructorSlice = createSlice({
 
         deleteIngredients: (state, action) => {
             state.mainAndSauce = [...state.mainAndSauce].filter(({_uuid}) => _uuid !== action.payload);
+            if(!state.mainAndSauce.length && !state.bun._id) state.plug = true;
         },
+
+        resetIngredients: () => ({...initialState}),
     },
 });
 
-export const {addIngredients, sortIngredients, deleteIngredients} = constructorSlice.actions;
+export const {addIngredients, sortIngredients, deleteIngredients, resetIngredients} = constructorSlice.actions;
 export default constructorSlice.reducer;

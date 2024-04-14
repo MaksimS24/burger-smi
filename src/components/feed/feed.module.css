@@ -1,0 +1,57 @@
+.mainFeedOrders {
+ max-width: 1280px;
+ margin: 0 auto;
+ flex: 1 1;
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+}
+
+.feedContainer {
+ margin: 40px 20px 0 0;
+ width: 600px;
+ max-height: 912px;
+}
+
+.feedHeader {
+ color: #F2F2F3;
+}
+
+.feedMainContainer {
+ display: flex;
+}
+
+.feedOrders {
+ max-height: calc(100vh - 242px);
+ overflow-x: hidden;
+ overflow-y: scroll;
+ scroll-behavior: smooth;
+}
+
+.stats {
+ margin-left: 60px;
+ max-width: 600px;
+ display: block;
+ justify-content: center;
+ align-items: center;
+
+}
+.statsUp {
+ display: flex;
+ justify-content: space-between;
+}
+
+.readyOrder, .workOrder {
+ list-style-type: none;
+ max-width: 272px;
+ height: 206px;
+ color: #00CCCC;
+ display: contents;
+}
+
+.totals p {
+ text-shadow:
+         0 0px 8px rgba(51, 51, 255, .25),
+         0 0px 8px rgba(51, 51, 255, .25),
+         0 4px 32px rgba(51, 51, 255, .5);
+}

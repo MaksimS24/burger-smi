@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
     forgotPasswordEmail,
     loginUser,
@@ -9,6 +9,7 @@ import {
     requestForEditing
 } from "../../utils/api";
 import {deleteCookie, setCookie} from "../../utils/cookie";
+import {IApiLogout, IEditProfile, IForProfileEdit, ILoginUserInfo, ISignInUser} from "../../utils/types/types-api";
 
 export interface User {
     user: {
@@ -34,6 +35,41 @@ const initialState: User = {
     send: false
 }
 
+export const registerUserFetch = createAsyncThunk(
+    'auth/register',
+    registerUser,
+);
+
+export const loginUserFetch = createAsyncThunk<ISignInUser, ILoginUserInfo>(
+    'user/login',
+    loginUser,
+);
+
+export const profileInfoFetch = createAsyncThunk<IForProfileEdit>(
+    'user/authentication',
+    profileInfo,
+);
+
+export const requestForEditingFetch = createAsyncThunk<IForProfileEdit, IEditProfile>(
+    'user/auth',
+    requestForEditing,
+);
+
+export const logoutUserFetch = createAsyncThunk<IApiLogout>(
+    'auth/logout',
+    logoutUser,
+);
+
+export const passwordSendFetch = createAsyncThunk(
+    'user/password-reset/reset',
+    passwordSend,
+);
+
+export const forgotPasswordEmailFetch = createAsyncThunk(
+    'user/password-reset',
+    forgotPasswordEmail,
+);
+
 export const profileSlice = createSlice({
     name: 'profile',
     initialState,
@@ -41,11 +77,11 @@ export const profileSlice = createSlice({
     extraReducers: builder =>
         builder
             // Register user
-            .addCase(registerUser.pending, (state) => {
+            .addCase(registerUserFetch.pending, (state) => {
                 state.isLoading = true;
                 state.isError = false;
             })
-            .addCase(registerUser.fulfilled, (state, action) => {
+            .addCase(registerUserFetch.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.authUser = true;
                 state.user = {
@@ -55,17 +91,17 @@ export const profileSlice = createSlice({
                 setCookie('accessToken', action.payload.accessToken);
                 localStorage.setItem('refreshToken', action.payload.refreshToken);
             })
-            .addCase(registerUser.rejected, (state) => {
+            .addCase(registerUserFetch.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })
 
             //Login
-            .addCase(loginUser.pending, (state) => {
+            .addCase(loginUserFetch.pending, (state) => {
                 state.isLoading = true;
                 state.isError = false;
             })
-            .addCase(loginUser.fulfilled, (state, action) => {
+            .addCase(loginUserFetch.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.user = {
                     email: action.payload.user.email,
@@ -75,17 +111,17 @@ export const profileSlice = createSlice({
                 setCookie('accessToken', action.payload.accessToken);
                 localStorage.setItem('refreshToken', action.payload.refreshToken);
             })
-            .addCase(loginUser.rejected, (state) => {
+            .addCase(loginUserFetch.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })
 
             //Auth
-            .addCase(profileInfo.pending, (state) => {
+            .addCase(profileInfoFetch.pending, (state) => {
                 state.isLoading = true;
                 state.isError = false;
             })
-            .addCase(profileInfo.fulfilled, (state, action) => {
+            .addCase(profileInfoFetch.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.user = {
                     email: action.payload.user.email,
@@ -94,34 +130,34 @@ export const profileSlice = createSlice({
                 state.authChecked = true;
                 state.authUser = true;
             })
-            .addCase(profileInfo.rejected, (state) => {
+            .addCase(profileInfoFetch.rejected, (state) => {
                 state.isLoading = false;
                 state.authChecked = true;
             })
 
             //Request for edit
-            .addCase(requestForEditing.pending, (state) => {
+            .addCase(requestForEditingFetch.pending, (state) => {
                 state.isLoading = true;
                 state.isError = false;
             })
-            .addCase(requestForEditing.fulfilled, (state, action) => {
+            .addCase(requestForEditingFetch.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.user = {
                     email: action.payload.user.email,
                     name: action.payload.user.name,
                 };
             })
-            .addCase(requestForEditing.rejected, (state) => {
+            .addCase(requestForEditingFetch.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })
 
             //Logout
-            .addCase(logoutUser.pending, (state) => {
+            .addCase(logoutUserFetch.pending, (state) => {
                 state.isLoading = false;
                 state.isError = false;
             })
-            .addCase(logoutUser.fulfilled, (state) => {
+            .addCase(logoutUserFetch.fulfilled, (state) => {
                 state.user = {
                     email: '',
                     name: '',
@@ -130,35 +166,35 @@ export const profileSlice = createSlice({
                 deleteCookie('accessToken');
                 localStorage.removeItem('refreshToken');
             })
-            .addCase(logoutUser.rejected, (state) => {
+            .addCase(logoutUserFetch.rejected, (state) => {
                 state.isLoading = true;
                 state.isError = true;
             })
 
             //Email password
-            .addCase(passwordSend.pending, state => {
+            .addCase(passwordSendFetch.pending, state => {
                 state.isLoading = true;
                 state.isError = false;
             })
-            .addCase(passwordSend.fulfilled, (state)=> {
+            .addCase(passwordSendFetch.fulfilled, (state) => {
                 state.isLoading = false;
                 state.send = true;
             })
-            .addCase(passwordSend.rejected, (state) => {
+            .addCase(passwordSendFetch.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })
 
             //Forgot password
-            .addCase(forgotPasswordEmail.pending, (state) => {
+            .addCase(forgotPasswordEmailFetch.pending, (state) => {
                 state.isLoading = true;
                 state.isError = false;
             })
-            .addCase(forgotPasswordEmail.fulfilled, (state) => {
+            .addCase(forgotPasswordEmailFetch.fulfilled, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })
-            .addCase(forgotPasswordEmail.rejected, (state) => {
+            .addCase(forgotPasswordEmailFetch.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })
