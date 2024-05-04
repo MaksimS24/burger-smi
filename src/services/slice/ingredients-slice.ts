@@ -1,53 +1,54 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {fetchIngredients} from "../../utils/api";
 import {IIngredient} from "../../utils/types/types-ingredients";
+import {IApiIngredients} from "../../utils/types/types-api";
 
 interface IInterfaceIngredientsSlice {
     ingredients: IIngredient[],
-    isIngredientsOpen: boolean,
     isLoading: boolean,
-    isError: boolean,
+    isError: boolean | undefined | string,
 
 }
+
 export const initialState: IInterfaceIngredientsSlice = {
     ingredients: [],
-    isIngredientsOpen: false,
     isLoading: false,
     isError: false,
 
 };
 
-export const ingredientsFetch = createAsyncThunk(
+export const ingredientsFetch = createAsyncThunk<IApiIngredients, void, {rejectValue: string}>(
     'slice/fetchIngredients',
-    fetchIngredients,
-)
+    async (_, {rejectWithValue}) => {
+        try {
+            return await fetchIngredients();
+        } catch (err) {
+            return rejectWithValue('Error')
+        }
+    }
+);
 
 
 export const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
-    reducers: {
-        openModal: (state) => {
-            state.isIngredientsOpen = true;
-        },
-        closeModal: (state) => {
-            state.isIngredientsOpen = !state.isIngredientsOpen;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(ingredientsFetch.pending, (state) => {
                 state.isLoading = true;
+                state.isError = false;
             })
             .addCase(ingredientsFetch.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.ingredients = action.payload.data;
             })
-            .addCase(ingredientsFetch.rejected, (state) => {
-                state.isError = true;
+            .addCase(ingredientsFetch.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = action.error.message;
             });
     },
 });
 
-export const {openModal, closeModal,} = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;

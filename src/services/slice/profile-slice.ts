@@ -23,7 +23,7 @@ export interface User {
     send: boolean,
 }
 
-const initialState: User = {
+export const initialState: User = {
     user: {
         email: '',
         name: ''
@@ -133,6 +133,7 @@ export const profileSlice = createSlice({
             .addCase(profileInfoFetch.rejected, (state) => {
                 state.isLoading = false;
                 state.authChecked = true;
+                state.isError = true;
             })
 
             //Request for edit
@@ -154,10 +155,11 @@ export const profileSlice = createSlice({
 
             //Logout
             .addCase(logoutUserFetch.pending, (state) => {
-                state.isLoading = false;
+                state.isLoading = true;
                 state.isError = false;
             })
             .addCase(logoutUserFetch.fulfilled, (state) => {
+                state.isLoading = false;
                 state.user = {
                     email: '',
                     name: '',
@@ -167,7 +169,7 @@ export const profileSlice = createSlice({
                 localStorage.removeItem('refreshToken');
             })
             .addCase(logoutUserFetch.rejected, (state) => {
-                state.isLoading = true;
+                state.isLoading = false;
                 state.isError = true;
             })
 
@@ -178,7 +180,7 @@ export const profileSlice = createSlice({
             })
             .addCase(passwordSendFetch.fulfilled, (state) => {
                 state.isLoading = false;
-                state.send = true;
+                state.send = false;
             })
             .addCase(passwordSendFetch.rejected, (state) => {
                 state.isLoading = false;
@@ -192,13 +194,12 @@ export const profileSlice = createSlice({
             })
             .addCase(forgotPasswordEmailFetch.fulfilled, (state) => {
                 state.isLoading = false;
-                state.isError = true;
+                state.send = true;
             })
             .addCase(forgotPasswordEmailFetch.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })
-
 
 })
 

@@ -7,7 +7,6 @@ import {
 import {wsProfile} from "../../../utils/api";
 import FeedOrders from "../../feed-orders/feed-orders";
 import {useAppDispatch, useAppSelector} from "../../../services/selectors/use-typed-selector";
-import {useParams} from "react-router-dom";
 
 const ProfileOrders: FC = () => {
 
