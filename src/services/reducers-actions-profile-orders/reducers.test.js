@@ -1,5 +1,4 @@
-import profileOrdersReducer from "./reducers";
-import {initialState} from "../slice/order-slice";
+import profileOrdersReducer, {initialState} from "./reducers";
 import {wsOpen, wsClose, wsConnecting, wsError, wsMessage} from "./actions";
 import {TypeWsStatus} from "../../utils/types/websocket";
 
