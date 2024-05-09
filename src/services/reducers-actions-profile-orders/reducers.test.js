@@ -28,11 +28,11 @@ describe('Reducer profile orders', () => {
     it('Websocket online error', () => {
         const result = profileOrdersReducer(
             {...initialState, status: TypeWsStatus.ONLINE},
-            {type: wsError.type, payload: 'Error'}
+            {type: wsError.type, payload: ''}
         );
         expect(result).toEqual({
             ...initialState,
-            error: 'Error',
+            error: '',
             status: TypeWsStatus.ONLINE}
         );
     });
