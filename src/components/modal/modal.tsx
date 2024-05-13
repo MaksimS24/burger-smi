@@ -26,7 +26,7 @@ const Modal: FC<PropsWithChildren<ModalInterface>> = ({title, children, onCloseM
                         <h1 className={'text text_type_main-large'}>
                             {title}
                         </h1>
-                        <button className={styles.closeButton}>
+                        <button className={styles.closeButton} data-cy='close-modal'>
                             <CloseIcon onClick={onCloseModal} type="primary"/>
                         </button>
 

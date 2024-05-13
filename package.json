@@ -4,6 +4,7 @@
   "homepage": "https://maksims24.github.io/burger-smi",
   "private": true,
   "dependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.5",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/user-event": "^13.5.0",
@@ -58,7 +59,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^15.0.4",
-    "cypress": "^13.8.1",
+    "cypress": "^13.9.0",
     "eslint-plugin-cypress": "^3.2.0",
     "fetch-mock": "^9.11.0",
     "gh-pages": "^6.1.1",

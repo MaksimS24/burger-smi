@@ -41,11 +41,12 @@ const IngredientCard: FC<IIngredientCardInterface> = ({ingredientData}) => {
         <li className={styles.liIngredients}
             onClick={toViewModal}
             style={{opacity}}
+            ref={dragTarget}
+            data-cy={`ingredients-${ingredientData._id}`}
         >
             {counter ? <Counter count={counter} size={"default"} extraClass={styles.count}/> : null}
             <img src={image}
                  alt={'burger-ingredient-card'}
-                 ref={dragTarget}
             />
             <div className={'text text_type_digits-default'}>
                 {price}

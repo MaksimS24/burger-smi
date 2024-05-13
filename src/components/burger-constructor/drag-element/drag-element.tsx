@@ -1,6 +1,7 @@
 import React, {FC} from "react";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../burger-constructor.module.css';
+import chevron from '../../../images/chevron.png'
 
 const DragElement: FC = () => {
     return (
@@ -9,7 +10,7 @@ const DragElement: FC = () => {
             <ConstructorElement
                 text={'Добавьте начинки и соусы'}
                 price={0}
-                thumbnail={'/chevron.png'}
+                thumbnail={chevron}
             />
         </div>
     )

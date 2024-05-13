@@ -1,6 +1,7 @@
 import style from './loader.module.css';
 import {ReactSVG} from "react-svg";
 import React from "react";
+import loader from '../../images/loader.svg'
 
 const Loader = () => {
     return (
@@ -10,7 +11,7 @@ const Loader = () => {
                     beforeInjection={(svg) => {
                         svg.classList.add('loader')
                     }}
-                    src={'./loader.svg'}
+                    src={loader}
                 />
             </div>
         </div>
