@@ -14,7 +14,8 @@ describe('useProject', () => {
         cy.get('[data-cy="close-modal"]').as('close-modal-btn');
         cy.wait(2000).get('@close-modal-btn').click();
 
-        cy.get('@ingredient1').drag('[data-cy="drop"]');
+        cy.get('@ingredient1').trigger('dragstart');
+        cy.get('[class^=burger-constructor_mainBurgerConstructor__]').trigger('drop');
         cy.get('@ingredient2').drag('[data-cy="drop"]');
 
         cy.intercept('POST', 'orders', {fixture: 'order.json'});
