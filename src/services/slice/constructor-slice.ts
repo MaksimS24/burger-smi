@@ -52,7 +52,7 @@ export const constructorSlice = createSlice({
             state.mainAndSauce[action.payload.dragIndex] = sort;
         },
 
-        deleteIngredients: (state, action) => {
+        deleteIngredients: (state, action: PayloadAction<string>) => {
             state.mainAndSauce = [...state.mainAndSauce].filter(({_uuid}) => _uuid !== action.payload);
             if(!state.mainAndSauce.length && !state.bun._id) state.plug = true;
         },

@@ -7,7 +7,7 @@ export interface IFeedOrders {
     status: TypeWsStatus,
     error: string,
 }
-const initialState: IFeedOrders = {
+export const initialState: IFeedOrders = {
     data: null,
     status: TypeWsStatus.OFFLINE,
     error: '',

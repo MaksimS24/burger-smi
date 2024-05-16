@@ -11,6 +11,8 @@ import DragElement from "./drag-element/drag-element";
 import {IIngredient} from '../../utils/types/types-ingredients';
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../services/selectors/use-typed-selector";
+import upChevron from '../../images/up-chevron.png';
+import downChevron from '../../images/down-chevron.png';
 
 const BurgerConstructor: FC = () => {
 
@@ -66,6 +68,7 @@ const BurgerConstructor: FC = () => {
     return (
         <div className={styles.mainBurgerConstructor}
              ref={dropIngredients}
+             data-cy="drop"
              style={{background}}
         >
             <div className={styles.burgerConstructor}>
@@ -76,7 +79,7 @@ const BurgerConstructor: FC = () => {
                     isLocked={true}
                     text={`${bun?.name} (верх)`}
                     price={bun?.price}
-                    thumbnail={bun?.image_mobile || '/up-chevron.png'}
+                    thumbnail={bun?.image_mobile || upChevron}
                 />
 
                 {/*Начинки и соусы*/}
@@ -103,7 +106,7 @@ const BurgerConstructor: FC = () => {
                     isLocked={true}
                     text={`${bun?.name} (низ)`}
                     price={bun?.price}
-                    thumbnail={bun?.image_mobile || '/down-chevron.png'}
+                    thumbnail={bun?.image_mobile || downChevron}
                 />
             </div>
 
@@ -120,6 +123,7 @@ const BurgerConstructor: FC = () => {
                         type="primary"
                         size="large"
                         onClick={isSendOrder}
+                        data-cy="button-order"
                     >
                         {statusOrder}
                     </Button>

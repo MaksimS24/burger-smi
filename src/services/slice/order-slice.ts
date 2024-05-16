@@ -11,7 +11,7 @@ interface OrderInterface {
         }
     }
     isLoading: boolean,
-    isError: boolean,
+    isError: boolean | undefined | string,
 }
 
 export const initialState: OrderInterface = {
@@ -36,12 +36,8 @@ export const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        orderOpenModal: (state, action) => {
-            state.isOrderOpen = true;
-            state.isError = action.payload;
-        },
         orderCloseModal: (state) => {
-            state.isOrderOpen = !state.isOrderOpen;
+            state.isOrderOpen = false;
             state.dataOrder.order.number = null;
         },
     },
@@ -57,15 +53,15 @@ export const orderSlice = createSlice({
                 state.isOrderOpen = true;
                 state.isLoading = false;
             })
-            .addCase(orderFetch.rejected, (state) => {
+            .addCase(orderFetch.rejected, (state, action) => {
                 state.isLoading = false;
-                state.isError = true;
+                state.isError = action.error.message;
             })
             .addDefaultCase(() => {})
     }
 })
 
-export const {orderOpenModal, orderCloseModal,} = orderSlice.actions;
+export const {orderCloseModal} = orderSlice.actions;
 
 export default orderSlice.reducer;
 

@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/burger-smi/static/css/main.7718303f.css",
+    "main.js": "/burger-smi/static/js/main.cf61ef82.js",
+    "static/js/787.802a99a9.chunk.js": "/burger-smi/static/js/787.802a99a9.chunk.js",
+    "static/media/JetBrainsMono-Bold.woff": "/burger-smi/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
+    "static/media/JetBrainsMono-Regular.woff": "/burger-smi/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
+    "static/media/image-done.svg": "/burger-smi/static/media/image-done.8134fadc841ec0ec763974777feb6e17.svg",
+    "static/media/JetBrainsMono-Bold.woff2": "/burger-smi/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
+    "static/media/JetBrainsMono-Regular.woff2": "/burger-smi/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
+    "static/media/iceland.woff": "/burger-smi/static/media/iceland.77ad7fc2baffd9305538.woff",
+    "static/media/iceland.woff2": "/burger-smi/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
+    "static/media/error-404.svg": "/burger-smi/static/media/error-404.0d117ab19a0fc0fc9e5cc4d6929f98ad.svg",
+    "index.html": "/burger-smi/index.html",
+    "main.7718303f.css.map": "/burger-smi/static/css/main.7718303f.css.map",
+    "main.cf61ef82.js.map": "/burger-smi/static/js/main.cf61ef82.js.map",
+    "787.802a99a9.chunk.js.map": "/burger-smi/static/js/787.802a99a9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7718303f.css",
+    "static/js/main.cf61ef82.js"
+  ]
+}

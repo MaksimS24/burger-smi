@@ -7,7 +7,7 @@ export interface IProfileOrders {
     status: TypeWsStatus,
     error: string,
 }
-const initialState: IProfileOrders = {
+export const initialState: IProfileOrders = {
     data: null,
     status: TypeWsStatus.OFFLINE,
     error: '',
