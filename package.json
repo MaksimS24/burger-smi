@@ -1,7 +1,7 @@
 {
   "name": "react-burger",
   "version": "0.1.0",
-  "homepage": "https://maksims24.github.io/burger-smi",
+  "homepage": "https://maksims24.github.io/burger-smi/",
   "private": true,
   "dependencies": {
     "@4tw/cypress-drag-drop": "^2.2.5",
@@ -37,7 +37,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "./node_modules/.bin/cypress open"
+    "cypress:open": "./node_modules/.bin/cypress open",
+    "deploy-script": "npm run build && scp -r ./build/* burger-smi@51.250.64.224:/home/maksim/stellar-frontend"
   },
   "eslintConfig": {
     "extends": [
