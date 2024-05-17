@@ -1,7 +1,7 @@
 {
   "name": "react-burger",
   "version": "0.1.0",
-  "homepage": "https://maksims24.github.io/burger-smi/",
+  "homepage": "https://maksims24.github.io/burger-smi",
   "private": true,
   "dependencies": {
     "@4tw/cypress-drag-drop": "^2.2.5",
